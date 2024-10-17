@@ -19,33 +19,30 @@ jobs:
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v3
-      
-    # - name: Set up Git user
-    #   run: |
-    #     git config user.name "github-actions[bot]"
-    #     git config user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Install sing-box
       run: |
-        curl -Lo sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-amd64.tar.gz
-        tar -xzf sing-box.tar.gz
-        chmod +x sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box
-        sudo mv sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box /usr/local/bin/sing-box
+        curl -Lo /tmp/sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-amd64.tar.gz
+        tar -xzf /tmp/sing-box.tar.gz -C /tmp/
+        chmod +x /tmp/sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box
+        sudo mv /tmp/sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box /usr/local/bin/sing-box
         sing-box version
 
-    - name: Setup Debug Session
-      uses: csexton/debugger-action@master
+    # - name: Setup Debug Session
+    #   uses: csexton/debugger-action@master
 
     - name: Compile Sing-Box Rules
       run: |
-        rm -rf sing-box/rules_srs/*
+        mkdir -p ${GITHUB_WORKSPACE}/sing-box/rules_srs/
+        rm -rf ${GITHUB_WORKSPACE}/sing-box/rules_srs/*
         for file in sing-box/rules_json/*.json; do
           filename=$(basename "$file" .json)
-          sing-box rule-set compile "$file" -o "sing-box/rules_srs/${filename}.compiled"
+          sing-box rule-set compile "$file" -o "sing-box/rules_srs/${filename}.srs"
         done
     
     - name: Commit compiled rules
       run: |
+        cd ${GITHUB_WORKSPACE}
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
         git add sing-box/rules_srs/*
