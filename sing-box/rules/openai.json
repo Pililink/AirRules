@@ -1,0 +1,51 @@
+{
+    "rules": [
+        {
+            "domain": [
+                "ai.com",
+                "openai.com",
+                "auth0.com",
+                "challenges.cloudflare.com",
+                "chatgpt.com",
+                "oaistatic.com",
+                "arkoselabs.com",
+                "openaiapi-site.azureedge.net",
+                "events.statsigapi.net",
+                "featuregates.org",
+                "identrust.com",
+                "intercom.io",
+                "intercomcdn.com",
+                "oaiusercontent.com",
+                "sentry.io",
+                "stripe.com",
+                "gemini.google.com"
+            ]
+        },
+        {
+          "domain_keyword": [
+            "openai"
+          ]
+        },
+        {
+            "domain_suffix": [
+                ".ai.com",
+                ".openai.com",
+                ".auth0.com",
+                ".challenges.cloudflare.com",
+                ".chatgpt.com",
+                ".oaistatic.com",
+                ".arkoselabs.com",
+                ".openaiapi-site.azureedge.net",
+                ".events.statsigapi.net",
+                ".featuregates.org",
+                ".identrust.com",
+                ".intercom.io",
+                ".intercomcdn.com",
+                ".oaiusercontent.com",
+                ".sentry.io",
+                ".stripe.com"
+            ]
+        }
+    ],
+    "version": 1
+}

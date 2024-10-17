@@ -1,0 +1,47 @@
+{
+    "rules": [
+        {
+            "domain": [
+                "okx.com",
+                "pililink.net",
+                "github.com",
+                "githubusercontent.com",
+                "githubcopilot.com",
+                "iyzico.com",
+                "relayinfo.quickconnect.to",
+                "global.quickconnect.cn",
+                "linux.do",
+                "docker.com",
+                "tmdb.org",
+                "alicenetworks.net",
+                "synology.cn",
+                "synology.com",
+                "pythonhosted.org",
+                "gigabyte.cn",
+                "pypi.org"
+            ]
+        },
+        {
+            "domain_suffix": [
+                ".okx.com",
+                ".pililink.net",
+                ".github.com",
+                ".githubusercontent.com",
+                ".githubcopilot.com",
+                ".iyzico.com",
+                ".relayinfo.quickconnect.to",
+                ".global.quickconnect.cn",
+                ".linux.do",
+                ".docker.com",
+                ".tmdb.org",
+                ".alicenetworks.net",
+                ".synology.cn",
+                ".synology.com",
+                ".pythonhosted.org",
+                ".gigabyte.cn",
+                ".pypi.org"
+            ]
+        }
+    ],
+    "version": 1
+}

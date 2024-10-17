@@ -1,0 +1,21 @@
+{
+    "rules": [
+        {
+            "domain": [
+                "noteo.cn",
+                "wslmf.com",
+                "lanmiyun.me",
+                "alicenetworks.net"
+            ]
+        },
+        {
+            "domain_suffix": [
+                ".noteo.cn",
+                ".wslmf.com",
+                ".lanmiyun.me",
+                ".alicenetworks.net"
+            ]
+        }
+    ],
+    "version": 1
+}
