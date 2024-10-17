@@ -33,12 +33,9 @@ jobs:
         sudo mv sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box /usr/local/bin/sing-box
         sing-box version
 
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-      timeout-minutes: 15
-      with:
-        detached: true
-        
+    - name: Setup Debug Session
+      uses: csexton/debugger-action@master
+
     - name: Compile Sing-Box Rules
       run: |
         rm -rf sing-box/rules_srs/*
