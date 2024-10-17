@@ -28,8 +28,8 @@ jobs:
         sudo mv /tmp/sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box /usr/local/bin/sing-box
         sing-box version
 
-    # - name: Setup Debug Session
-    #   uses: csexton/debugger-action@master
+    - name: Setup Debug Session
+      uses: csexton/debugger-action@master
 
     - name: Compile Sing-Box Rules
       run: |
@@ -45,7 +45,7 @@ jobs:
         cd ${GITHUB_WORKSPACE}
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
-        
+
         git add sing-box/rules_srs/*
         if git diff-index --quiet HEAD --; then
           echo "No changes to commit"
