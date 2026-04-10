@@ -15,4 +15,5 @@ DOMAIN-SUFFIX,bing.net
 DOMAIN-SUFFIX,gitee.com
 DOMAIN-SUFFIX,ts.net
 DOMAIN-SUFFIX,tailscale.com
+DOMAIN-SUFFIX,duckcoding.ai
 IP-CIDR,100.64.0.0/10
