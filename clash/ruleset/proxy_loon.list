@@ -1,0 +1,17 @@
+DOMAIN-SUFFIX,okx.com,PROXY
+DOMAIN-SUFFIX,github.com,PROXY
+DOMAIN-SUFFIX,githubusercontent.com,PROXY
+DOMAIN-SUFFIX,githubcopilot.com,PROXY
+DOMAIN-SUFFIX,iyzico.com,PROXY
+DOMAIN-SUFFIX,relayinfo.quickconnect.to,PROXY
+DOMAIN-SUFFIX,global.quickconnect.cn,PROXY
+DOMAIN-SUFFIX,linux.do,PROXY
+DOMAIN-SUFFIX,docker.com,PROXY
+DOMAIN-SUFFIX,tmdb.org,PROXY
+DOMAIN-SUFFIX,alicenetworks.net,PROXY
+DOMAIN-SUFFIX,synology.cn,PROXY
+DOMAIN-SUFFIX,synology.com,PROXY
+DOMAIN-SUFFIX,pythonhosted.org,PROXY
+DOMAIN-SUFFIX,gigabyte.cn,PROXY
+DOMAIN-SUFFIX,pypi.org,PROXY
+DOMAIN-SUFFIX,openwrt.ai,PROXY
