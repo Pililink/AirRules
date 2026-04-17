@@ -48,34 +48,24 @@ proxy-groups:
   # --- 跨机场优选层 ---
   - {
       name: 🇺🇸 全线路美国优选,
-      type: url-test,
+      type: fallback,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
-      tolerance: 50,
-      include-all-providers: true,
-      filter: "(?i)(美国|美|US|USA|United States|America|洛杉矶|硅谷|圣何塞|西雅图|达拉斯|凤凰城|纽约|芝加哥)",
+      proxies: [ A-美国自动, B-美国自动 ],
     }
   - {
       name: 🇸🇬 全线路新加坡优选,
-      type: url-test,
+      type: fallback,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
-      tolerance: 50,
-      include-all-providers: true,
-      filter: "(?i)(新加坡|狮城|坡|SG|Singapore)",
+      proxies: [ A-新加坡自动, B-新加坡自动 ],
     }
   - {
       name: 🌏 全线路其他地区优选,
-      type: url-test,
+      type: fallback,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
-      tolerance: 50,
-      include-all-providers: true,
-      exclude-filter: "(?i)(香港|HK|HKG|Hong
-        Kong|HongKong|日本|JP|Japan|东京|大阪|韩国|KR|Korea|首尔|新加坡|SG|Singapore|美国|美|US\
-        |USA|United
-        States|America|台湾|TW|Taiwan|台北|欧洲|EU|Europe|英国|UK|London|德国|DE|Germany|\
-        法国|FR|France|荷兰|NL|Netherlands)",
+      proxies: [ A-其他地区自动, B-其他地区自动 ],
     }
 
   # --- 服务层 ---
