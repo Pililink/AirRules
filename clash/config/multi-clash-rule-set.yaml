@@ -202,56 +202,56 @@ proxy-groups:
   # --- A 机场线路层：对外入口组，自动回退到机场常用或全线路优选 ---
   - {
       name: A-香港节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ A-香港自动, A机场常用 ],
     }
   - {
       name: A-日本节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ A-日本自动, A机场常用 ],
     }
   - {
       name: A-韩国节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ A-韩国自动, A机场常用 ],
     }
   - {
       name: A-新加坡节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ A-新加坡自动, 🇸🇬 全线路新加坡优选, A机场常用 ],
     }
   - {
       name: A-美国节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ A-美国自动, 🇺🇸 全线路美国优选, A机场常用 ],
     }
   - {
       name: A-台湾节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ A-台湾自动, A机场常用 ],
     }
   - {
       name: A-欧洲节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ A-欧洲自动, A机场常用 ],
     }
   - {
       name: A-其他地区,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ A-其他地区自动, 🌏 全线路其他地区优选, A机场常用 ],
@@ -339,56 +339,56 @@ proxy-groups:
   # --- B 机场线路层：对外入口组，自动回退到机场常用或全线路优选 ---
   - {
       name: B-香港节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ B-香港自动, B机场常用 ],
     }
   - {
       name: B-日本节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ B-日本自动, B机场常用 ],
     }
   - {
       name: B-韩国节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ B-韩国自动, B机场常用 ],
     }
   - {
       name: B-新加坡节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ B-新加坡自动, 🇸🇬 全线路新加坡优选, B机场常用 ],
     }
   - {
       name: B-美国节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ B-美国自动, 🇺🇸 全线路美国优选, B机场常用 ],
     }
   - {
       name: B-台湾节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ B-台湾自动, B机场常用 ],
     }
   - {
       name: B-欧洲节点,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ B-欧洲自动, B机场常用 ],
     }
   - {
       name: B-其他地区,
-      type: fallback,
+      type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 300,
       proxies: [ B-其他地区自动, 🌏 全线路其他地区优选, B机场常用 ],
