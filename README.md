@@ -69,8 +69,6 @@
 - 地址：粘贴以下对应 URL
   - base：
     `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/base-clash-ruleset.yaml`
-  - base（国内游戏规则版）：
-    `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/base-clash-ruleset-game-cn.yaml`
   - multi：
     `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/multi-clash-rule-set.yaml`
 
@@ -101,18 +99,3 @@ if (yaml['proxy-providers']?.['B机场']) {
 
 $content = ProxyUtils.yaml.dump(yaml);
 ```
-
-## 国内游戏规则（直连优先）
-
-- 新增一份国内游戏配置文件：  
-  - `clash/config/base-clash-ruleset-game-cn.yaml`
-- 这版做了规则源叠加，先命中本地国内游戏列表直连，不再包含 Steam/Epic/Blizzard；
-  再用官方规则补充其余游戏域名，交给 `🎮 游戏服务` 处理：
-  - 国内直连源：  
-    `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/ruleset/games-cn-domestic-cn.list`
-  - 官方补充源（DustinWin）：  
-    `https://raw.githubusercontent.com/DustinWin/ruleset_geodata/refs/heads/mihomo-ruleset/games-cn.list`
-- 订阅入口：  
-  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/base-clash-ruleset-game-cn.yaml`
-
-如需只保留“一个规则源”，可移除 `games-cn`，只保留 `game-cn` 即可（`game-cn` 保持直连）。
