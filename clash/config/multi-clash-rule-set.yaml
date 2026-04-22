@@ -25,16 +25,25 @@ proxy-groups:
   # --- 主控层 ---
   - {
       name: 🚀 节点选择,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ A机场常用, B机场常用, 🇺🇸 全线路美国优选, 🇸🇬 全线路新加坡优选, 🌏 全线路其他地区优选, 🎯 全球直连 ],
+      type: select,
+      proxies: [ A机场全线路自动优选, B机场全线路自动优选, 🇺🇸 全线路美国优选, 🇸🇬 全线路新加坡优选, 🎯 全球直连 ],
     }
 
   # --- 机场常用入口 ---
   - {
       name: A机场常用,
+      type: select,
+      proxies: [ A-香港节点, A-日本节点, A-新加坡节点, A-美国节点, A-韩国节点, A-台湾节点, A-欧洲节点, A-其他地区 ],
+    }
+  - {
+      name: B机场常用,
+      type: select,
+      proxies: [ B-美国节点, B-新加坡节点, B-香港节点, B-日本节点, B-韩国节点, B-台湾节点, B-欧洲节点, B-其他地区 ],
+    }
+
+  # --- 机场全线路自动优选 ---
+  - {
+      name: A机场全线路自动优选,
       type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 120,
@@ -42,7 +51,7 @@ proxy-groups:
       proxies: [ A-香港自动, A-日本自动, A-新加坡自动, A-美国自动, A-韩国自动, A-台湾自动, A-欧洲自动, A-其他地区自动 ],
     }
   - {
-      name: B机场常用,
+      name: B机场全线路自动优选,
       type: url-test,
       url: "https://www.gstatic.com/generate_204",
       interval: 120,
@@ -67,15 +76,6 @@ proxy-groups:
       tolerance: 50,
       proxies: [ A-新加坡自动, B-新加坡自动 ],
     }
-  - {
-      name: 🌏 全线路其他地区优选,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ A-其他地区自动, B-其他地区自动 ],
-    }
-
   # --- 服务层 ---
   - {
       name: 🤖 人工智能,
@@ -95,19 +95,19 @@ proxy-groups:
   - {
       name: 📈 网络测试,
       type: select,
-      proxies: [ 🇺🇸 全线路美国优选, 🇸🇬 全线路新加坡优选, A机场常用, B机场常用, 🚀 节点选择 ],
+      proxies: [ A机场全线路自动优选, B机场全线路自动优选, 🇺🇸 全线路美国优选, 🇸🇬 全线路新加坡优选, A机场常用, B机场常用, 🚀 节点选择 ],
     }
   - {
       name: 🪟 微软服务,
       type: select,
-      proxies: [ 🎯 全球直连, A机场常用, B机场常用, 🇺🇸 全线路美国优选, 🚀 节点选择 ],
+      proxies: [ 🎯 全球直连, A机场全线路自动优选, B机场全线路自动优选, A机场常用, B机场常用, 🇺🇸 全线路美国优选, 🚀 节点选择 ],
     }
   - {
       name: 🇬 谷歌服务,
       type: select,
-      proxies: [ A机场常用, B机场常用, 🇺🇸 全线路美国优选, 🇸🇬 全线路新加坡优选, 🚀 节点选择 ],
+      proxies: [ A机场全线路自动优选, B机场全线路自动优选, A机场常用, B机场常用, 🇺🇸 全线路美国优选, 🇸🇬 全线路新加坡优选, 🚀 节点选择 ],
     }
-  - { name: 🍎 苹果服务, type: select, proxies: [ 🎯 全球直连, A机场常用, B机场常用, 🚀 节点选择 ] }
+  - { name: 🍎 苹果服务, type: select, proxies: [ 🎯 全球直连, A机场全线路自动优选, B机场全线路自动优选, A机场常用, B机场常用, 🚀 节点选择 ] }
 
   # --- 规则承接层 ---
   - {
@@ -116,7 +116,7 @@ proxy-groups:
       url: "https://www.gstatic.com/generate_204",
       interval: 120,
       tolerance: 50,
-      proxies: [ 🚀 节点选择, A机场常用, B机场常用, 🇺🇸 全线路美国优选, 🇸🇬 全线路新加坡优选, 🎯 全球直连 ],
+      proxies: [ 🚀 节点选择, A机场全线路自动优选, B机场全线路自动优选, 🇺🇸 全线路美国优选, 🇸🇬 全线路新加坡优选, 🎯 全球直连 ],
     }
   - {
       name: 🐟 漏网之鱼,
@@ -124,7 +124,7 @@ proxy-groups:
       url: "https://www.gstatic.com/generate_204",
       interval: 120,
       tolerance: 50,
-      proxies: [ 🚀 节点选择, A机场常用, B机场常用, 🇺🇸 全线路美国优选, 🎯 全球直连 ],
+      proxies: [ 🚀 节点选择, A机场全线路自动优选, B机场全线路自动优选, 🇺🇸 全线路美国优选, 🎯 全球直连 ],
     }
 
   # --- 固定终端层 ---
@@ -213,71 +213,15 @@ proxy-groups:
         法国|FR|France|荷兰|NL|Netherlands)",
     }
 
-  # --- A 机场线路层：对外入口组，自动回退到机场常用或全线路优选 ---
-  - {
-      name: A-香港节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ A-香港自动, A机场常用 ],
-    }
-  - {
-      name: A-日本节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ A-日本自动, A机场常用 ],
-    }
-  - {
-      name: A-韩国节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ A-韩国自动, A机场常用 ],
-    }
-  - {
-      name: A-新加坡节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ A-新加坡自动, 🇸🇬 全线路新加坡优选, A机场常用 ],
-    }
-  - {
-      name: A-美国节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ A-美国自动, 🇺🇸 全线路美国优选, A机场常用 ],
-    }
-  - {
-      name: A-台湾节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ A-台湾自动, A机场常用 ],
-    }
-  - {
-      name: A-欧洲节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ A-欧洲自动, A机场常用 ],
-    }
-  - {
-      name: A-其他地区,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ A-其他地区自动, 🌏 全线路其他地区优选, A机场常用 ],
-    }
+  # --- A 机场线路层：对外入口组，不含隐式 fallback ---
+  - { name: A-香港节点, type: select, proxies: [ A-香港自动 ] }
+  - { name: A-日本节点, type: select, proxies: [ A-日本自动 ] }
+  - { name: A-韩国节点, type: select, proxies: [ A-韩国自动 ] }
+  - { name: A-新加坡节点, type: select, proxies: [ A-新加坡自动 ] }
+  - { name: A-美国节点, type: select, proxies: [ A-美国自动 ] }
+  - { name: A-台湾节点, type: select, proxies: [ A-台湾自动 ] }
+  - { name: A-欧洲节点, type: select, proxies: [ A-欧洲自动 ] }
+  - { name: A-其他地区, type: select, proxies: [ A-其他地区自动 ] }
 
   # --- B 机场线路层：自动组 ---
   - {
@@ -358,71 +302,15 @@ proxy-groups:
         法国|FR|France|荷兰|NL|Netherlands)",
     }
 
-  # --- B 机场线路层：对外入口组，自动回退到机场常用或全线路优选 ---
-  - {
-      name: B-香港节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ B-香港自动, B机场常用 ],
-    }
-  - {
-      name: B-日本节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ B-日本自动, B机场常用 ],
-    }
-  - {
-      name: B-韩国节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ B-韩国自动, B机场常用 ],
-    }
-  - {
-      name: B-新加坡节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ B-新加坡自动, 🇸🇬 全线路新加坡优选, B机场常用 ],
-    }
-  - {
-      name: B-美国节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ B-美国自动, 🇺🇸 全线路美国优选, B机场常用 ],
-    }
-  - {
-      name: B-台湾节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ B-台湾自动, B机场常用 ],
-    }
-  - {
-      name: B-欧洲节点,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ B-欧洲自动, B机场常用 ],
-    }
-  - {
-      name: B-其他地区,
-      type: url-test,
-      url: "https://www.gstatic.com/generate_204",
-      interval: 120,
-      tolerance: 50,
-      proxies: [ B-其他地区自动, 🌏 全线路其他地区优选, B机场常用 ],
-    }
+  # --- B 机场线路层：对外入口组，不含隐式 fallback ---
+  - { name: B-香港节点, type: select, proxies: [ B-香港自动 ] }
+  - { name: B-日本节点, type: select, proxies: [ B-日本自动 ] }
+  - { name: B-韩国节点, type: select, proxies: [ B-韩国自动 ] }
+  - { name: B-新加坡节点, type: select, proxies: [ B-新加坡自动 ] }
+  - { name: B-美国节点, type: select, proxies: [ B-美国自动 ] }
+  - { name: B-台湾节点, type: select, proxies: [ B-台湾自动 ] }
+  - { name: B-欧洲节点, type: select, proxies: [ B-欧洲自动 ] }
+  - { name: B-其他地区, type: select, proxies: [ B-其他地区自动 ] }
 
 rule-providers:
   ads:
