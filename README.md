@@ -55,9 +55,9 @@
 - 将 `🇺🇸 美国自动选择` 放到 `🤖 人工智能` 的第一候选
 - 保留原有各国家地区 `url-test` 组，继续作为稳定备选线路
 
-## Sub-Store 使用说明（base/multi）
+## Sub-Store 使用说明（base/2-subscription/3-subscription）
 
-`base-clash-ruleset.yaml` 和 `multi-clash-rule-set.yaml` 可以直接作为 Sub-Store 远程文件托管使用，建议按文件分别建立两条订阅。若你只做规则定制，这两份文件本身更推荐只维护 `proxy-groups` 与 `rules`，把机场订阅链接留空，避免暴露个人链接。
+`base-clash-ruleset.yaml`、`2-subscription-clash-rule-set.yaml` 和 `3-subscription-clash-rule-set.yaml` 可以直接作为 Sub-Store 远程文件托管使用，建议按文件分别建立订阅。若你只做规则定制，这些文件本身更推荐只维护 `proxy-groups` 与 `rules`，把机场订阅链接留空，避免暴露个人链接。
 
 ### 1. 新增远程文件
 
@@ -69,8 +69,10 @@
 - 地址：粘贴以下对应 URL
   - base：
     `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/base-clash-ruleset.yaml`
-  - multi：
-    `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/multi-clash-rule-set.yaml`
+  - 2-subscription：
+    `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/2-subscription-clash-rule-set.yaml`
+  - 3-subscription：
+    `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/3-subscription-clash-rule-set.yaml`
 
 ### 2. 编辑文件脚本（清空订阅地址）
 
