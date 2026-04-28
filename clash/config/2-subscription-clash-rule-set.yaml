@@ -346,8 +346,7 @@ rule-providers:
     behavior: domain
     format: text
     path: ./rule_provider/ai.list
-    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/refs/heads/mi\
-      homo-ruleset/ai.list"
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.list"
     interval: 7200
 
   networktest:
@@ -432,6 +431,9 @@ rules:
   - RULE-SET,apple-cn,🍎 苹果服务
   - RULE-SET,google-cn,🇬 谷歌服务
   - RULE-SET,games-cn,🎮 游戏服务
+  - DOMAIN-SUFFIX,hf.co,🪜 代理域名
+  - DOMAIN-SUFFIX,hf.space,🪜 代理域名
+  - DOMAIN-SUFFIX,huggingface.co,🪜 代理域名
   - RULE-SET,ai,🤖 人工智能
   - RULE-SET,networktest,📈 网络测试
   - RULE-SET,proxy,🪜 代理域名
