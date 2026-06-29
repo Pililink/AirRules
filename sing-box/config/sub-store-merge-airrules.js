@@ -82,6 +82,38 @@ function setGroup(tag, outbounds) {
   }
 }
 
+function removeOutboundTags(tagsToRemove) {
+  const tagSet = new Set(tagsToRemove);
+  template.outbounds = template.outbounds.filter((outbound) => !tagSet.has(outbound.tag));
+
+  for (const outbound of template.outbounds) {
+    if (!Array.isArray(outbound.outbounds)) continue;
+
+    outbound.outbounds = outbound.outbounds.filter((tag) => !tagSet.has(tag));
+    if (outbound.outbounds.length === 0) {
+      outbound.outbounds = [placeholder];
+    }
+
+    if (
+      Object.prototype.hasOwnProperty.call(outbound, "default") &&
+      !outbound.outbounds.includes(outbound.default)
+    ) {
+      outbound.default = outbound.outbounds[0];
+    }
+  }
+
+  const route = template.route;
+  if (route?.final && tagSet.has(route.final)) {
+    route.final = "🚀 节点选择";
+  }
+
+  for (const rule of route?.rules ?? []) {
+    if (rule.outbound && tagSet.has(rule.outbound)) {
+      rule.outbound = "🚀 节点选择";
+    }
+  }
+}
+
 function addProxies(proxies) {
   const existing = new Set(template.outbounds.map((outbound) => outbound.tag));
   for (const proxy of proxies) {
@@ -102,6 +134,10 @@ const knownRegion = new RegExp(
   `${hk.source}|${jp.source}|${kr.source}|${sg.source}|${us.source}|${tw.source}|${eu.source}`,
   "i"
 );
+
+const hasA = Boolean(artifactName(a));
+const hasB = Boolean(artifactName(b));
+const hasC = Boolean(artifactName(c));
 
 const aProxies = await loadProxies(a, aType, "A-");
 const bProxies = await loadProxies(b, bType, "B-");
@@ -126,6 +162,42 @@ setGroup("B-美国节点", byPattern(bProxies, us));
 setGroup("B-台湾节点", byPattern(bProxies, tw));
 setGroup("B-欧洲节点", byPattern(bProxies, eu));
 setGroup("B-其他地区", excluding(bProxies, knownRegion));
-setGroup("C全线路优选", tags(cProxies));
+if (hasC) {
+  setGroup("C全线路优选", tags(cProxies));
+}
+
+if (!hasA) {
+  removeOutboundTags([
+    "A机场全线路自动优选",
+    "A机场常用",
+    "A-香港节点",
+    "A-日本节点",
+    "A-韩国节点",
+    "A-新加坡节点",
+    "A-美国节点",
+    "A-台湾节点",
+    "A-欧洲节点",
+    "A-其他地区",
+  ]);
+}
+
+if (!hasB) {
+  removeOutboundTags([
+    "B机场全线路自动优选",
+    "B机场常用",
+    "B-香港节点",
+    "B-日本节点",
+    "B-韩国节点",
+    "B-新加坡节点",
+    "B-美国节点",
+    "B-台湾节点",
+    "B-欧洲节点",
+    "B-其他地区",
+  ]);
+}
+
+if (!hasC) {
+  removeOutboundTags(["C全线路优选"]);
+}
 
 $content = JSON.stringify(template, null, 2);
