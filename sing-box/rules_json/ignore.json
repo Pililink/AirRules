@@ -5,7 +5,22 @@
                 "noteo.cn",
                 "wslmf.com",
                 "lanmiyun.me",
-                "alicenetworks.net"
+                "alicenetworks.net",
+                "github.site",
+                "pililink.com",
+                "soulshell.cn",
+                "volcengine.com",
+                "volces.com",
+                "pililink.net",
+                "feishu.com",
+                "poecdn.com",
+                "bing.com",
+                "bing.net",
+                "gitee.com",
+                "ts.net",
+                "dqy.ink",
+                "tailscale.com",
+                "duckcoding.ai"
             ]
         },
         {
@@ -13,7 +28,29 @@
                 ".noteo.cn",
                 ".wslmf.com",
                 ".lanmiyun.me",
-                ".alicenetworks.net"
+                ".alicenetworks.net",
+                ".github.site",
+                ".pililink.com",
+                ".soulshell.cn",
+                ".volcengine.com",
+                ".volces.com",
+                ".pililink.net",
+                ".feishu.com",
+                ".poecdn.com",
+                ".bing.com",
+                ".bing.net",
+                ".gitee.com",
+                ".ts.net",
+                ".dqy.ink",
+                ".tailscale.com",
+                ".duckcoding.ai"
+            ]
+        },
+        {
+            "ip_cidr": [
+                "100.64.0.0/10",
+                "115.190.88.0/21",
+                "115.190.80.0/21"
             ]
         }
     ],

@@ -3,7 +3,7 @@
         {
             "domain": [
                 "okx.com",
-                "pililink.net",
+                "github.com",
                 "githubusercontent.com",
                 "githubcopilot.com",
                 "iyzico.com",
@@ -17,13 +17,13 @@
                 "synology.com",
                 "pythonhosted.org",
                 "gigabyte.cn",
-                "pypi.org"
+                "pypi.org",
+                "openwrt.ai"
             ]
         },
         {
             "domain_suffix": [
                 ".okx.com",
-                ".pililink.net",
                 ".github.com",
                 ".githubusercontent.com",
                 ".githubcopilot.com",
@@ -38,7 +38,8 @@
                 ".synology.com",
                 ".pythonhosted.org",
                 ".gigabyte.cn",
-                ".pypi.org"
+                ".pypi.org",
+                ".openwrt.ai"
             ]
         }
     ],
