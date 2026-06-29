@@ -4,7 +4,7 @@
 
 ## 文件
 
-- `2-subscription-sing-box-rule-set.json`：对应两个机场的 Clash 配置。
+- `subscription-sing-box-rule-set.json`：对应单机场/单订阅配置。
 - `3-subscription-sing-box-rule-set.json`：对应三个机场的 Clash 配置。
 
 ## 使用边界
@@ -42,7 +42,7 @@
 
 在 Sub-Store 中先创建 A/B/C 机场订阅或组合订阅，然后在文件管理中创建远程文件：
 
-- 2 机场模板：`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/config/2-subscription-sing-box-rule-set.json`
+- 单订阅模板：`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/config/subscription-sing-box-rule-set.json`
 - 3 机场模板：`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/config/3-subscription-sing-box-rule-set.json`
 
 文件脚本操作使用：
