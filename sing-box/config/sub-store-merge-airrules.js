@@ -16,12 +16,30 @@ function artifactType(type) {
     : "subscription";
 }
 
+function artifactName(value) {
+  if (!value) return "";
+
+  const text = String(value).trim();
+  try {
+    const url = new URL(text);
+    const parts = url.pathname.split("/").filter(Boolean);
+    const downloadIndex = parts.lastIndexOf("download");
+    if (downloadIndex >= 0 && parts[downloadIndex + 1]) {
+      return decodeURIComponent(parts[downloadIndex + 1]);
+    }
+  } catch {}
+
+  const match = text.match(/(?:^|\/)download\/([^/?#]+)/);
+  return match ? decodeURIComponent(match[1]) : text;
+}
+
 async function loadProxies(name, type, prefix) {
-  if (!name) return [];
+  const normalizedName = artifactName(name);
+  if (!normalizedName) return [];
 
   const proxies = await produceArtifact({
     type: artifactType(type),
-    name,
+    name: normalizedName,
     platform: "sing-box",
     produceType: "internal",
   });
