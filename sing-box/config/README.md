@@ -17,6 +17,8 @@
 - `B-美国节点`、`B-新加坡节点`、`B-香港节点`、`B-日本节点`、`B-韩国节点`、`B-台湾节点`、`B-欧洲节点`、`B-其他地区`
 - 三机场模板额外包含 `C全线路优选`
 
+模板默认启用 `experimental.clash_api.external_controller` 为 `127.0.0.1:9090`，用于让 GUI 或 Dashboard 读取并切换 `selector`/`urltest` 分组。如果本机已有其他 Clash/Mihomo/Sing-box 占用 9090 端口，请改成其他本地端口。
+
 ## 规则集来源
 
 公共规则集使用 DustinWin 的 Sing-box 兼容 SRS release：
