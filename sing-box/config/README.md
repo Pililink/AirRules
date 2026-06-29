@@ -35,3 +35,16 @@
 - Sing-box 规则集：`https://sing-box.sagernet.org/zh/configuration/rule-set/`
 - Sing-box 路由规则：`https://sing-box.sagernet.org/zh/configuration/route/rule/`
 - Sing-box Selector/URLTest 出站：`https://sing-box.sagernet.org/zh/configuration/outbound/selector/`、`https://sing-box.sagernet.org/zh/configuration/outbound/urltest/`
+
+## Sub-Store 动态生成
+
+在 Sub-Store 中先创建 A/B/C 机场订阅或组合订阅，然后在文件管理中创建远程文件：
+
+- 2 机场模板：`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/config/2-subscription-sing-box-rule-set.json`
+- 3 机场模板：`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/config/3-subscription-sing-box-rule-set.json`
+
+文件脚本操作使用：
+
+`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/config/sub-store-merge-airrules.js#a=A机场订阅名称&b=B机场订阅名称`
+
+如果 A/B 是组合订阅，追加 `aType=collection&bType=collection`。三机场模板额外追加 `c=C机场订阅名称`，如果 C 是组合订阅再追加 `cType=collection`。
