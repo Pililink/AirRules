@@ -19,6 +19,8 @@
 
 模板默认启用 `experimental.clash_api.external_controller` 为 `127.0.0.1:9090`，用于让 GUI 或 Dashboard 读取并切换 `selector`/`urltest` 分组。如果本机已有其他 Clash/Mihomo/Sing-box 占用 9090 端口，请改成其他本地端口。
 
+模板内置直连 UDP DNS `223.5.5.5`，用于避免启动阶段继承本机或其他代理的 FakeIP DNS 结果，导致代理服务端域名被解析到 `198.18.0.0/15` 后规则集下载失败。
+
 ## 规则集来源
 
 公共规则集使用 DustinWin 的 Sing-box 兼容 SRS release：

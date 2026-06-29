@@ -1,4 +1,15 @@
 {
+  "dns": {
+    "servers": [
+      {
+        "type": "udp",
+        "tag": "alidns",
+        "server": "223.5.5.5"
+      }
+    ],
+    "final": "alidns",
+    "strategy": "ipv4_only"
+  },
   "experimental": {
     "cache_file": {
       "enabled": true
