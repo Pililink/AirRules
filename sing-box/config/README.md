@@ -19,7 +19,12 @@
 
 模板默认启用 `experimental.clash_api.external_controller` 为 `127.0.0.1:9090`，用于让 GUI 或 Dashboard 读取并切换 `selector`/`urltest` 分组。如果本机已有其他 Clash/Mihomo/Sing-box 占用 9090 端口，请改成其他本地端口。
 
-模板内置直连 UDP DNS `223.5.5.5`，用于避免启动阶段继承本机或其他代理的 FakeIP DNS 结果，导致代理服务端域名被解析到 `198.18.0.0/15` 后规则集下载失败。
+模板内置分流 DNS：
+
+- 国内、直连和私有域名默认使用直连 UDP DNS `223.5.5.5`，避免启动阶段继承本机或其他代理的 FakeIP DNS 结果，导致代理服务端域名被解析到 `198.18.0.0/15` 后规则集下载失败。
+- 代理、AI、Google 与 Hugging Face 相关域名使用 Cloudflare DoH，并通过 `🚀 节点选择` 下载和解析，减少国内 DNS 污染或解析到错误 CDN 的概率。
+
+公共和自定义远程规则集默认每 `12h` 更新一次，避免客户端频繁访问 GitHub。调试规则时可临时改短。
 
 ## 规则集来源
 
@@ -52,3 +57,10 @@
 `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/config/sub-store-merge-airrules.js#a=A机场订阅名称&b=B机场订阅名称`
 
 如果 A/B 是组合订阅，追加 `aType=collection&bType=collection`。三机场模板额外追加 `c=C机场订阅名称`，如果 C 是组合订阅再追加 `cType=collection`。
+
+脚本会自动完成：
+
+- 给 A/B/C 机场节点 tag 加前缀，避免不同订阅出现同名节点。
+- 按地区填充 A/B 机场的香港、日本、新加坡、美国、韩国、台湾、欧洲和其他地区组。
+- 过滤订阅里的流量、到期、官网、跳转域名、请勿连接等提示节点，避免它们进入 urltest。
+- 从上层策略组里移除只有 `未配置节点-拒绝占位` 的空地区组，避免误选到不可用分组。

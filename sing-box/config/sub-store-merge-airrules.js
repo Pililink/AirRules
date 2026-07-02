@@ -37,12 +37,12 @@ async function loadProxies(name, type, prefix) {
   const normalizedName = artifactName(name);
   if (!normalizedName) return [];
 
-  const proxies = await produceArtifact({
+  const proxies = (await produceArtifact({
     type: artifactType(type),
     name: normalizedName,
     platform: "sing-box",
     produceType: "internal",
-  });
+  })).filter(isUsableProxy);
 
   const tagMap = new Map(
     proxies.map((proxy) => [proxy.tag, `${prefix}${proxy.tag}`])
@@ -62,12 +62,74 @@ function tags(proxies) {
   return proxies.map((proxy) => proxy.tag);
 }
 
-function byPattern(proxies, pattern) {
-  return proxies.filter((proxy) => pattern.test(proxy.tag)).map((proxy) => proxy.tag);
+const metadataNode = new RegExp(
+  [
+    "剩余流量",
+    "流量",
+    "距离下次",
+    "下次重置",
+    "重置剩余",
+    "套餐",
+    "到期",
+    "过期",
+    "官网",
+    "订阅",
+    "更新",
+    "跳转域名",
+    "请勿连接",
+    "不可用",
+    "剩余：",
+    "expire",
+    "traffic",
+    "reset",
+    "subscription",
+    "official",
+  ].join("|"),
+  "i"
+);
+
+function isUsableProxy(proxy) {
+  if (!proxy?.tag || proxy.tag === placeholder) return false;
+  return !metadataNode.test(proxy.tag);
 }
 
-function excluding(proxies, pattern) {
-  return proxies.filter((proxy) => !pattern.test(proxy.tag)).map((proxy) => proxy.tag);
+function codePattern(...codes) {
+  const boundary = String.raw`(?:^|[\s_\-\[\]()（）【】|/,:：])`;
+  return new RegExp(
+    `${boundary}(?:${codes.join("|")})(?=$|[\\s_\\-\\[\\]()（）【】|/,:：])`,
+    "i"
+  );
+}
+
+const regionPatterns = {
+  hk: [/香港|港|Hong ?Kong/i, codePattern("HK", "HKG")],
+  jp: [/日本|东京|大阪|Japan/i, codePattern("JP", "JPN")],
+  kr: [/韩国|韩|首尔|Korea/i, codePattern("KR", "KOR")],
+  sg: [/新加坡|狮城|坡|Singapore/i, codePattern("SG", "SGP")],
+  us: [
+    /美国|美|洛杉矶|硅谷|圣何塞|西雅图|达拉斯|凤凰城|纽约|芝加哥|United ?States|America/i,
+    codePattern("US", "USA"),
+  ],
+  tw: [/台湾|台北|新北|Taiwan/i, codePattern("TW", "TWN")],
+  eu: [
+    /欧洲|英国|伦敦|德国|法国|荷兰|西班牙|意大利|爱尔兰|瑞士|瑞典|芬兰|挪威|波兰|葡萄牙|Europe|London|Germany|France|Netherlands|Spain|Italy/i,
+    codePattern("EU", "UK", "GB", "DE", "FR", "NL", "ES", "IT", "IE", "CH", "SE", "FI", "NO", "PL", "PT"),
+  ],
+};
+
+function matchesRegion(tag, region) {
+  return regionPatterns[region].some((pattern) => pattern.test(tag));
+}
+
+function regionOf(proxy) {
+  for (const region of ["hk", "jp", "sg", "us", "kr", "tw", "eu"]) {
+    if (matchesRegion(proxy.tag, region)) return region;
+  }
+  return "other";
+}
+
+function byRegion(proxies, region) {
+  return proxies.filter((proxy) => regionOf(proxy) === region).map((proxy) => proxy.tag);
 }
 
 function setGroup(tag, outbounds) {
@@ -79,6 +141,38 @@ function setGroup(tag, outbounds) {
 
   if (Object.prototype.hasOwnProperty.call(group, "default")) {
     group.default = group.outbounds[0];
+  }
+}
+
+function prunePlaceholderOnlyGroups() {
+  const placeholderOnlyGroups = new Set(
+    template.outbounds
+      .filter(
+        (outbound) =>
+          Array.isArray(outbound.outbounds) &&
+          outbound.outbounds.length === 1 &&
+          outbound.outbounds[0] === placeholder
+      )
+      .map((outbound) => outbound.tag)
+  );
+
+  for (const outbound of template.outbounds) {
+    if (!Array.isArray(outbound.outbounds)) continue;
+    if (placeholderOnlyGroups.has(outbound.tag)) continue;
+
+    outbound.outbounds = outbound.outbounds.filter(
+      (tag) => !placeholderOnlyGroups.has(tag)
+    );
+    if (outbound.outbounds.length === 0) {
+      outbound.outbounds = [placeholder];
+    }
+
+    if (
+      Object.prototype.hasOwnProperty.call(outbound, "default") &&
+      !outbound.outbounds.includes(outbound.default)
+    ) {
+      outbound.default = outbound.outbounds[0];
+    }
   }
 }
 
@@ -123,18 +217,6 @@ function addProxies(proxies) {
   }
 }
 
-const hk = /(香港|港|HK|HKG|Hong ?Kong)/i;
-const jp = /(日本|东京|大阪|JP|Japan)/i;
-const kr = /(韩国|韩|首尔|KR|Korea)/i;
-const sg = /(新加坡|狮城|坡|SG|Singapore)/i;
-const us = /(美国|美|洛杉矶|硅谷|圣何塞|西雅图|达拉斯|凤凰城|纽约|芝加哥|US|USA|United ?States|America)/i;
-const tw = /(台湾|台北|新北|TW|Taiwan)/i;
-const eu = /(欧洲|英国|伦敦|德国|法国|荷兰|西班牙|意大利|EU|Europe|UK|London|DE|Germany|FR|France|NL|Netherlands|ES|IT)/i;
-const knownRegion = new RegExp(
-  `${hk.source}|${jp.source}|${kr.source}|${sg.source}|${us.source}|${tw.source}|${eu.source}`,
-  "i"
-);
-
 const hasA = Boolean(artifactName(a));
 const hasB = Boolean(artifactName(b));
 const hasC = Boolean(artifactName(c));
@@ -145,23 +227,23 @@ const cProxies = await loadProxies(c, cType, "C-");
 
 addProxies([...aProxies, ...bProxies, ...cProxies]);
 
-setGroup("A-香港节点", byPattern(aProxies, hk));
-setGroup("A-日本节点", byPattern(aProxies, jp));
-setGroup("A-韩国节点", byPattern(aProxies, kr));
-setGroup("A-新加坡节点", byPattern(aProxies, sg));
-setGroup("A-美国节点", byPattern(aProxies, us));
-setGroup("A-台湾节点", byPattern(aProxies, tw));
-setGroup("A-欧洲节点", byPattern(aProxies, eu));
-setGroup("A-其他地区", excluding(aProxies, knownRegion));
+setGroup("A-香港节点", byRegion(aProxies, "hk"));
+setGroup("A-日本节点", byRegion(aProxies, "jp"));
+setGroup("A-韩国节点", byRegion(aProxies, "kr"));
+setGroup("A-新加坡节点", byRegion(aProxies, "sg"));
+setGroup("A-美国节点", byRegion(aProxies, "us"));
+setGroup("A-台湾节点", byRegion(aProxies, "tw"));
+setGroup("A-欧洲节点", byRegion(aProxies, "eu"));
+setGroup("A-其他地区", byRegion(aProxies, "other"));
 
-setGroup("B-香港节点", byPattern(bProxies, hk));
-setGroup("B-日本节点", byPattern(bProxies, jp));
-setGroup("B-韩国节点", byPattern(bProxies, kr));
-setGroup("B-新加坡节点", byPattern(bProxies, sg));
-setGroup("B-美国节点", byPattern(bProxies, us));
-setGroup("B-台湾节点", byPattern(bProxies, tw));
-setGroup("B-欧洲节点", byPattern(bProxies, eu));
-setGroup("B-其他地区", excluding(bProxies, knownRegion));
+setGroup("B-香港节点", byRegion(bProxies, "hk"));
+setGroup("B-日本节点", byRegion(bProxies, "jp"));
+setGroup("B-韩国节点", byRegion(bProxies, "kr"));
+setGroup("B-新加坡节点", byRegion(bProxies, "sg"));
+setGroup("B-美国节点", byRegion(bProxies, "us"));
+setGroup("B-台湾节点", byRegion(bProxies, "tw"));
+setGroup("B-欧洲节点", byRegion(bProxies, "eu"));
+setGroup("B-其他地区", byRegion(bProxies, "other"));
 if (hasC) {
   setGroup("C全线路优选", tags(cProxies));
 }
@@ -199,5 +281,7 @@ if (!hasB) {
 if (!hasC) {
   removeOutboundTags(["C全线路优选"]);
 }
+
+prunePlaceholderOnlyGroups();
 
 $content = JSON.stringify(template, null, 2);

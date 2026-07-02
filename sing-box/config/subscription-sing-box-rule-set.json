@@ -5,6 +5,43 @@
         "type": "udp",
         "tag": "alidns",
         "server": "223.5.5.5"
+      },
+      {
+        "type": "https",
+        "tag": "cloudflare",
+        "server": "1.1.1.1",
+        "server_port": 443,
+        "detour": "🚀 节点选择",
+        "tls": {
+          "server_name": "cloudflare-dns.com"
+        }
+      }
+    ],
+    "rules": [
+      {
+        "rule_set": [
+          "myproxy",
+          "proxy",
+          "ai",
+          "google-cn"
+        ],
+        "server": "cloudflare"
+      },
+      {
+        "domain_suffix": [
+          "hf.co",
+          "hf.space",
+          "huggingface.co"
+        ],
+        "server": "cloudflare"
+      },
+      {
+        "rule_set": [
+          "private",
+          "myignore",
+          "cn"
+        ],
+        "server": "alidns"
       }
     ],
     "final": "alidns",
@@ -152,15 +189,15 @@
       "type": "selector",
       "tag": "🎮 游戏服务",
       "outbounds": [
+        "🎯 全球直连",
         "A-香港节点",
         "A-日本节点",
         "A-韩国节点",
         "B-香港节点",
         "B-日本节点",
-        "🚀 节点选择",
-        "🎯 全球直连"
+        "🚀 节点选择"
       ],
-      "default": "A-香港节点"
+      "default": "🎯 全球直连"
     },
     {
       "type": "selector",
@@ -440,6 +477,10 @@
   ],
   "route": {
     "auto_detect_interface": true,
+    "default_domain_resolver": {
+      "server": "alidns",
+      "strategy": "ipv4_only"
+    },
     "rules": [
       {
         "ip_cidr": [
@@ -477,6 +518,22 @@
         "outbound": "🪜 代理域名"
       },
       {
+        "domain_suffix": [
+          "hf.co",
+          "hf.space",
+          "huggingface.co"
+        ],
+        "action": "route",
+        "outbound": "🤖 人工智能"
+      },
+      {
+        "rule_set": [
+          "ai"
+        ],
+        "action": "route",
+        "outbound": "🤖 人工智能"
+      },
+      {
         "rule_set": [
           "microsoft-cn"
         ],
@@ -502,23 +559,7 @@
           "games-cn"
         ],
         "action": "route",
-        "outbound": "🎮 游戏服务"
-      },
-      {
-        "domain_suffix": [
-          "hf.co",
-          "hf.space",
-          "huggingface.co"
-        ],
-        "action": "route",
-        "outbound": "🪜 代理域名"
-      },
-      {
-        "rule_set": [
-          "ai"
-        ],
-        "action": "route",
-        "outbound": "🤖 人工智能"
+        "outbound": "🎯 全球直连"
       },
       {
         "rule_set": [
@@ -570,7 +611,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/ads.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -578,7 +619,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/private.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -586,7 +627,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/microsoft-cn.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -594,7 +635,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/apple-cn.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -602,7 +643,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/google-cn.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -610,7 +651,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/games-cn.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -618,7 +659,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/ai.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -626,7 +667,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/networktest.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -634,7 +675,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/proxy.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -642,7 +683,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/cn.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -650,7 +691,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/telegramip.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -658,7 +699,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/privateip.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -666,7 +707,7 @@
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/cnip.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -674,7 +715,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/rules_srs/ignore.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       },
       {
         "type": "remote",
@@ -682,7 +723,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/rules_srs/proxy.srs",
         "download_detour": "🚀 节点选择",
-        "update_interval": "2h"
+        "update_interval": "12h"
       }
     ],
     "final": "🐟 漏网之鱼"
