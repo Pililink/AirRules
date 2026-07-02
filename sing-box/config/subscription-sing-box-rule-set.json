@@ -1,4 +1,12 @@
 {
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "127.0.0.1",
+      "listen_port": 7890
+    }
+  ],
   "dns": {
     "servers": [
       {
@@ -75,92 +83,6 @@
     },
     {
       "type": "selector",
-      "tag": "A机场常用",
-      "outbounds": [
-        "A-香港节点",
-        "A-日本节点",
-        "A-新加坡节点",
-        "A-美国节点",
-        "A-韩国节点",
-        "A-台湾节点",
-        "A-欧洲节点",
-        "A-其他地区"
-      ],
-      "default": "A-香港节点"
-    },
-    {
-      "type": "selector",
-      "tag": "B机场常用",
-      "outbounds": [
-        "B-美国节点",
-        "B-新加坡节点",
-        "B-香港节点",
-        "B-日本节点",
-        "B-韩国节点",
-        "B-台湾节点",
-        "B-欧洲节点",
-        "B-其他地区"
-      ],
-      "default": "B-美国节点"
-    },
-    {
-      "type": "urltest",
-      "tag": "A机场全线路自动优选",
-      "outbounds": [
-        "A-香港节点",
-        "A-日本节点",
-        "A-新加坡节点",
-        "A-美国节点",
-        "A-韩国节点",
-        "A-台湾节点",
-        "A-欧洲节点",
-        "A-其他地区"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "urltest",
-      "tag": "B机场全线路自动优选",
-      "outbounds": [
-        "B-美国节点",
-        "B-新加坡节点",
-        "B-香港节点",
-        "B-日本节点",
-        "B-韩国节点",
-        "B-台湾节点",
-        "B-欧洲节点",
-        "B-其他地区"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "urltest",
-      "tag": "🇺🇸 全线路美国优选",
-      "outbounds": [
-        "A-美国节点",
-        "B-美国节点"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "urltest",
-      "tag": "🇸🇬 全线路新加坡优选",
-      "outbounds": [
-        "A-新加坡节点",
-        "B-新加坡节点"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "selector",
       "tag": "🤖 人工智能",
       "outbounds": [
         "B-美国节点",
@@ -198,20 +120,6 @@
         "🚀 节点选择"
       ],
       "default": "🎯 全球直连"
-    },
-    {
-      "type": "selector",
-      "tag": "📈 网络测试",
-      "outbounds": [
-        "A机场全线路自动优选",
-        "B机场全线路自动优选",
-        "🇺🇸 全线路美国优选",
-        "🇸🇬 全线路新加坡优选",
-        "A机场常用",
-        "B机场常用",
-        "🚀 节点选择"
-      ],
-      "default": "A机场全线路自动优选"
     },
     {
       "type": "selector",
@@ -256,7 +164,7 @@
     },
     {
       "type": "selector",
-      "tag": "🪜 代理域名",
+      "tag": "🐟 漏网之鱼",
       "outbounds": [
         "🚀 节点选择",
         "🎯 全球直连"
@@ -264,8 +172,188 @@
       "default": "🚀 节点选择"
     },
     {
+      "type": "urltest",
+      "tag": "A机场全线路自动优选",
+      "outbounds": [
+        "A-香港节点",
+        "A-日本节点",
+        "A-新加坡节点",
+        "A-美国节点",
+        "A-韩国节点",
+        "A-台湾节点",
+        "A-欧洲节点",
+        "A-其他地区"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
       "type": "selector",
-      "tag": "🐟 漏网之鱼",
+      "tag": "A机场常用",
+      "outbounds": [
+        "A-香港节点",
+        "A-日本节点",
+        "A-新加坡节点",
+        "A-美国节点",
+        "A-韩国节点",
+        "A-台湾节点",
+        "A-欧洲节点",
+        "A-其他地区"
+      ],
+      "default": "A-香港节点"
+    },
+    {
+      "type": "urltest",
+      "tag": "A-香港节点",
+      "outbounds": [
+        "未配置节点-拒绝占位"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "urltest",
+      "tag": "A-日本节点",
+      "outbounds": [
+        "未配置节点-拒绝占位"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "urltest",
+      "tag": "A-新加坡节点",
+      "outbounds": [
+        "未配置节点-拒绝占位"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "urltest",
+      "tag": "A-美国节点",
+      "outbounds": [
+        "未配置节点-拒绝占位"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "urltest",
+      "tag": "A-韩国节点",
+      "outbounds": [
+        "未配置节点-拒绝占位"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "urltest",
+      "tag": "A-台湾节点",
+      "outbounds": [
+        "未配置节点-拒绝占位"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "urltest",
+      "tag": "A-欧洲节点",
+      "outbounds": [
+        "未配置节点-拒绝占位"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "urltest",
+      "tag": "A-其他地区",
+      "outbounds": [
+        "未配置节点-拒绝占位"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "selector",
+      "tag": "B机场常用",
+      "outbounds": [
+        "B-美国节点",
+        "B-新加坡节点",
+        "B-香港节点",
+        "B-日本节点",
+        "B-韩国节点",
+        "B-台湾节点",
+        "B-欧洲节点",
+        "B-其他地区"
+      ],
+      "default": "B-美国节点"
+    },
+    {
+      "type": "urltest",
+      "tag": "B机场全线路自动优选",
+      "outbounds": [
+        "B-美国节点",
+        "B-新加坡节点",
+        "B-香港节点",
+        "B-日本节点",
+        "B-韩国节点",
+        "B-台湾节点",
+        "B-欧洲节点",
+        "B-其他地区"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "urltest",
+      "tag": "🇺🇸 全线路美国优选",
+      "outbounds": [
+        "A-美国节点",
+        "B-美国节点"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "urltest",
+      "tag": "🇸🇬 全线路新加坡优选",
+      "outbounds": [
+        "A-新加坡节点",
+        "B-新加坡节点"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "2m",
+      "tolerance": 50
+    },
+    {
+      "type": "selector",
+      "tag": "📈 网络测试",
+      "outbounds": [
+        "A机场全线路自动优选",
+        "B机场全线路自动优选",
+        "🇺🇸 全线路美国优选",
+        "🇸🇬 全线路新加坡优选",
+        "A机场常用",
+        "B机场常用",
+        "🚀 节点选择"
+      ],
+      "default": "A机场全线路自动优选"
+    },
+    {
+      "type": "selector",
+      "tag": "🪜 代理域名",
       "outbounds": [
         "🚀 节点选择",
         "🎯 全球直连"
@@ -303,86 +391,6 @@
         "DIRECT"
       ],
       "default": "DIRECT"
-    },
-    {
-      "type": "urltest",
-      "tag": "A-香港节点",
-      "outbounds": [
-        "未配置节点-拒绝占位"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "urltest",
-      "tag": "A-日本节点",
-      "outbounds": [
-        "未配置节点-拒绝占位"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "urltest",
-      "tag": "A-韩国节点",
-      "outbounds": [
-        "未配置节点-拒绝占位"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "urltest",
-      "tag": "A-新加坡节点",
-      "outbounds": [
-        "未配置节点-拒绝占位"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "urltest",
-      "tag": "A-美国节点",
-      "outbounds": [
-        "未配置节点-拒绝占位"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "urltest",
-      "tag": "A-台湾节点",
-      "outbounds": [
-        "未配置节点-拒绝占位"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "urltest",
-      "tag": "A-欧洲节点",
-      "outbounds": [
-        "未配置节点-拒绝占位"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
-    },
-    {
-      "type": "urltest",
-      "tag": "A-其他地区",
-      "outbounds": [
-        "未配置节点-拒绝占位"
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "2m",
-      "tolerance": 50
     },
     {
       "type": "urltest",
@@ -482,6 +490,13 @@
       "strategy": "ipv4_only"
     },
     "rules": [
+      {
+        "inbound": [
+          "mixed-in"
+        ],
+        "action": "sniff",
+        "timeout": "1s"
+      },
       {
         "ip_cidr": [
           "100.64.0.0/10"
