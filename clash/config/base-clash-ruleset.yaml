@@ -7,52 +7,52 @@ proxy-providers:
     interval: 300
     health-check:
       enable: true
-      url: https://www.gstatic.com/generate_204
+      url: "https://www.gstatic.com/generate_204"
       interval: 600
 
 proxy-groups:
   # --- 主选择逻辑 ---
-  - { name: 🚀 节点选择, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, proxies: [🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
+  - { name: 🚀 节点选择, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, proxies: [🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
   
   - { name: 🤖 人工智能, type: select, proxies: [🇺🇸 美国自动选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🚀 节点选择] }
 
   - { name: 📲 电报消息, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区] }
 
-  - { name: 🐟 漏网之鱼, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
+  - { name: 🐟 漏网之鱼, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
 
   # --- 基础组 ---
   - { name: 🎯 全球直连, type: select, proxies: [DIRECT] }
 
   # --- 地区自动选择策略组 ---
   
-  - { name: 🇭🇰 香港节点, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "香港|HK|HKG|(?i)HongKong" }
+  - { name: 🇭🇰 香港节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "香港|HK|HKG|(?i)HongKong" }
   
-  - { name: 🇯🇵 日本节点, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "日本|JP|(?i)Japan" }
+  - { name: 🇯🇵 日本节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "日本|JP|(?i)Japan" }
   
-  - { name: 🇰🇷 韩国节点, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "韩国|韩|KR|(?i)Korea" }
+  - { name: 🇰🇷 韩国节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "韩国|韩|KR|(?i)Korea" }
   
-  - { name: 🇸🇬 新加坡节点, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "新加坡|坡|SG|(?i)Singapore" }
+  - { name: 🇸🇬 新加坡节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "新加坡|坡|SG|(?i)Singapore" }
   
-  - { name: 🇺🇸 美国节点, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "美国|美|US|(?i)States" }
+  - { name: 🇺🇸 美国节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "美国|美|US|(?i)States" }
 
-  - { name: 🇺🇸 美国自动选择, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "美国|美|US|(?i)States" }
+  - { name: 🇺🇸 美国自动选择, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "美国|美|US|(?i)States" }
   
-  - { name: 🇹🇼 台湾节点, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "台湾|台|TW|(?i)Taiwan" }
+  - { name: 🇹🇼 台湾节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "台湾|台|TW|(?i)Taiwan" }
 
   # 欧洲汇总：包含英国、西班牙、意大利、荷兰、德国
-  - { name: 🇪🇺 欧洲节点, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "英国|UK|西班牙|ES|意大利|IT|荷兰|NL|德国|DE" }
+  - { name: 🇪🇺 欧洲节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "英国|UK|西班牙|ES|意大利|IT|荷兰|NL|德国|DE" }
 
-  - { name: 🇹🇷 土耳其节点, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "土耳其|TR|(?i)Turkey" }
+  - { name: 🇹🇷 土耳其节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "土耳其|TR|(?i)Turkey" }
 
-  - { name: 🇮🇳 印度节点, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "印度|IN|(?i)India" }
+  - { name: 🇮🇳 印度节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "印度|IN|(?i)India" }
 
-  - { name: 🇷🇺 俄罗斯节点, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, include-all-providers: true, filter: "俄罗斯|RU|(?i)Russia" }
+  - { name: 🇷🇺 俄罗斯节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "俄罗斯|RU|(?i)Russia" }
 
   # --- 关键：其他地区 (排除掉以上所有地区) ---
   - { 
       name: 🌏 其他地区, 
       type: url-test,
-      url: https://www.gstatic.com/generate_204,
+      url: "https://www.gstatic.com/generate_204",
       interval: 120,
       tolerance: 50,
       include-all-providers: true, 
@@ -62,7 +62,7 @@ proxy-groups:
 
   # --- 专项服务（保持原样） ---
   - { name: 🎮 游戏服务, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
-  - { name: 🪜 代理域名, type: url-test, url: https://www.gstatic.com/generate_204, interval: 120, tolerance: 50, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
+  - { name: 🪜 代理域名, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
   - { name: 📈 网络测试, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
   - { name: 🪟 微软服务, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
   - { name: 🇬 谷歌服务, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }

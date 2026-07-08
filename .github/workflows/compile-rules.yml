@@ -28,6 +28,22 @@ jobs:
         sudo mv /tmp/sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box /usr/local/bin/sing-box
         sing-box version
 
+    - name: Validate Clash templates and scripts
+      run: |
+        python -m pip install ruamel.yaml
+        python - <<'PY'
+        from pathlib import Path
+        from ruamel.yaml import YAML
+
+        yaml = YAML(typ="safe")
+        yaml.allow_duplicate_keys = False
+
+        for path in Path("clash/config").glob("*.yaml"):
+            yaml.load(path.read_text(encoding="utf-8"))
+            print(f"validated {path}")
+        PY
+        node --check clash/config/sub-store-fill-clash-providers.js
+
     # - name: Setup Debug Session
     #   uses: csexton/debugger-action@master
 

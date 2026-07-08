@@ -74,30 +74,26 @@
   - 3-subscription：
     `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/3-subscription-clash-rule-set.yaml`
 
-### 2. 编辑文件脚本（清空订阅地址）
+### 2. 编辑文件脚本（动态填充订阅地址）
 
-在该远程文件的 `脚本` 栏填入以下 JS，可在 Sub-Store 下发给客户端前统一清空订阅地址占位，方便你在本地或其他地方动态注入：
+在 Sub-Store 中先创建 A/B 机场订阅或组合订阅，然后在文件管理的脚本操作中使用：
 
+- 2-subscription：
+  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&b=private#noCache`
+- 3-subscription：
+  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&b=private&c=第三机场订阅名称#noCache`
 - base：
-```javascript
-const yaml = ProxyUtils.yaml.safeLoad($content ?? $files?.[0] ?? '') || {};
+  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#sub=机场订阅名称#noCache`
 
-if (yaml['proxy-providers']?.['机场1']) {
-  yaml['proxy-providers']['机场1'].url = '';
-}
+脚本参数会自动写入对应的 `proxy-providers`：
 
-$content = ProxyUtils.yaml.dump(yaml);
-```
-- multi：
-```javascript
-const yaml = ProxyUtils.yaml.safeLoad($content ?? $files?.[0] ?? '') || {};
+- `a` -> `A机场`
+- `b` -> `B机场`
+- `c` -> `C机场`
+- `sub` -> `机场1`
 
-if (yaml['proxy-providers']?.['A机场']) {
-  yaml['proxy-providers']['A机场'].url = '';
-}
-if (yaml['proxy-providers']?.['B机场']) {
-  yaml['proxy-providers']['B机场'].url = '';
-}
+如果脚本不能从当前 Sub-Store 请求中自动识别服务根地址，可以显式追加 `base` 参数，例如：
 
-$content = ProxyUtils.yaml.dump(yaml);
-```
+`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&b=private&base=https%3A%2F%2Fsub.example.com%2Ftoken#noCache`
+
+同一个 Sub-Store 文件只保留一个 Clash 模板来源；`base`、`2-subscription`、`3-subscription` 需要分别建文件，避免多个完整 YAML 被拼接后产生重复顶层键。
