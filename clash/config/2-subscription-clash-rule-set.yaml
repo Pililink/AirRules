@@ -3,7 +3,7 @@ proxy-providers:
     type: http
     # 替换为 A 机场 Clash/Mihomo 订阅链接
     url: ""
-    path: ./proxy_provider/air1.yaml
+    path: ./proxy_provider/air2-1.yaml
     interval: 300
     health-check:
       enable: true
@@ -14,7 +14,7 @@ proxy-providers:
     type: http
     # 替换为 B 机场 Clash/Mihomo 订阅链接
     url: ""
-    path: ./proxy_provider/air2.yaml
+    path: ./proxy_provider/air2-2.yaml
     interval: 300
     health-check:
       enable: true
