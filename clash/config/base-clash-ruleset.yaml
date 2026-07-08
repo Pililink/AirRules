@@ -67,7 +67,7 @@ proxy-groups:
   - { name: 🪟 微软服务, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
   - { name: 🇬 谷歌服务, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
   - { name: 🍎 苹果服务, type: select, proxies: [🎯 全球直连, 🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区] }
-  - { name: 🛑 广告拦截, type: select, proxies: [REJECT, DIRECT] }# 规则集(yaml 文件每天自动更新)
+  - { name: 🛑 广告拦截, type: select, proxies: [REJECT, DIRECT] }
   - { name: 🔒 私有网络, type: select, proxies: [DIRECT] }
   - { name: 🇨🇳 直连域名, type: select, proxies: [DIRECT] }
   - { name: 🇨🇳 直连 IP, type: select, proxies: [DIRECT] }
