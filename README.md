@@ -9,7 +9,7 @@
   - 代理组策略（`proxy-groups`）
   - 规则集定义（`rule-providers`）
   - 路由规则（`rules`）
-- `clash/ruleset/` 存放自定义规则文件（由 `rule-providers` 拉取/引用）
+- `clash/ruleset/` 保留可选自定义规则文件；当前 Clash 模板的通用规则源统一使用 ACL4SSR `Clash/Providers`
 
 ## 关键策略说明
 
@@ -34,13 +34,14 @@
 - 关键用途规则：
   - `🚀 节点选择` 作为总入口
   - `🐟 漏网之鱼` 兜底全部流量
-  - `📲 电报消息 / 📈 网络测试 / 🎮 游戏服务 / 🍎 苹果服务 / 🪟 微软服务 / 🇬 谷歌服务` 按用途分流
+  - `📲 电报消息 / 🎮 游戏服务 / 🍎 苹果服务 / 🪟 微软服务 / 🇬 谷歌服务` 按用途分流
+  - 规则源使用 ACL4SSR 的 `LocalAreaNetwork / UnBan / BanAD / BanProgramAD / ProxyGFWlist / ChinaDomain / ChinaIp` 以及常用服务规则集
 
 ## 使用方式（简要）
 
 - 每次修改 `clash/config/base-clash-ruleset.yaml` 后，确保 Clash 重新加载配置。
 - 更新订阅或远程规则前可先检查 `rule-providers` 链接是否可达。
-- 对于本地规则文件变化，确认 `path` 目录（如 `./rule_provider/`、`./proxy_provider/`）存在对应文件或能被规则源自动更新。
+- 对于远程规则文件变化，确认 `path` 目录（如 `./rule_provider/`、`./proxy_provider/`）存在对应文件或能被规则源自动更新。
 
 ## 兼容建议
 
