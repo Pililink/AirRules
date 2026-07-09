@@ -9,7 +9,7 @@
   - 代理组策略（`proxy-groups`）
   - 规则集定义（`rule-providers`）
   - 路由规则（`rules`）
-- `clash/ruleset/` 保留可选自定义规则文件；当前 Clash 模板的通用规则源统一使用 ACL4SSR `Clash/Providers`
+- `clash/ruleset/` 存放自定义覆盖规则；当前 Clash 模板的通用规则源使用 ACL4SSR `Clash/Providers`
 
 ## 关键策略说明
 
@@ -36,6 +36,7 @@
   - `🐟 漏网之鱼` 兜底全部流量
   - `📲 电报消息 / 🎮 游戏服务 / 🍎 苹果服务 / 🪟 微软服务 / 🇬 谷歌服务` 按用途分流
   - 规则源使用 ACL4SSR 的 `LocalAreaNetwork / UnBan / BanAD / BanProgramAD / ProxyGFWlist / ChinaDomain / ChinaIp` 以及常用服务规则集
+  - `clash/ruleset/ignore.list` 和 `clash/ruleset/proxy.list` 作为自定义直连/代理覆盖规则，优先级高于 ACL4SSR 通用代理规则
 
 ## 使用方式（简要）
 

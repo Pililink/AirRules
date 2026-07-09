@@ -90,6 +90,22 @@ rule-providers:
     url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/UnBan.yaml"
     interval: 7200
 
+  myignore:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/myignore.list
+    url: "https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/ruleset/ignore.list"
+    interval: 7200
+
+  myproxy:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/myproxy.list
+    url: "https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/ruleset/proxy.list"
+    interval: 7200
+
   ads:
     type: http
     behavior: classical
@@ -254,6 +270,7 @@ rule-providers:
 rules:
   - RULE-SET,private,🔒 私有网络
   - RULE-SET,unban,🎯 全球直连
+  - RULE-SET,myignore,DIRECT
   - RULE-SET,ads,🛑 广告拦截
   - RULE-SET,program-ads,🛑 广告拦截
   # 为过滤 P2P 流量(BT 下载)，可添加一条 `DST-PORT` 规则(ShellCrash 会默认开启“只代理常用端口”，可删除此条 `DST-PORT`)
@@ -262,6 +279,7 @@ rules:
   - RULE-SET,google-cn,🎯 全球直连
   - RULE-SET,steam-cn,🎯 全球直连
   - RULE-SET,cn,🇨🇳 直连域名
+  - RULE-SET,myproxy,🪜 代理域名
   - RULE-SET,microsoft,🪟 微软服务
   - RULE-SET,apple,🍎 苹果服务
   - RULE-SET,google,🇬 谷歌服务
