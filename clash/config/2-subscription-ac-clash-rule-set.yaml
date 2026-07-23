@@ -1,72 +1,188 @@
 proxy-providers:
-  机场1:
+  A机场:
     type: http
-    # 机场订阅链接，使用 Clash 链接
+    # 替换为 A 机场 Clash/Mihomo 订阅链接
     url: ""
-    path: ./proxy_provider/air1.yaml
+    path: ./proxy_provider/air2-ac-a.yaml
     interval: 300
     health-check:
       enable: true
-      url: "https://www.gstatic.com/generate_204"
+      url: https://www.gstatic.com/generate_204
+      interval: 600
+
+  C机场:
+    type: http
+    # 替换为 C 机场 Clash/Mihomo 订阅链接
+    url: ""
+    path: ./proxy_provider/air2-ac-c.yaml
+    interval: 300
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
       interval: 600
 
 proxy-groups:
-  # --- 主选择逻辑 ---
-  - { name: 🚀 节点选择, type: select, proxies: [🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
-  
-  - { name: 🤖 人工智能, type: select, proxies: [🇺🇸 美国节点, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🚀 节点选择] }
-
-  - { name: 📲 电报消息, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区] }
-
-  - { name: 🐟 漏网之鱼, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
-
-  # --- 基础组 ---
-  - { name: 🎯 全球直连, type: select, proxies: [DIRECT] }
-
-  # --- 地区自动选择策略组 ---
-  
-  - { name: 🇭🇰 香港节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "香港|HK|HKG|(?i)HongKong" }
-  
-  - { name: 🇯🇵 日本节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "日本|JP|(?i)Japan" }
-  
-  - { name: 🇰🇷 韩国节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "韩国|韩|KR|(?i)Korea" }
-  
-  - { name: 🇸🇬 新加坡节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "新加坡|坡|SG|(?i)Singapore" }
-  
-  - { name: 🇺🇸 美国节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "美国|美|US|(?i)States" }
-
-  - { name: 🇹🇼 台湾节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "台湾|台|TW|(?i)Taiwan" }
-
-  # 欧洲汇总：包含英国、西班牙、意大利、荷兰、德国
-  - { name: 🇪🇺 欧洲节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "英国|UK|西班牙|ES|意大利|IT|荷兰|NL|德国|DE" }
-
-  - { name: 🇹🇷 土耳其节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "土耳其|TR|(?i)Turkey" }
-
-  - { name: 🇮🇳 印度节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "印度|IN|(?i)India" }
-
-  - { name: 🇷🇺 俄罗斯节点, type: url-test, url: "https://www.gstatic.com/generate_204", interval: 120, tolerance: 50, include-all-providers: true, filter: "俄罗斯|RU|(?i)Russia" }
-
-  # --- 关键：其他地区 (排除掉以上所有地区) ---
-  - { 
-      name: 🌏 其他地区, 
+  # --- 主控层 ---
+  - {
+      name: 🚀 节点选择,
       type: select,
-      include-all-providers: true, 
-      # 排除正则：将上面所有组用到的关键词放进来，剩下的就是俄罗斯、加拿大、印度、土耳其等
-      exclude-filter: "香港|HK|HKG|HongKong|日本|JP|Japan|韩国|韩|KR|Korea|新加坡|坡|SG|Singapore|美国|美|US|States|台湾|台|TW|Taiwan|英国|UK|西班牙|ES|意大利|IT|荷兰|NL|德国|DE|土耳其|TR|Turkey|印度|IN|India|俄罗斯|RU|Russia"
+      proxies: [ A机场全线路自动优选, C全线路优选, A机场常用, 🎯 全球直连 ],
     }
 
-  # --- 专项服务（保持原样） ---
-  - { name: 🎮 游戏服务, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
-  - { name: 🪜 代理域名, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
-  - { name: 📈 网络测试, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
-  - { name: 🪟 微软服务, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
-  - { name: 🇬 谷歌服务, type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
-  - { name: 🍎 苹果服务, type: select, proxies: [🎯 全球直连, 🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区] }
-  - { name: 🛑 广告拦截, type: select, proxies: [REJECT, DIRECT] }
-  - { name: 🔒 私有网络, type: select, proxies: [DIRECT] }
-  - { name: 🇨🇳 直连域名, type: select, proxies: [DIRECT] }
-  - { name: 🇨🇳 直连 IP, type: select, proxies: [DIRECT] }
-  
+  # --- 机场常用入口 ---
+  - {
+      name: A机场常用,
+      type: select,
+      proxies: [ A-香港节点, A-日本节点, A-新加坡节点, A-美国节点, A-韩国节点, A-台湾节点, A-欧洲节点, A-其他地区 ],
+    }
+  # --- 机场全线路自动优选 ---
+  - {
+      name: A机场全线路自动优选,
+      type: url-test,
+      url: "https://www.gstatic.com/generate_204",
+      interval: 120,
+      tolerance: 50,
+      proxies: [ A-香港节点, A-日本节点, A-新加坡节点, A-美国节点, A-韩国节点, A-台湾节点, A-欧洲节点, A-其他地区 ],
+    }
+  - {
+      name: C全线路优选,
+      type: url-test,
+      url: "https://www.gstatic.com/generate_204",
+      interval: 120,
+      tolerance: 50,
+      use: [ C机场 ],
+    }
+
+  # --- 服务层 ---
+  - {
+      name: 🤖 人工智能,
+      type: select,
+      proxies: [ C全线路优选, A-美国节点, 🚀 节点选择 ],
+    }
+  - {
+      name: 📲 电报消息,
+      type: select,
+      proxies: [ C全线路优选, A-新加坡节点, A-香港节点, 🚀 节点选择 ],
+    }
+  - {
+      name: 🎮 游戏服务,
+      type: select,
+      proxies: [ A-香港节点, A-日本节点, A-韩国节点, 🚀 节点选择, 🎯 全球直连 ],
+    }
+  - {
+      name: 📈 网络测试,
+      type: select,
+      proxies: [ A机场全线路自动优选, C全线路优选, A机场常用, 🚀 节点选择 ],
+    }
+  - {
+      name: 🪟 微软服务,
+      type: select,
+      proxies: [ 🎯 全球直连, A机场全线路自动优选, A机场常用, 🚀 节点选择 ],
+    }
+  - {
+      name: 🇬 谷歌服务,
+      type: select,
+      proxies: [ A机场全线路自动优选, A机场常用, 🚀 节点选择 ],
+    }
+  - { name: 🍎 苹果服务, type: select, proxies: [ 🎯 全球直连, A机场全线路自动优选, A机场常用, 🚀 节点选择 ] }
+
+  # --- 规则承接层 ---
+  - {
+      name: 🪜 代理域名,
+      type: select,
+      proxies: [ 🚀 节点选择, 🎯 全球直连 ],
+    }
+  - {
+      name: 🐟 漏网之鱼,
+      type: select,
+      proxies: [ 🚀 节点选择, 🎯 全球直连 ],
+    }
+
+  # --- 固定终端层 ---
+  - { name: 🎯 全球直连, type: select, proxies: [ DIRECT ] }
+  - { name: 🛑 广告拦截, type: select, proxies: [ REJECT, DIRECT ] }
+  - { name: 🔒 私有网络, type: select, proxies: [ DIRECT ] }
+  - { name: 🇨🇳 直连域名, type: select, proxies: [ DIRECT ] }
+  - { name: 🇨🇳 直连 IP, type: select, proxies: [ DIRECT ] }
+
+  # --- A 机场线路层：地区组 ---
+  - {
+      name: A-香港节点,
+      type: url-test,
+      url: "https://www.gstatic.com/generate_204",
+      interval: 120,
+      tolerance: 50,
+      use: [ A机场 ],
+      filter: "(?i)(香港|HK|HKG|Hong Kong|HongKong)",
+    }
+  - {
+      name: A-日本节点,
+      type: url-test,
+      url: "https://www.gstatic.com/generate_204",
+      interval: 120,
+      tolerance: 50,
+      use: [ A机场 ],
+      filter: "(?i)(日本|JP|Japan|东京|大阪)",
+    }
+  - {
+      name: A-韩国节点,
+      type: url-test,
+      url: "https://www.gstatic.com/generate_204",
+      interval: 120,
+      tolerance: 50,
+      use: [ A机场 ],
+      filter: "(?i)(韩国|韩|KR|Korea|首尔)",
+    }
+  - {
+      name: A-新加坡节点,
+      type: url-test,
+      url: "https://www.gstatic.com/generate_204",
+      interval: 120,
+      tolerance: 50,
+      use: [ A机场 ],
+      filter: "(?i)(新加坡|狮城|坡|SG|Singapore)",
+    }
+  - {
+      name: A-美国节点,
+      type: url-test,
+      url: "https://www.gstatic.com/generate_204",
+      interval: 120,
+      tolerance: 50,
+      use: [ A机场 ],
+      filter: "(?i)(美国|美|US|USA|United States|America|洛杉矶|硅谷|圣何塞|西雅图|达拉斯|凤凰城|纽约|芝加哥)",
+    }
+  - {
+      name: A-台湾节点,
+      type: url-test,
+      url: "https://www.gstatic.com/generate_204",
+      interval: 120,
+      tolerance: 50,
+      use: [ A机场 ],
+      filter: "(?i)(台湾|TW|Taiwan|台北|新北)",
+    }
+  - {
+      name: A-欧洲节点,
+      type: url-test,
+      url: "https://www.gstatic.com/generate_204",
+      interval: 120,
+      tolerance: 50,
+      use: [ A机场 ],
+      filter: "(?i)(欧洲|EU|Europe|英国|UK|London|德国|DE|Germany|法国|FR|France|荷兰|NL|Nether\
+        lands)",
+    }
+  - {
+      name: A-其他地区,
+      type: url-test,
+      url: "https://www.gstatic.com/generate_204",
+      interval: 120,
+      tolerance: 50,
+      use: [ A机场 ],
+      exclude-filter: "(?i)(香港|HK|HKG|Hong
+        Kong|HongKong|日本|JP|Japan|东京|大阪|韩国|KR|Korea|首尔|新加坡|SG|Singapore|美国|美|US\
+        |USA|United
+        States|America|台湾|TW|Taiwan|台北|欧洲|EU|Europe|英国|UK|London|德国|DE|Germany|\
+        法国|FR|France|荷兰|NL|Netherlands)",
+    }
 
 rule-providers:
   private:
@@ -261,7 +377,6 @@ rule-providers:
     url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ChinaIp.yaml"
     interval: 7200
 
-# 规则
 rules:
   - RULE-SET,private,🔒 私有网络
   - RULE-SET,unban,🎯 全球直连

@@ -486,11 +486,16 @@ rules:
   - RULE-SET,google-cn,🎯 全球直连
   - RULE-SET,steam-cn,🎯 全球直连
   - RULE-SET,cn,🇨🇳 直连域名
+  - DOMAIN-SUFFIX,grok.com,🤖 人工智能
+  - DOMAIN-SUFFIX,grok.x.com,🤖 人工智能
+  - DOMAIN-SUFFIX,hf.co,🪜 代理域名
+  - DOMAIN-SUFFIX,hf.space,🪜 代理域名
+  - DOMAIN-SUFFIX,huggingface.co,🪜 代理域名
+  - RULE-SET,ai,🤖 人工智能
   - RULE-SET,myproxy,🪜 代理域名
   - RULE-SET,microsoft,🪟 微软服务
   - RULE-SET,apple,🍎 苹果服务
   - RULE-SET,google,🇬 谷歌服务
-  - RULE-SET,ai,🤖 人工智能
   - RULE-SET,telegram,📲 电报消息
   - RULE-SET,game-download,🎮 游戏服务
   - RULE-SET,game-epic,🎮 游戏服务

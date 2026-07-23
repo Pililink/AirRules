@@ -37,6 +37,14 @@
       },
       {
         "domain_suffix": [
+          "grok.com",
+          "grok.x.com",
+          "x.ai"
+        ],
+        "server": "cloudflare"
+      },
+      {
+        "domain_suffix": [
           "hf.co",
           "hf.space",
           "huggingface.co"
@@ -539,17 +547,19 @@
         "outbound": "🔒 私有网络"
       },
       {
-        "rule_set": [
-          "myproxy"
+        "domain_suffix": [
+          "hf.co",
+          "hf.space",
+          "huggingface.co"
         ],
         "action": "route",
         "outbound": "🪜 代理域名"
       },
       {
         "domain_suffix": [
-          "hf.co",
-          "hf.space",
-          "huggingface.co"
+          "grok.com",
+          "grok.x.com",
+          "x.ai"
         ],
         "action": "route",
         "outbound": "🤖 人工智能"
@@ -560,6 +570,13 @@
         ],
         "action": "route",
         "outbound": "🤖 人工智能"
+      },
+      {
+        "rule_set": [
+          "myproxy"
+        ],
+        "action": "route",
+        "outbound": "🪜 代理域名"
       },
       {
         "rule_set": [

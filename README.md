@@ -15,18 +15,18 @@
 
 ### 人工智能分组（`🤖 人工智能`）优先策略
 
-`🤖 人工智能` 已设置为优先走 **美国自动选择**，并在第一位保留回退：
+`🤖 人工智能` 已设置为优先走 **美国节点**：
 
-- `🇺🇸 美国自动选择`：`type: fallback`
+- `🇺🇸 美国节点`：`type: url-test`
   - 入口探测：`https://www.gstatic.com/generate_204`
   - 覆盖范围：通过 `filter` 匹配美国节点
-  - 刷新间隔：`interval: 600`
+  - 刷新间隔：`interval: 120`
 - `🤖 人工智能` 的候选顺序为：
-  1. `🇺🇸 美国自动选择`
-  2. 其它地区分组（香港、日本、韩国、新加坡、美国、台湾、欧洲、土耳其、印度、俄罗斯、其他）
+  1. `🇺🇸 美国节点`
+  2. 其它地区分组（香港、日本、韩国、新加坡、台湾、欧洲、土耳其、印度、俄罗斯、其他）
   3. `🚀 节点选择`
 
-如果你希望让 AI 线路永远优先美国延迟回退，可直接按该顺序调整分组即可；后续如需扩展为更多层级回退，可在此组末尾继续添加 `DIRECT` 或其他 fallback 组。
+AI 分组默认使用美国节点的延迟自动选择，其他地区和主节点组保留为手动备选。
 
 ### 其他分组
 
@@ -53,13 +53,12 @@
 
 本仓库最近的调整重点：
 
-- 为人工智能分组新增 `🇺🇸 美国自动选择`（fallback）
-- 将 `🇺🇸 美国自动选择` 放到 `🤖 人工智能` 的第一候选
+- 将 `🇺🇸 美国节点` 放到 `🤖 人工智能` 的第一候选
 - 保留原有各国家地区 `url-test` 组，继续作为稳定备选线路
 
-## Sub-Store 使用说明（base/2-subscription/3-subscription）
+## Sub-Store 使用说明（base/AB/AC/ABC）
 
-`base-clash-ruleset.yaml`、`2-subscription-clash-rule-set.yaml` 和 `3-subscription-clash-rule-set.yaml` 可以直接作为 Sub-Store 远程文件托管使用，建议按文件分别建立订阅。若你只做规则定制，这些文件本身更推荐只维护 `proxy-groups` 与 `rules`，把机场订阅链接留空，避免暴露个人链接。
+`base-clash-ruleset.yaml`、`2-subscription-clash-rule-set.yaml`（AB）、`2-subscription-ac-clash-rule-set.yaml`（AC）和 `3-subscription-clash-rule-set.yaml`（ABC）可以直接作为 Sub-Store 远程文件托管使用，建议按文件分别建立订阅。若你只做规则定制，这些文件本身更推荐只维护 `proxy-groups` 与 `rules`，把机场订阅链接留空，避免暴露个人链接。
 
 ### 1. 新增远程文件
 
@@ -71,18 +70,22 @@
 - 地址：粘贴以下对应 URL
   - base：
     `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/base-clash-ruleset.yaml`
-  - 2-subscription：
+  - 2-subscription（AB）：
     `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/2-subscription-clash-rule-set.yaml`
-  - 3-subscription：
+  - 2-subscription（AC）：
+    `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/2-subscription-ac-clash-rule-set.yaml`
+  - 3-subscription（ABC）：
     `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/3-subscription-clash-rule-set.yaml`
 
 ### 2. 编辑文件脚本（动态填充订阅地址）
 
-在 Sub-Store 中先创建 A/B 机场订阅或组合订阅，然后在文件管理的脚本操作中使用：
+在 Sub-Store 中先创建所需的 A/B/C 机场订阅或组合订阅，然后在文件管理的脚本操作中使用：
 
-- 2-subscription：
+- 2-subscription（AB）：
   `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&b=private#noCache`
-- 3-subscription：
+- 2-subscription（AC）：
+  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&c=第三机场订阅名称#noCache`
+- 3-subscription（ABC）：
   `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&b=private&c=第三机场订阅名称#noCache`
 - base：
   `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#sub=机场订阅名称#noCache`
@@ -98,4 +101,6 @@
 
 `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&b=private&base=https%3A%2F%2Fsub.example.com%2Ftoken#noCache`
 
-同一个 Sub-Store 文件只保留一个 Clash 模板来源；`base`、`2-subscription`、`3-subscription` 需要分别建文件，避免多个完整 YAML 被拼接后产生重复顶层键。
+AC 模板沿用 ABC 中 C 机场的既有定位：C 机场通过 `C全线路优选` 参与主节点、人工智能、Telegram 和网络测试，不拆分地区组。
+
+同一个 Sub-Store 文件只保留一个 Clash 模板来源；`base`、`2-subscription`（AB）、`2-subscription-ac`（AC）、`3-subscription`（ABC）需要分别建文件，避免多个完整 YAML 被拼接后产生重复顶层键。

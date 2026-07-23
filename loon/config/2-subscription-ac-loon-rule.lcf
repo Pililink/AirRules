@@ -1,0 +1,107 @@
+# A+C remote configuration for Loon
+# A 机场按地区筛选，C 机场使用全线路自动优选。
+
+[General]
+ip-mode = v4-only
+ipv6-vif = off
+dns-server = system,223.5.5.5,1.1.1.1
+sni-sniffing = true
+disable-stun = false
+dns-reject-mode = LoopbackIP
+domain-reject-mode = DNS
+udp-fallback-mode = REJECT
+wifi-access-http-port = 7222
+wifi-access-socks5-port = 7221
+allow-wifi-access = false
+interface-mode = auto
+test-timeout = 5
+disconnect-on-policy-change = false
+internet-test-url = http://wifi.vivo.com.cn/generate_204
+proxy-test-url = https://www.gstatic.com/generate_204
+resource-parser = https://raw.githubusercontent.com/sub-store-org/Sub-Store/release/sub-store-parser.loon.min.js
+geoip-url = https://geodata.kelee.one/Country-Masaiki.mmdb
+ipasn-url = https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb
+skip-proxy = 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, localhost, *.local, e.crashlynatics.com
+bypass-tun = 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.88.99.0/24, 192.168.0.0/16, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 255.255.255.255/32
+
+[Proxy]
+
+[Remote Proxy]
+A机场 = https://sub.test.com/abc?target=Loon
+C机场 = https://sub.test.com/abc?target=Loon
+
+[Remote Filter]
+A可用 = NameRegex, A机场, FilterKey = ^(?!.*(剩余流量|套餐到期|距离下次重置剩余|跳转域名|请勿连接|官网|最新|订阅|流量|到期|备用网址|更新地址|客服|工单|剩余|重置|群|邀请|返利|循环|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|通知|倒卖|地址|频道|说明|提示|特别|访问|支持|教程|关注|作者|加入|超时|收藏|福利|Traffic|Expire|Used|Total|Panel|Channel|Email)).*
+C可用 = NameRegex, C机场, FilterKey = ^(?!.*(剩余流量|套餐到期|距离下次重置剩余|跳转域名|请勿连接|官网|最新|订阅|流量|到期|备用网址|更新地址|客服|工单|剩余|重置|群|邀请|返利|循环|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|通知|倒卖|地址|频道|说明|提示|特别|访问|支持|教程|关注|作者|加入|超时|收藏|福利|Traffic|Expire|Used|Total|Panel|Channel|Email)).*
+A新加坡 = NameRegex, A机场, FilterKey = ^(?!.*(剩余流量|套餐到期|距离下次重置剩余|跳转域名|请勿连接|官网|最新|订阅|流量|到期|备用网址|更新地址|客服|工单|剩余|重置|群|邀请|返利|循环|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|通知|倒卖|地址|频道|说明|提示|特别|访问|支持|教程|关注|作者|加入|超时|收藏|福利|Traffic|Expire|Used|Total|Panel|Channel|Email)).*(新加坡|狮城|坡|SG|Singapore)
+A香港 = NameRegex, A机场, FilterKey = ^(?!.*(剩余流量|套餐到期|距离下次重置剩余|跳转域名|请勿连接|官网|最新|订阅|流量|到期|备用网址|更新地址|客服|工单|剩余|重置|群|邀请|返利|循环|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|通知|倒卖|地址|频道|说明|提示|特别|访问|支持|教程|关注|作者|加入|超时|收藏|福利|Traffic|Expire|Used|Total|Panel|Channel|Email)).*(香港|HK|HKG|Hong Kong|HongKong|港)
+A美国 = NameRegex, A机场, FilterKey = ^(?!.*(剩余流量|套餐到期|距离下次重置剩余|跳转域名|请勿连接|官网|最新|订阅|流量|到期|备用网址|更新地址|客服|工单|剩余|重置|群|邀请|返利|循环|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|通知|倒卖|地址|频道|说明|提示|特别|访问|支持|教程|关注|作者|加入|超时|收藏|福利|Traffic|Expire|Used|Total|Panel|Channel|Email)).*(美国|美|US|USA|United States|America|洛杉矶|硅谷|圣何塞|西雅图|达拉斯|凤凰城|纽约|芝加哥)
+A其他 = NameRegex, A机场, FilterKey = ^(?!.*((剩余流量|套餐到期|距离下次重置剩余|跳转域名|请勿连接|官网|最新|订阅|流量|到期|备用网址|更新地址|客服|工单|剩余|重置|群|邀请|返利|循环|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|通知|倒卖|地址|频道|说明|提示|特别|访问|支持|教程|关注|作者|加入|超时|收藏|福利|Traffic|Expire|Used|Total|Panel|Channel|Email)|(香港|HK|HKG|Hong Kong|HongKong|日本|JP|Japan|东京|大阪|韩国|韩|KR|Korea|首尔|新加坡|狮城|坡|SG|Singapore|美国|美|US|USA|United States|America|洛杉矶|硅谷|圣何塞|西雅图|达拉斯|凤凰城|纽约|芝加哥|台湾|TW|Taiwan|台北|新北|欧洲|EU|Europe|英国|UK|London|德国|DE|Germany|法国|FR|France|荷兰|NL|Netherlands))).*
+
+[Proxy Group]
+# 场景入口（AC，AI 优先 C）
+🚀 节点选择 = select, A机场常用, C全线路优选, 🇺🇸 A全线路美国优选, 🇸🇬 A全线路新加坡优选, 🇭🇰 A全线路香港优选, 🌏 A全线路其他地区优选, 🎯 全球直连
+🤖 人工智能 = select, C全线路优选, 🇺🇸 A全线路美国优选, 🚀 节点选择
+🪜 代理域名 = select, 🚀 节点选择, A机场常用, C全线路优选, 🇺🇸 A全线路美国优选, 🇸🇬 A全线路新加坡优选, 🇭🇰 A全线路香港优选, 🎯 全球直连
+🐟 漏网之鱼 = select, 🚀 节点选择, 🎯 全球直连
+🎯 全球直连 = select, DIRECT
+🛑 广告拦截 = select, REJECT, DIRECT
+🔒 私有网络 = select, DIRECT
+Pililink Ignore = select, DIRECT
+Pililink Proxy = select, 🚀 节点选择
+🇨🇳 直连域名 = select, DIRECT
+🇨🇳 直连 IP = select, DIRECT
+
+A机场常用 = url-test, A可用, url = https://www.gstatic.com/generate_204, interval = 300, tolerance = 50
+C全线路优选 = url-test, C可用, url = https://www.gstatic.com/generate_204, interval = 300, tolerance = 50
+🇸🇬 A全线路新加坡优选 = url-test, A新加坡, url = https://www.gstatic.com/generate_204, interval = 300, tolerance = 50
+🇭🇰 A全线路香港优选 = url-test, A香港, url = https://www.gstatic.com/generate_204, interval = 300, tolerance = 50
+🇺🇸 A全线路美国优选 = url-test, A美国, url = https://www.gstatic.com/generate_204, interval = 300, tolerance = 50
+🌏 A全线路其他地区优选 = url-test, A其他, url = https://www.gstatic.com/generate_204, interval = 300, tolerance = 50
+
+[Rule]
+IP-CIDR, 10.0.0.0/8, DIRECT, no-resolve
+IP-CIDR, 172.16.0.0/12, DIRECT, no-resolve
+IP-CIDR, 192.168.0.0/16, DIRECT, no-resolve
+IP-CIDR, 127.0.0.0/8, DIRECT, no-resolve
+IP-CIDR6, fc00::/7, DIRECT, no-resolve
+DOMAIN-SUFFIX, hf.co, 🪜 代理域名
+DOMAIN-SUFFIX, hf.space, 🪜 代理域名
+DOMAIN-SUFFIX, huggingface.co, 🪜 代理域名
+DOMAIN-SUFFIX, grok.com, 🤖 人工智能
+DOMAIN-SUFFIX, grok.x.com, 🤖 人工智能
+DOMAIN-SUFFIX, x.ai, 🤖 人工智能
+FINAL, 🐟 漏网之鱼
+
+[Remote Rule]
+https://raw.githubusercontent.com/mihoyo-typ/KeleeOne/Loon/Rule/Advertising.lsr, policy = 🛑 广告拦截, tag = Advertising, enabled = true
+https://raw.githubusercontent.com/mihoyo-typ/KeleeOne/Loon/Rule/Lsr/AI.lsr, policy = 🤖 人工智能, tag = AI, enabled = true
+https://raw.githubusercontent.com/Pililink/AirRules/main/loon/rule/ignore_loon.list, tag = Pililink Ignore, enabled = true
+https://raw.githubusercontent.com/Pililink/AirRules/main/loon/rule/proxy_loon.list, tag = Pililink Proxy, enabled = true
+https://raw.githubusercontent.com/mihoyo-typ/KeleeOne/Loon/Rule/Proxy.lsr, policy = 🪜 代理域名, tag = Proxy, enabled = true
+https://raw.githubusercontent.com/mihoyo-typ/KeleeOne/Loon/Rule/China.lsr, policy = 🇨🇳 直连域名, tag = China, enabled = true
+https://raw.githubusercontent.com/mihoyo-typ/KeleeOne/Loon/Rule/Lsr/LAN_SPLITTER.lsr, policy = 🔒 私有网络, tag = LAN, enabled = true
+https://raw.githubusercontent.com/mihoyo-typ/KeleeOne/Loon/Rule/ChinaIPs.lsr, policy = 🇨🇳 直连 IP, tag = China IPs, enabled = true
+
+[Host]
+
+[Rewrite]
+
+[Script]
+
+[Plugin]
+https://kelee.one/Tool/Loon/Lpx/Block_HTTPDNS.lpx, pin=true, enabled=true
+https://kelee.one/Tool/Loon/Lpx/BlockAdvertisers.lpx, pin=true, enabled=true
+https://kelee.one/Tool/Loon/Lpx/QuickSearch.lpx, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Prevent_DNS_Leaks.lpx, policy = DIRECT, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Node_detection_tool.lpx, enabled=true
+https://kelee.one/Tool/Loon/Lpx/TestFlightRegionUnlock.lpx, policy = DIRECT, enabled=false
+https://kelee.one/Tool/Loon/Lpx/BoxJs.lpx, policy = DIRECT, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Sub-Store.lpx, policy = DIRECT, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Script-Hub.lpx, policy = DIRECT, enabled=true
+
+[Mitm]
+hostname =
+ca-p12 =
+ca-passphrase =
+skip-server-cert-verify = false
