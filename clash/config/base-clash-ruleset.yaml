@@ -101,6 +101,14 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/ruleset/proxy.list"
     interval: 7200
 
+  myai:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/myai.list
+    url: "https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/ruleset/ai.list"
+    interval: 7200
+
   ads:
     type: http
     behavior: classical
@@ -274,13 +282,9 @@ rules:
   - RULE-SET,google-cn,🎯 全球直连
   - RULE-SET,steam-cn,🎯 全球直连
   - RULE-SET,cn,🇨🇳 直连域名
-  - DOMAIN-SUFFIX,grok.com,🤖 人工智能
-  - DOMAIN-SUFFIX,grok.x.com,🤖 人工智能
-  - DOMAIN-SUFFIX,hf.co,🪜 代理域名
-  - DOMAIN-SUFFIX,hf.space,🪜 代理域名
-  - DOMAIN-SUFFIX,huggingface.co,🪜 代理域名
-  - RULE-SET,ai,🤖 人工智能
   - RULE-SET,myproxy,🪜 代理域名
+  - RULE-SET,myai,🤖 人工智能
+  - RULE-SET,ai,🤖 人工智能
   - RULE-SET,microsoft,🪟 微软服务
   - RULE-SET,apple,🍎 苹果服务
   - RULE-SET,google,🇬 谷歌服务
