@@ -1,0 +1,211 @@
+# 免费节点单订阅链路池（Mihomo / Clash.Meta）
+# 将 url 留空后，可继续使用本仓库的 Sub-Store 脚本通过 sub 参数动态填充。
+# 设计目标：连接优先低延迟，失败自动回退，多任务下载分散到可用节点。
+
+proxy-providers:
+  机场1:
+    type: http
+    url: ""
+    path: ./proxy_provider/free.yaml
+    interval: 300
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 120
+      timeout: 5000
+      lazy: false
+
+# Mihomo 全局连接优化：
+# unified-delay 让不同协议节点的延迟结果更可比；
+# tcp-concurrent 对同一域名解析出的多个 IP 并发拨号，采用最先成功者。
+unified-delay: true
+tcp-concurrent: true
+
+proxy-groups:
+  # 用户总入口。默认低延迟，也可切换到稳定链路或下载池。
+  - name: 🚀 自动选择
+    type: select
+    proxies:
+      - ⚡ 免费低延迟
+      - 🛟 保障连接
+      - 📦 保障下载
+      - 🎯 全球直连
+
+  # 网页、API、即时通信：选择当前延迟最低的可用节点。
+  # tolerance 避免只有轻微延迟差时频繁切换节点。
+  - name: ⚡ 免费低延迟
+    type: url-test
+    use:
+      - 机场1
+    url: https://www.gstatic.com/generate_204
+    interval: 120
+    tolerance: 80
+    timeout: 5000
+    max-failed-times: 2
+    lazy: false
+
+  # 长连接与弱网环境：当前节点超时后，按 provider 顺序使用首个可用节点。
+  - name: 🛟 保障连接
+    type: fallback
+    use:
+      - 机场1
+    url: https://www.gstatic.com/generate_204
+    interval: 120
+    timeout: 5000
+    max-failed-times: 2
+    lazy: false
+
+  # 多文件、多目标、分片下载：不同目标可分散到不同节点。
+  # consistent-hashing 保持同一目标使用同一出口，避免 round-robin
+  # 导致同一站点频繁切换 IP。单条 TCP 连接不会叠加多个节点带宽。
+  - name: 📦 保障下载
+    type: load-balance
+    use:
+      - 机场1
+    url: https://www.gstatic.com/generate_204
+    interval: 180
+    strategy: consistent-hashing
+    timeout: 8000
+    max-failed-times: 2
+    lazy: false
+
+  - name: 🪜 代理流量
+    type: select
+    proxies:
+      - 🚀 自动选择
+      - ⚡ 免费低延迟
+      - 🛟 保障连接
+      - 📦 保障下载
+      - 🎯 全球直连
+
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - 🚀 自动选择
+      - 🎯 全球直连
+
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+
+  - name: 🛑 广告拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+rule-providers:
+  private:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./rule_provider/acl4ssr-local-area-network.yaml
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/LocalAreaNetwork.yaml
+    interval: 7200
+
+  unban:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./rule_provider/acl4ssr-unban.yaml
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/UnBan.yaml
+    interval: 7200
+
+  myignore:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/myignore.list
+    url: https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/ruleset/ignore.list
+    interval: 7200
+
+  ads:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./rule_provider/acl4ssr-ban-ad.yaml
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/BanAD.yaml
+    interval: 7200
+
+  program-ads:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./rule_provider/acl4ssr-ban-program-ad.yaml
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/BanProgramAD.yaml
+    interval: 7200
+
+  download:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./rule_provider/acl4ssr-download.yaml
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Download.yaml
+    interval: 7200
+
+  google-cn:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./rule_provider/acl4ssr-google-cn.yaml
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/GoogleCN.yaml
+    interval: 7200
+
+  steam-cn:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./rule_provider/acl4ssr-steam-cn.yaml
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/SteamCN.yaml
+    interval: 7200
+
+  cn:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./rule_provider/acl4ssr-china-domain.yaml
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ChinaDomain.yaml
+    interval: 7200
+
+  myproxy:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/myproxy.list
+    url: https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/ruleset/proxy.list
+    interval: 7200
+
+  proxy:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./rule_provider/acl4ssr-proxy-gfwlist.yaml
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ProxyGFWlist.yaml
+    interval: 7200
+
+  cnip:
+    type: http
+    behavior: ipcidr
+    format: yaml
+    path: ./rule_provider/acl4ssr-china-ip.yaml
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ChinaIp.yaml
+    interval: 7200
+
+# Mihomo 从上到下匹配，故本地/自定义直连最先，下载规则在普通代理规则之前。
+rules:
+  - RULE-SET,private,DIRECT
+  - RULE-SET,unban,DIRECT
+  - RULE-SET,myignore,DIRECT
+  - RULE-SET,ads,🛑 广告拦截
+  - RULE-SET,program-ads,🛑 广告拦截
+  # 国内 CDN 和常用下载优先直连，避免免费节点吞吐或流量额度成为瓶颈。
+  - RULE-SET,google-cn,DIRECT
+  - RULE-SET,steam-cn,DIRECT
+  - RULE-SET,cn,DIRECT
+  - RULE-SET,cnip,DIRECT,no-resolve
+  # ACL4SSR Download 中未被前面国内规则命中的下载目标进入下载池。
+  - RULE-SET,download,📦 保障下载
+  - RULE-SET,myproxy,🪜 代理流量
+  - RULE-SET,proxy,🪜 代理流量
+  - MATCH,🐟 漏网之鱼
