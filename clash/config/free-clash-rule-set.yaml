@@ -1,5 +1,5 @@
 # 免费节点单订阅链路池（Mihomo / Clash.Meta）
-# 将 url 留空后，可继续使用本仓库的 Sub-Store 脚本通过 sub 参数动态填充。
+# url 由 sub-store-fill-free-clash-provider.js 通过 provider_url 直接填充。
 # 设计目标：连接优先低延迟，失败自动回退，多任务下载分散到可用节点。
 
 proxy-providers:
