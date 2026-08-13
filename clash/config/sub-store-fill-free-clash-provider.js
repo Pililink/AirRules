@@ -1,8 +1,12 @@
-// 免费节点池专用 Sub-Store 文件脚本。
-// 唯一必填参数：provider_url，值为最终的 Clash/Mihomo 订阅地址。
-const { provider_url: providerUrl } = typeof $arguments !== "undefined" ? $arguments : {};
-
-const PROVIDER_NAME = "机场1";
+// Clash/Mihomo proxy-provider 最终 URL 直填脚本。
+// 按模板传入所需参数，未传入的 provider 保持不变：
+// provider_url -> 机场1；a -> A机场；b -> B机场；c -> C机场。
+const {
+  provider_url: providerUrl,
+  a,
+  b,
+  c,
+} = typeof $arguments !== "undefined" ? $arguments : {};
 
 const files = typeof $files !== "undefined" && Array.isArray($files) ? $files : [];
 const source = files.length > 0
@@ -27,11 +31,20 @@ function normalizeProviderUrl(value) {
   return text;
 }
 
-const provider = yaml["proxy-providers"]?.[PROVIDER_NAME];
-if (!provider) {
-  throw new Error(`Missing proxy-provider: ${PROVIDER_NAME}`);
+function fillProvider(providerName, url) {
+  if (!url) return;
+
+  const provider = yaml["proxy-providers"]?.[providerName];
+  if (!provider) {
+    throw new Error(`Missing proxy-provider: ${providerName}`);
+  }
+
+  provider.url = normalizeProviderUrl(url);
 }
 
-provider.url = normalizeProviderUrl(providerUrl);
+fillProvider("机场1", providerUrl);
+fillProvider("A机场", a);
+fillProvider("B机场", b);
+fillProvider("C机场", c);
 
 $content = ProxyUtils.yaml.dump(yaml);
