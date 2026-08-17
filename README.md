@@ -55,6 +55,7 @@ AI 分组默认使用美国节点的延迟自动选择，其他地区和主节�
 
 - 将 `🇺🇸 美国节点` 放到 `🤖 人工智能` 的第一候选
 - 保留原有各国家地区 `url-test` 组，继续作为稳定备选线路
+- 修复规则模式下 Google 账号登录点击无反应（[XTLS/Xray-core#1618](https://github.com/XTLS/Xray-core/discussions/1618)）：ACL4SSR `UnBan`（直连）含 `ssl.gstatic.com`/`www.gstatic.com` 等，且 `google-cn`（直连）含 `recaptcha.net`，均排在 Clash 模板的 google 规则集之前，导致 OAuth 登录页静态资源/验证组件走直连而 `accounts.google.com` 走代理，出口 IP 不一致被 Google 风控拦截（全局模式正常）。已在各端把 `gstatic.com`、`recaptcha.net` 强制走代理（Clash 内联到 🇬 谷歌服务并置于 UnBan 之前，Surfboard/Loon/sing-box 走各自代理列表），保证与 accounts.google.com 同出口。url-test 探测不受影响（健康检查直接走被测节点、不经过路由规则）
 
 ## Sub-Store 使用说明（base/AB/AC/ABC）
 
