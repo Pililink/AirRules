@@ -15,3 +15,6 @@ DOMAIN-SUFFIX,pythonhosted.org,PROXY
 DOMAIN-SUFFIX,gigabyte.cn,PROXY
 DOMAIN-SUFFIX,pypi.org,PROXY
 DOMAIN-SUFFIX,openwrt.ai,PROXY
+# Google OAuth 登录依赖，走代理与 accounts.google.com 出口一致 (XTLS/Xray-core#1618)
+DOMAIN-SUFFIX,gstatic.com,🪜 代理域名
+DOMAIN-SUFFIX,recaptcha.net,🪜 代理域名

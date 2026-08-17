@@ -18,7 +18,9 @@
                 "pythonhosted.org",
                 "gigabyte.cn",
                 "pypi.org",
-                "openwrt.ai"
+                "openwrt.ai",
+                "gstatic.com",
+                "recaptcha.net"
             ]
         },
         {
@@ -39,7 +41,9 @@
                 ".pythonhosted.org",
                 ".gigabyte.cn",
                 ".pypi.org",
-                ".openwrt.ai"
+                ".openwrt.ai",
+                ".gstatic.com",
+                ".recaptcha.net"
             ]
         }
     ],
