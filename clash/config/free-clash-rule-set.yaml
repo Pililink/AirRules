@@ -192,11 +192,13 @@ rule-providers:
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ChinaIp.yaml
     interval: 7200
 
-# Mihomo 从上到下匹配，故本地/自定义直连最先，下载规则在普通代理规则之前。
+# Mihomo 从上到下匹配；本仓库维护的覆盖规则必须先于所有第三方规则集。
+# ignore 为明确直连覆盖，proxy 为明确代理覆盖。
 rules:
+  - RULE-SET,myignore,DIRECT
+  - RULE-SET,myproxy,🪜 代理流量
   - RULE-SET,private,DIRECT
   - RULE-SET,unban,DIRECT
-  - RULE-SET,myignore,DIRECT
   - RULE-SET,ads,🛑 广告拦截
   - RULE-SET,program-ads,🛑 广告拦截
   # 国内 CDN 和常用下载优先直连，避免免费节点吞吐或流量额度成为瓶颈。
@@ -206,6 +208,5 @@ rules:
   - RULE-SET,cnip,DIRECT,no-resolve
   # ACL4SSR Download 中未被前面国内规则命中的下载目标进入下载池。
   - RULE-SET,download,📦 保障下载
-  - RULE-SET,myproxy,🪜 代理流量
   - RULE-SET,proxy,🪜 代理流量
   - MATCH,🐟 漏网之鱼

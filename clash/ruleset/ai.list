@@ -23,3 +23,9 @@ DOMAIN-SUFFIX,sentry.io
 DOMAIN-SUFFIX,stripe.com
 
 DOMAIN,gemini.google.com
+
+# Google Antigravity / Cloud Code 后端：必须先于 UnBan、GoogleCN 等直连规则匹配，
+# 避免该 API 以本地出口访问而触发服务端地区限制。
+DOMAIN,daily-cloudcode-pa.sandbox.googleapis.com
+DOMAIN-SUFFIX,sandbox.googleapis.com
+DOMAIN-SUFFIX,cloudcode-pa.googleapis.com
