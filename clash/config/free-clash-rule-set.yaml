@@ -89,6 +89,12 @@ proxy-groups:
     proxies:
       - DIRECT
 
+  # 默认 DIRECT，故未注入家庭/Tailscale 节点时家庭网段会安全兜底直连。
+  - name: 🏠 家庭网络
+    type: select
+    proxies:
+      - DIRECT
+
   - name: 🛑 广告拦截
     type: select
     proxies:
@@ -192,9 +198,14 @@ rule-providers:
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ChinaIp.yaml
     interval: 7200
 
-# Mihomo 从上到下匹配；本仓库维护的覆盖规则必须先于所有第三方规则集。
-# ignore 为明确直连覆盖，proxy 为明确代理覆盖。
+# 家庭网段在 myignore 前匹配；🏠 家庭网络 默认仅含 DIRECT，未注入节点时自动兜底直连。
+# 100.64.0.0/10 已覆盖 100.65.0.0/24。
 rules:
+  - IP-CIDR,192.168.31.0/24,🏠 家庭网络,no-resolve
+  - IP-CIDR,192.168.100.0/24,🏠 家庭网络,no-resolve
+  - IP-CIDR,100.64.0.0/10,🏠 家庭网络,no-resolve
+  # Mihomo 从上到下匹配；本仓库维护的覆盖规则必须先于所有第三方规则集。
+  # ignore 为明确直连覆盖，proxy 为明确代理覆盖。
   - RULE-SET,myignore,DIRECT
   - RULE-SET,myproxy,🪜 代理流量
   - RULE-SET,private,DIRECT

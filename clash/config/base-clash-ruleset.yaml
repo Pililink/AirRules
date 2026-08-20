@@ -23,7 +23,7 @@ proxy-groups:
   # --- 基础组 ---
   - { name: 🎯 全球直连, type: select, proxies: [DIRECT] }
 
-  # 家庭网络占位组：默认直连；支持 Tailscale 的客户端可在本地处理脚本中注入节点。
+  # 家庭网络默认 DIRECT；未注入家庭/Tailscale 节点时安全兜底直连。
   - { name: 🏠 家庭网络, type: select, proxies: [DIRECT] }
 
   # --- 地区自动选择策略组 ---
@@ -274,15 +274,17 @@ rule-providers:
 
 # 规则
 rules:
-  # 本仓库维护的覆盖规则必须优先于所有第三方规则集：Mihomo 从上到下首次命中即停止。
+  # 家庭网段必须置于 myignore 之前：myignore 含 100.64.0.0/10，
+  # 这样可在注入家庭节点后由 🏠 家庭网络 接管；未注入时该组内 DIRECT 自动兜底。
+  - IP-CIDR,192.168.31.0/24,🏠 家庭网络,no-resolve
+  - IP-CIDR,192.168.100.0/24,🏠 家庭网络,no-resolve
+  # 100.64.0.0/10 已覆盖 100.65.0.0/24。
+  - IP-CIDR,100.64.0.0/10,🏠 家庭网络,no-resolve
+  # 本仓库维护的覆盖规则优先于所有第三方规则集：Mihomo 从上到下首次命中即停止。
   # ignore 为明确直连覆盖，ai 为人工智能服务覆盖，proxy 为明确代理覆盖。
   - RULE-SET,myignore,DIRECT
   - RULE-SET,myai,🤖 人工智能
   - RULE-SET,myproxy,🪜 代理域名
-  # 优先于 private 规则集，让支持 Tailscale 的客户端接管 Tailnet 和家庭局域网流量。
-  # 不支持 Tailscale 的客户端会通过上面的占位组保持 DIRECT。
-  - IP-CIDR,192.168.31.0/24,🏠 家庭网络,no-resolve
-  - IP-CIDR,100.64.0.0/10,🏠 家庭网络,no-resolve
   - RULE-SET,private,🔒 私有网络
   # Google Antigravity / Cloud Code API 必须在 UnBan、GoogleCN 等直连规则之前命中 AI 组；
   # 服务端按真实出口 IP 校验地区，切换为服务支持地区的节点后请在 Clash Verge 中选择该节点。

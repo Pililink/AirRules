@@ -142,6 +142,8 @@ proxy-groups:
 
   # --- 固定终端层 ---
   - { name: 🎯 全球直连, type: select, proxies: [ DIRECT ] }
+  # 默认 DIRECT，故未注入家庭/Tailscale 节点时家庭网段会安全兜底直连。
+  - { name: 🏠 家庭网络, type: select, proxies: [ DIRECT ] }
   - { name: 🛑 广告拦截, type: select, proxies: [ REJECT, DIRECT ] }
   - { name: 🔒 私有网络, type: select, proxies: [ DIRECT ] }
   - { name: 🇨🇳 直连域名, type: select, proxies: [ DIRECT ] }
@@ -507,6 +509,11 @@ rule-providers:
     interval: 7200
 
 rules:
+  # 家庭网段在 myignore 前匹配；🏠 家庭网络 默认仅含 DIRECT，未注入节点时自动兜底直连。
+  - IP-CIDR,192.168.31.0/24,🏠 家庭网络,no-resolve
+  - IP-CIDR,192.168.100.0/24,🏠 家庭网络,no-resolve
+  # 100.64.0.0/10 已覆盖 100.65.0.0/24。
+  - IP-CIDR,100.64.0.0/10,🏠 家庭网络,no-resolve
   # 本仓库维护的覆盖规则必须优先于所有第三方规则集：Mihomo 从上到下首次命中即停止。
   # ignore 为明确直连覆盖，ai 为人工智能服务覆盖，proxy 为明确代理覆盖。
   - RULE-SET,myignore,DIRECT
