@@ -106,6 +106,28 @@ AC 模板沿用 ABC 中 C 机场的既有定位：C 机场通过 `C全线路优�
 
 同一个 Sub-Store 文件只保留一个 Clash 模板来源；`base`、`2-subscription`（AB）、`2-subscription-ac`（AC）、`3-subscription`（ABC）需要分别建文件，避免多个完整 YAML 被拼接后产生重复顶层键。
 
+### 3. 可选：注入 Tailscale 出站
+
+机场订阅填完后，可以再给**同一个 Sub-Store 文件**追加独立脚本，把 Mihomo `type: tailscale` 节点写入 `proxies`，并放到 `🏠 家庭网络` 第一位。这不是 `proxy-providers` URL，也不会复用本机官方 Tailscale 客户端。
+
+推荐地址（不带密钥）：
+
+`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-add-tailscale-proxy.js#noCache`
+
+常用参数：
+
+- `ts_hostname` / `hostname`：Tailnet 设备名，默认 `mihomo-home`
+- `ts_state_dir` / `state-dir`：本机 tsnet 状态目录，默认 `./tailscale`
+- `ts_dialer_proxy` / `dialer-proxy`：控制面/DERP 出口，默认 `DIRECT`
+- `ts_group` / `group`：挂载的策略组，默认 `🏠 家庭网络`
+- `ts_auth_key` / `auth-key`：可选。仅私有 Sub-Store 使用；不填则首次命中时从 Mihomo 日志打开登录 URL
+
+示例：
+
+`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-add-tailscale-proxy.js#ts_hostname=mihomo-home&ts_dialer_proxy=DIRECT#noCache`
+
+家中 Mac mini 仍需自行发布并批准子网路由后，Clash 才能访问家庭 LAN。不要把 `auth-key` 提交到公开仓库。
+
 ## Sub-Store 使用说明（Loon AC）
 
 Loon AC 配置也可以作为 Sub-Store 远程文件，并通过文件脚本动态填充 A/C 机场地址，避免把真实订阅写入公开模板。
