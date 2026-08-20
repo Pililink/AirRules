@@ -42,6 +42,8 @@ function clashTemplate() {
 }
 
 const original = JSON.stringify(clashTemplate());
+const duplicatedFiles = [original, original];
+const duplicatedContent = duplicatedFiles.join("\n");
 const fillArgs = {
   a: "Qcloud",
   c: "private",
@@ -70,15 +72,16 @@ assert.equal(
   "https://sub.example.com/token/download/Qcloud?target=ClashMeta",
 );
 
+// Sub-Store 会把多个来源拼接到初始 $content；完整模板重复时不能直接解析该字符串。
 const filled = runFileScript("clash/config/sub-store-fill-clash-providers.js", {
-  content: original,
-  files: [original],
+  content: duplicatedContent,
+  files: duplicatedFiles,
   arguments: fillArgs,
 });
 const chained = JSON.parse(
   runFileScript("clash/config/sub-store-add-tailscale-proxy.js", {
     content: filled,
-    files: [original],
+    files: duplicatedFiles,
     arguments: tailscaleArgs,
   }),
 );

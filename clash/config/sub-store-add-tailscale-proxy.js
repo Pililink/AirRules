@@ -7,11 +7,13 @@
 const args = typeof $arguments !== "undefined" && $arguments ? $arguments : {};
 
 const files = typeof $files !== "undefined" && Array.isArray($files) ? $files : [];
-// Sub-Store 会把上一个文件脚本的结果放在 $content 中，而 $files 仍保留原始来源。
-// 必须优先读取 $content，避免注入 Tailscale 时清掉已填充的 provider URL。
-const source = typeof $content !== "undefined" && $content != null
-  ? $content
-  : (files[0] || "");
+const initialContent = files.filter((item) => item != null && item !== "").join("\n");
+const currentContent = typeof $content !== "undefined" ? $content : null;
+// 初次执行时 $content 可能是多个完整文件的拼接结果，应只读取第一个模板；
+// 前序脚本修改 $content 后则继续处理该结果，保留已填充的 provider URL。
+const source = currentContent != null && currentContent !== initialContent
+  ? currentContent
+  : (files[0] ?? currentContent ?? "");
 const yaml = ProxyUtils.yaml.safeLoad(source) || {};
 
 function decoded(value) {

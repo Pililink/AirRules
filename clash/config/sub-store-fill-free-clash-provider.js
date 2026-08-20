@@ -9,10 +9,12 @@ const {
 } = typeof $arguments !== "undefined" ? $arguments : {};
 
 const files = typeof $files !== "undefined" && Array.isArray($files) ? $files : [];
-// 链式文件脚本应继续处理当前 $content；$files 仅作为首次执行时的回退来源。
-const source = typeof $content !== "undefined" && $content != null
-  ? $content
-  : (files[0] || "");
+const initialContent = files.filter((item) => item != null && item !== "").join("\n");
+const currentContent = typeof $content !== "undefined" ? $content : null;
+// 初次执行时忽略多个完整来源的拼接，只处理第一个模板；链式执行时处理当前结果。
+const source = currentContent != null && currentContent !== initialContent
+  ? currentContent
+  : (files[0] ?? currentContent ?? "");
 const yaml = ProxyUtils.yaml.safeLoad(source) || {};
 
 function decoded(value) {
