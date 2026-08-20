@@ -12,7 +12,11 @@ const {
 } = typeof $arguments !== "undefined" ? $arguments : {};
 
 const files = typeof $files !== "undefined" && Array.isArray($files) ? $files : [];
-const source = files.length > 0 ? files[0] : (typeof $content !== "undefined" ? $content : "");
+// Sub-Store 会把上一个文件脚本的结果放在 $content 中，而 $files 仍保留原始来源。
+// 必须优先读取 $content，避免后续脚本把前序修改还原。
+const source = typeof $content !== "undefined" && $content != null
+  ? $content
+  : (files[0] || "");
 const yaml = ProxyUtils.yaml.safeLoad(source) || {};
 
 function artifactName(value) {

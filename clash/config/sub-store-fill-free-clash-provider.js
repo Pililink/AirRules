@@ -9,9 +9,10 @@ const {
 } = typeof $arguments !== "undefined" ? $arguments : {};
 
 const files = typeof $files !== "undefined" && Array.isArray($files) ? $files : [];
-const source = files.length > 0
-  ? files[0]
-  : (typeof $content !== "undefined" ? $content : "");
+// 链式文件脚本应继续处理当前 $content；$files 仅作为首次执行时的回退来源。
+const source = typeof $content !== "undefined" && $content != null
+  ? $content
+  : (files[0] || "");
 const yaml = ProxyUtils.yaml.safeLoad(source) || {};
 
 function decoded(value) {

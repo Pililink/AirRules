@@ -42,7 +42,10 @@ jobs:
             yaml.load(path.read_text(encoding="utf-8"))
             print(f"validated {path}")
         PY
-        node --check clash/config/sub-store-fill-clash-providers.js
+        for file in clash/config/*.js loon/config/*.js script/test-sub-store-file-scripts.js; do
+          node --check "$file"
+        done
+        node script/test-sub-store-file-scripts.js
 
     # - name: Setup Debug Session
     #   uses: csexton/debugger-action@master

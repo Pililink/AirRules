@@ -8,7 +8,12 @@ const {
 } = typeof $arguments !== "undefined" ? $arguments : {};
 
 const files = typeof $files !== "undefined" && Array.isArray($files) ? $files : [];
-let content = String(files.length > 0 ? files[0] : (typeof $content !== "undefined" ? $content : ""));
+// 链式文件脚本应继续处理当前 $content；$files 仅作为首次执行时的回退来源。
+let content = String(
+  typeof $content !== "undefined" && $content != null
+    ? $content
+    : (files[0] || ""),
+);
 
 function decoded(value) {
   const text = String(value || "").trim();
