@@ -84,6 +84,7 @@ FINAL, 🐟 漏网之鱼
 https://raw.githubusercontent.com/mihoyo-typ/KeleeOne/Loon/Rule/Advertising.lsr, policy = 🛑 广告拦截, tag = Advertising, enabled = true
 https://raw.githubusercontent.com/mihoyo-typ/KeleeOne/Loon/Rule/Lsr/AI.lsr, policy = 🤖 人工智能, tag = AI, enabled = true
 https://raw.githubusercontent.com/Pililink/AirRules/main/loon/rule/ignore_loon.list, tag = Pililink Ignore, enabled = true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PrivateTracker/PrivateTracker.list, policy = 🎯 全球直连, tag = PrivateTracker, enabled = true
 https://raw.githubusercontent.com/Pililink/AirRules/main/loon/rule/proxy_loon.list, tag = Pililink Proxy, enabled = true
 https://raw.githubusercontent.com/mihoyo-typ/KeleeOne/Loon/Rule/Proxy.lsr, policy = 🪜 代理域名, tag = Proxy, enabled = true
 https://raw.githubusercontent.com/mihoyo-typ/KeleeOne/Loon/Rule/China.lsr, policy = 🇨🇳 直连域名, tag = China, enabled = true

@@ -55,6 +55,7 @@
         "rule_set": [
           "private",
           "myignore",
+          "private-tracker",
           "cn"
         ],
         "server": "alidns"
@@ -534,6 +535,13 @@
       },
       {
         "rule_set": [
+          "private-tracker"
+        ],
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": [
           "ads"
         ],
         "action": "reject",
@@ -751,6 +759,14 @@
         "tag": "cnip",
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/cnip.srs",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "12h"
+      },
+      {
+        "type": "remote",
+        "tag": "private-tracker",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/rules_srs/private_tracker.srs",
         "download_detour": "🚀 节点选择",
         "update_interval": "12h"
       },
