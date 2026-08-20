@@ -193,6 +193,14 @@ rule-providers:
     url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/LocalAreaNetwork.yaml"
     interval: 7200
 
+  private-tracker:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./rule_provider/blackmatrix7-private-tracker-no-resolve.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml"
+    interval: 86400
+
   unban:
     type: http
     behavior: classical
@@ -387,6 +395,8 @@ rule-providers:
 
 rules:
   - RULE-SET,private,🔒 私有网络
+  # PT tracker / announce 直连，避免 Fake-IP 或代理影响私有站汇报与 IPv6 announce
+  - RULE-SET,private-tracker,🎯 全球直连
   # Google OAuth 登录依赖:ssl.gstatic.com 被 ACL4SSR UnBan 误直连、recaptcha.net 被 google-cn 直连,
   # 与 accounts.google.com 出口 IP 不一致导致登录点击无反应(XTLS/Xray-core#1618),统一走谷歌服务
   - DOMAIN-SUFFIX,gstatic.com,🇬 谷歌服务
