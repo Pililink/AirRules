@@ -45,9 +45,10 @@ const original = JSON.stringify(clashTemplate());
 const duplicatedFiles = [original, original];
 const duplicatedContent = duplicatedFiles.join("\n");
 const fillArgs = {
-  a: "Qcloud",
-  c: "private",
-  base: "https://sub.example.com/token",
+  a: "https://sub.example.com/token/download/Qcloud?target=ClashMeta",
+  b: "https://airport.example/subscription?token=b",
+  c: "https://sub.example.com/token/download/collection/private%20group?target=ClashMeta&udp=true",
+  sub: "https://sub.example.com/token/download/base?target=ClashMeta",
 };
 const tailscaleArgs = {
   ts: "1",
@@ -71,6 +72,25 @@ assert.equal(
   filledFromFiles["proxy-providers"]["A机场"].url,
   "https://sub.example.com/token/download/Qcloud?target=ClashMeta",
 );
+assert.equal(
+  filledFromFiles["proxy-providers"]["B机场"].url,
+  "https://airport.example/subscription?token=b",
+);
+assert.equal(
+  filledFromFiles["proxy-providers"]["C机场"].url,
+  "https://sub.example.com/token/download/collection/private%20group?target=ClashMeta&udp=true",
+);
+assert.equal(
+  filledFromFiles["proxy-providers"]["机场1"].url,
+  "https://sub.example.com/token/download/base?target=ClashMeta",
+);
+assert.throws(
+  () => runFileScript("clash/config/sub-store-fill-clash-providers.js", {
+    files: [original],
+    arguments: { a: "Qcloud" },
+  }),
+  /Invalid URL for proxy-provider A机场/,
+);
 
 // Sub-Store 会把多个来源拼接到初始 $content；完整模板重复时不能直接解析该字符串。
 const filled = runFileScript("clash/config/sub-store-fill-clash-providers.js", {
@@ -92,7 +112,7 @@ assert.equal(
 );
 assert.equal(
   chained["proxy-providers"]["C机场"].url,
-  "https://sub.example.com/token/download/private?target=ClashMeta",
+  "https://sub.example.com/token/download/collection/private%20group?target=ClashMeta&udp=true",
 );
 assert.equal(chained.proxies[0].name, "🏠 Tailscale");
 assert.deepEqual(

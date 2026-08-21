@@ -282,6 +282,8 @@ rule-providers:
 
 # 规则
 rules:
+  # Tailscale MagicDNS 必须在 myignore 前交给嵌入式 Tailscale 出站解析。
+  - DOMAIN-SUFFIX,ts.net,🏠 家庭网络
   # 家庭网段必须置于 myignore 之前：myignore 含 100.64.0.0/10，
   # 这样可在注入家庭节点后由 🏠 家庭网络 接管；未注入时该组内 DIRECT 自动兜底。
   - IP-CIDR,192.168.31.0/24,🏠 家庭网络,no-resolve

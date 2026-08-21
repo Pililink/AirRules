@@ -81,29 +81,36 @@ AI 分组默认使用美国节点的延迟自动选择，其他地区和主节�
 
 ### 2. 编辑文件脚本（动态填充订阅地址）
 
-在 Sub-Store 中先创建所需的 A/B/C 机场订阅或组合订阅，然后在文件管理的脚本操作中使用：
+在 Sub-Store 中创建所需的机场订阅或组合订阅后，复制它们面向 Clash/Mihomo 的**完整下载地址**。脚本不再接收订阅名称，也不再使用 `base` 拼接地址，而是把完整 HTTP(S) URL 原样写入 `proxy-providers`。
 
-- 2-subscription（AB）：
-  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&b=private#noCache`
-- 2-subscription（AC）：
-  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&c=第三机场订阅名称#noCache`
-- 3-subscription（ABC）：
-  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&b=private&c=第三机场订阅名称#noCache`
-- base：
-  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#sub=机场订阅名称#noCache`
+完整地址示例：
 
-脚本参数会自动写入对应的 `proxy-providers`：
+- 普通订阅：`https://sub.example.com/token/download/Qcloud?target=ClashMeta`
+- 组合订阅：`https://sub.example.com/token/download/collection/MyGroup?target=ClashMeta`
+
+脚本参数对应关系：
 
 - `a` -> `A机场`
 - `b` -> `B机场`
 - `c` -> `C机场`
 - `sub` -> `机场1`
 
-如果脚本不能从当前 Sub-Store 请求中自动识别服务根地址，可以显式追加 `base` 参数，例如：
+完整地址通常包含私密 token，只应保存在私有 Sub-Store 配置中，不要提交到仓库或分享完整的脚本操作 URL。由于脚本参数位于 URL 片段中，请先对每个完整地址执行 `encodeURIComponent`。例如上面的普通订阅应写成：
 
-`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=Qcloud&b=private&base=https%3A%2F%2Fsub.example.com%2Ftoken#noCache`
+`https%3A%2F%2Fsub.example.com%2Ftoken%2Fdownload%2FQcloud%3Ftarget%3DClashMeta`
 
-AC 模板沿用 ABC 中 C 机场的既有定位：C 机场通过 `C全线路优选` 参与主节点、人工智能、Telegram 和网络测试，不拆分地区组。
+文件脚本地址格式：
+
+- 2-subscription（AB）：
+  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=<A完整URL编码>&b=<B完整URL编码>#noCache`
+- 2-subscription（AC）：
+  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=<A完整URL编码>&c=<C完整URL编码>#noCache`
+- 3-subscription（ABC）：
+  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#a=<A完整URL编码>&b=<B完整URL编码>&c=<C完整URL编码>#noCache`
+- base：
+  `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#sub=<完整URL编码>#noCache`
+
+AC 模板中的 C 机场保持手动选择：`C全线路自选` 直接列出 C 机场节点，并参与主节点、人工智能、Telegram 和网络测试，不做自动优选。
 
 同一个 Sub-Store 文件只保留一个 Clash 模板来源；`base`、`2-subscription`（AB）、`2-subscription-ac`（AC）、`3-subscription`（ABC）需要分别建文件，避免多个完整 YAML 被拼接后产生重复顶层键。
 
@@ -127,7 +134,7 @@ AC 模板沿用 ABC 中 C 机场的既有定位：C 机场通过 `C全线路优�
 
 `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-add-tailscale-proxy.js#ts_hostname=mihomo-home&ts_dialer_proxy=DIRECT#noCache`
 
-家中 Mac mini 仍需自行发布并批准子网路由后，Clash 才能访问家庭 LAN。不要把 `auth-key` 提交到公开仓库。
+模板会优先把 `.ts.net` MagicDNS 域名交给 `🏠 家庭网络`；注入 Tailscale 出站后，由内嵌 tsnet 完成域名解析和连接。家中 Mac mini 仍需自行发布并批准子网路由后，Clash 才能访问家庭 LAN。不要把 `auth-key` 提交到公开仓库。
 
 ## Sub-Store 使用说明（Loon AC）
 

@@ -38,9 +38,25 @@ jobs:
         yaml = YAML(typ="safe")
         yaml.allow_duplicate_keys = False
 
+        magic_dns_rule = "DOMAIN-SUFFIX,ts.net,🏠 家庭网络"
+        custom_ignore_rule = "RULE-SET,myignore,DIRECT"
+
         for path in Path("clash/config").glob("*.yaml"):
-            yaml.load(path.read_text(encoding="utf-8"))
+            config = yaml.load(path.read_text(encoding="utf-8"))
+            rules = config.get("rules", [])
+            assert magic_dns_rule in rules, f"{path}: missing Tailscale MagicDNS rule"
+            assert rules.index(magic_dns_rule) < rules.index(custom_ignore_rule), (
+                f"{path}: Tailscale MagicDNS must precede myignore"
+            )
             print(f"validated {path}")
+
+        ignore_rules = Path("clash/ruleset/ignore.list").read_text(encoding="utf-8").splitlines()
+        assert "DOMAIN-SUFFIX,ts.net" not in ignore_rules, (
+            "clash/ruleset/ignore.list must not bypass the Tailscale outbound"
+        )
+        assert "ruleset=🏠 家庭网络,[]DOMAIN-SUFFIX,ts.net" in Path(
+            "clash/pililink.ini"
+        ).read_text(encoding="utf-8")
         PY
         for file in clash/config/*.js loon/config/*.js script/test-sub-store-file-scripts.js; do
           node --check "$file"

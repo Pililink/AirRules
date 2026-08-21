@@ -201,6 +201,8 @@ rule-providers:
 # 家庭网段在 myignore 前匹配；🏠 家庭网络 默认仅含 DIRECT，未注入节点时自动兜底直连。
 # 100.64.0.0/10 已覆盖 100.65.0.0/24。
 rules:
+  # Tailscale MagicDNS 必须在 myignore 前交给嵌入式 Tailscale 出站解析。
+  - DOMAIN-SUFFIX,ts.net,🏠 家庭网络
   - IP-CIDR,192.168.31.0/24,🏠 家庭网络,no-resolve
   - IP-CIDR,192.168.100.0/24,🏠 家庭网络,no-resolve
   - IP-CIDR,100.64.0.0/10,🏠 家庭网络,no-resolve
