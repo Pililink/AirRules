@@ -148,19 +148,20 @@ Loon AC 配置也可以作为 Sub-Store 远程文件，并通过文件脚本动�
 
 ### 2. 添加文件脚本
 
-先在 Sub-Store 中创建 A/C 机场订阅，然后给该文件添加脚本操作：
+复制 A/C 订阅面向 Loon 的**完整 HTTP(S) 下载地址**。脚本不再接收订阅名称，也不再使用 `base` 拼接地址，而是原样写入 `[Remote Proxy]`。
 
-`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/loon/config/sub-store-fill-loon-proxies.js#a=Qcloud&c=第三机场订阅名称#noCache`
+完整地址示例：
 
-脚本参数会替换 `[Remote Proxy]` 中的对应地址：
+- 普通订阅：`https://sub.example.com/token/download/Qcloud?target=Loon`
+- 组合订阅：`https://sub.example.com/token/download/collection/MyGroup?target=Loon`
+
+参数对应关系：
 
 - `a` -> `A机场`
 - `c` -> `C机场`
 
-参数默认按普通订阅名称处理。使用组合订阅时，传入 `collection/组合订阅名称`，或者直接传入 Sub-Store 生成的组合订阅下载地址。
+完整地址通常包含私密 token，只应保存在私有 Sub-Store 配置中。由于脚本参数位于 URL 片段中，请先对每个完整地址执行 `encodeURIComponent`，再添加文件脚本：
 
-如果脚本无法从当前请求识别 Sub-Store 服务根地址，可显式追加 URL 编码后的 `base` 参数：
-
-`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/loon/config/sub-store-fill-loon-proxies.js#a=Qcloud&c=第三机场订阅名称&base=https%3A%2F%2Fsub.example.com%2Ftoken#noCache`
+`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/loon/config/sub-store-fill-loon-proxies.js#a=<A完整URL编码>&c=<C完整URL编码>#noCache`
 
 处理完成后，复制该文件在 Sub-Store 中的下载地址，将它作为 Loon 配置使用。不要把真实机场订阅地址提交到公开仓库。
