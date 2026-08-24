@@ -574,6 +574,13 @@
       },
       {
         "rule_set": [
+          "myai"
+        ],
+        "action": "route",
+        "outbound": "🤖 人工智能"
+      },
+      {
+        "rule_set": [
           "ai"
         ],
         "action": "route",
@@ -711,6 +718,14 @@
         "tag": "ai",
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset-compatible/ai.srs",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "12h"
+      },
+      {
+        "type": "remote",
+        "tag": "myai",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/sing-box/rules_srs/ai.srs",
         "download_detour": "🚀 节点选择",
         "update_interval": "12h"
       },

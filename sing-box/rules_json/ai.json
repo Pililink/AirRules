@@ -1,0 +1,80 @@
+{
+    "rules": [
+        {
+            "domain": [
+                "ai.google.dev",
+                "aistudio.google.com",
+                "makersuite.google.com",
+                "daily-cloudcode-pa.sandbox.googleapis.com"
+            ]
+        },
+        {
+            "domain_keyword": [
+                "openai",
+                "anthropic",
+                "claude",
+                "grok",
+                "perplexity"
+            ]
+        },
+        {
+            "domain_suffix": [
+                ".ai.com",
+                ".openai.com",
+                ".auth0.com",
+                ".challenges.cloudflare.com",
+                ".chatgpt.com",
+                ".oaistatic.com",
+                ".oaiusercontent.com",
+                ".openaiapi-site.azureedge.net",
+                ".events.statsigapi.net",
+                ".featuregates.org",
+                ".identrust.com",
+                ".intercom.io",
+                ".intercomcdn.com",
+                ".sentry.io",
+                ".stripe.com",
+                ".arkoselabs.com",
+                ".anthropic.com",
+                ".claude.ai",
+                ".claude.com",
+                ".claudeusercontent.com",
+                ".grok.com",
+                ".grok.x.com",
+                ".x.ai",
+                ".bard.google.com",
+                ".deepmind.com",
+                ".deepmind.google",
+                ".gemini.google",
+                ".gemini.google.com",
+                ".generativeai.google",
+                ".notebooklm.google",
+                ".notebooklm.google.com",
+                ".generativelanguage.googleapis.com",
+                ".aiplatform.googleapis.com",
+                ".aida.googleapis.com",
+                ".aisandbox-pa.googleapis.com",
+                ".notebooklm-pa.googleapis.com",
+                ".perplexity.ai",
+                ".perplexity.com",
+                ".pplx.ai",
+                ".meta.ai",
+                ".mistral.ai",
+                ".cohere.ai",
+                ".cohere.com",
+                ".openrouter.ai",
+                ".sora.com",
+                ".cursor.com",
+                ".cursor.sh",
+                ".grazie.ai",
+                ".jetbrains.ai",
+                ".kimi.ai",
+                ".moonshot.ai",
+                ".grokipedia.com",
+                ".sandbox.googleapis.com",
+                ".cloudcode-pa.googleapis.com"
+            ]
+        }
+    ],
+    "version": 1
+}

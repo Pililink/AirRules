@@ -78,6 +78,18 @@ DOMAIN-SUFFIX, huggingface.co, 🪜 代理域名
 DOMAIN-SUFFIX, grok.com, 🤖 人工智能
 DOMAIN-SUFFIX, grok.x.com, 🤖 人工智能
 DOMAIN-SUFFIX, x.ai, 🤖 人工智能
+# Google Antigravity / Cloud Code 后端：必须走 AI 组避免本地出口触发地区风控（KeleeOne AI.lsr 未覆盖）
+DOMAIN, daily-cloudcode-pa.sandbox.googleapis.com, 🤖 人工智能
+DOMAIN-SUFFIX, sandbox.googleapis.com, 🤖 人工智能
+DOMAIN-SUFFIX, cloudcode-pa.googleapis.com, 🤖 人工智能
+DOMAIN-SUFFIX, aiplatform.googleapis.com, 🤖 人工智能
+DOMAIN-SUFFIX, aida.googleapis.com, 🤖 人工智能
+DOMAIN-SUFFIX, aisandbox-pa.googleapis.com, 🤖 人工智能
+DOMAIN-SUFFIX, notebooklm-pa.googleapis.com, 🤖 人工智能
+# Claude / Anthropic 全量域名（KeleeOne AI.lsr 仅覆盖部分）
+DOMAIN-SUFFIX, claude.com, 🤖 人工智能
+DOMAIN-SUFFIX, claudemcpclient.com, 🤖 人工智能
+DOMAIN-SUFFIX, claudemcpcontent.com, 🤖 人工智能
 FINAL, 🐟 漏网之鱼
 
 [Remote Rule]

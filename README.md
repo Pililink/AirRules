@@ -28,6 +28,23 @@
 
 AI 分组默认使用美国节点的延迟自动选择，其他地区和主节点组保留为手动备选。
 
+#### AI 规则覆盖范围（补充完善）
+
+自维护的 AI 命中源已在各端统一补齐（`clash/ruleset/ai.list` ↔ `sing-box/rules_json/ai.json` 同源镜像），覆盖：
+
+- **OpenAI / ChatGPT**：`openai.com`、`chatgpt.com`、`oaistatic.com`、`oaiusercontent.com`、`auth0.com`、`stripe.com`、`sentry.io` 等依赖与风控域名
+- **Anthropic / Claude**：`anthropic.com`、`claude.ai`、`claude.com`、`claudeusercontent.com` 等
+- **xAI / Grok**：`grok.com`、`grok.x.com`、`x.ai`
+- **Google AI 全量**：`aistudio.google.com`、`notebooklm.google.com`、`makersuite.google.com`、`ai.google.dev`、`deepmind.google`、`generativelanguage.googleapis.com`、`aiplatform.googleapis.com`、`aida.googleapis.com`、`aisandbox-pa.googleapis.com`、`notebooklm-pa.googleapis.com`
+- **其他主流国外 AI 平台**：`perplexity.ai`、`meta.ai`、`mistral.ai`、`cohere.ai`、`openrouter.ai`、`sora.com`、`cursor.com`、`jetbrains.ai`、`kimi.ai`、`moonshot.ai`、`grokipedia.com`
+
+**HuggingFace（`hf.co` / `hf.space` / `huggingface.co`）不走 `🤖 人工智能` 分组**，始终走 `🪜 代理域名`：模型/权重下载流量大，避免打满 AI 组的美区自动优选。已在各端 AI 命中源中显式排除（Clash 经由 `proxy.list`、sing-box 经由路由内联 HF 规则置于 AI 规则之前）。
+
+**Google Antigravity / Cloud Code 地区风控**：`daily-cloudcode-pa.sandbox.googleapis.com`、`sandbox.googleapis.com`、`cloudcode-pa.googleapis.com` 必须**先于** UnBan、GoogleCN 等直连规则命中 AI 组，避免 API 以本地出口访问触发服务端地区限制（与 OAuth `gstatic.com`/`recaptcha.net` 同理）。
+  - Clash：内联进 `rules` 且置于 `RULE-SET,myai` 之前
+  - sing-box：通过本地 `myai`（`rules_srs/ai.srs`）在第三方 DustinWin `ai` 规则之前命中
+  - Loon / Surfboard：内联规则置于第三方 AI 规则源之前
+
 ### 其他分组
 
 - 基础区域组仍使用 `url-test`，用于自动测试响应延迟与可用性。
@@ -57,6 +74,10 @@ AI 分组默认使用美国节点的延迟自动选择，其他地区和主节�
 - 保留原有各国家地区 `url-test` 组，继续作为稳定备选线路
 - 修复规则模式下 Google 账号登录点击无反应（[XTLS/Xray-core#1618](https://github.com/XTLS/Xray-core/discussions/1618)）：ACL4SSR `UnBan`（直连）含 `ssl.gstatic.com`/`www.gstatic.com` 等，且 `google-cn`（直连）含 `recaptcha.net`，均排在 Clash 模板的 google 规则集之前，导致 OAuth 登录页静态资源/验证组件走直连而 `accounts.google.com` 走代理，出口 IP 不一致被 Google 风控拦截（全局模式正常）。已在各端把 `gstatic.com`、`recaptcha.net` 强制走代理（Clash 内联到 🇬 谷歌服务并置于 UnBan 之前，Surfboard/Loon/sing-box 走各自代理列表），保证与 accounts.google.com 同出口。url-test 探测不受影响（健康检查直接走被测节点、不经过路由规则）
 - 新增 PT / tracker 直连规则：采用 [blackmatrix7/ios_rule_script PrivateTracker](https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/Clash/PrivateTracker)（当前 248 条），覆盖常见 PT 站点和 tracker / announce 域名；Clash、Loon、Surfboard 直接引用上游规则，sing-box 使用同源已编译快照，均在通用分流规则之前匹配为直连，避免 Fake-IP、代理及代理 DNS 影响私有站汇报和 IPv6 announce
+- 统一补全并镜像国外 AI 命中源（`clash/ruleset/ai.list` ↔ `sing-box/rules_json/ai.json`）：新增 Claude/Anthropic、Google AI 全量（AI Studio/NotebookLM/MakerSuite/DeepMind/`generativelanguage`/`aiplatform`/`aida`/`aisandbox-pa`/`notebooklm-pa`）以及 openrouter/perplexity/meta.ai/mistral/cohere/cursor/jetbrains/kimi/moonshot/grokipedia 等国外平台；sing-box 本地 `myai`（`rules_srs/ai.srs`）已接入路由并在第三方 DustinWin `ai` 规则之前命中（原先 `rules_json/openai.json` 已编译但未接线的孤儿文件删除）
+- Google Antigravity / Cloud Code 地区风控：`daily-cloudcode-pa.sandbox.googleapis.com`、`sandbox.googleapis.com`、`cloudcode-pa.googleapis.com`、`aiplatform.googleapis.com` 等必须在 UnBan / GoogleCN 等直连规则之前命中 AI 组，避免 API 以本地出口触发服务端地区限制；Clash 内联前置、sing-box 走本地 `myai` 前置、Loon/Surfboard 内联前置
+- **HuggingFace（`hf.co`/`hf.space`/`huggingface.co`）固定走 `🪜 代理域名` 不进 `🤖 人工智能` 分组**：模型/权重下载流量大，已在所有 AI 命中源显式排除（Clash 经 `proxy.list`、sing-box 经路由内联 HF 规则置于 AI 规则之前），避免打满美区自动优选
+- CI 校验新增 AI 路由约束：`clash/ruleset/ai.list` 与 `sing-box/rules_json/ai.json` 不得包含 HF 域名、`proxy.list` 必须含 HF、sing-box `myai` 路由必须先于第三方 `ai` 规则
 
 ## Sub-Store 使用说明（base/AB/AC/ABC）
 

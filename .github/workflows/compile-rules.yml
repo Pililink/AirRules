@@ -57,6 +57,39 @@ jobs:
         assert "ruleset=🏠 家庭网络,[]DOMAIN-SUFFIX,ts.net" in Path(
             "clash/pililink.ini"
         ).read_text(encoding="utf-8")
+
+        # HuggingFace 模型下载量大,永远不能进 AI 分组(走 🪜 代理域名)。
+        hf_domains = ("hf.co", "hf.space", "huggingface.co")
+        ai_rules = Path("clash/ruleset/ai.list").read_text(encoding="utf-8")
+        assert not any(d in ai_rules for d in hf_domains), (
+            "clash/ruleset/ai.list must not contain HuggingFace domains"
+        )
+        assert all(d in Path("clash/ruleset/proxy.list").read_text(encoding="utf-8") for d in hf_domains), (
+            "clash/ruleset/proxy.list must contain HuggingFace domains"
+        )
+
+        # sing-box: 本地 myai(command-rules) 必须先于第三方 ai 规则命中;并且 AI 源不得含 HF。
+        for path in Path("sing-box/config").glob("*.json"):
+            import json as _json
+            cfg = _json.loads(path.read_text(encoding="utf-8"))
+            tags = [r.get("tag") for r in cfg["route"]["rule_set"]]
+            assert "myai" in tags, f"{path}: missing myai rule_set"
+            ai_route = next(
+                i for i, x in enumerate(cfg["route"]["rules"])
+                if (x.get("rule_set") or []) == ["ai"]
+            )
+            myai_route = [
+                i for i, x in enumerate(cfg["route"]["rules"])
+                if (x.get("rule_set") or []) == ["myai"]
+            ]
+            assert myai_route, f"{path}: myai rule missing"
+            assert myai_route[0] < ai_route, f"{path}: myai rule must precede ai rule"
+            ai_json = _json.loads(Path("sing-box/rules_json/ai.json").read_text(encoding="utf-8"))
+            flat = _json.dumps(ai_json, ensure_ascii=False)
+            assert not any(d in flat for d in hf_domains), (
+                "sing-box/rules_json/ai.json must not contain HuggingFace domains"
+            )
+        print("validated AI routing constraints")
         PY
         for file in clash/config/*.js loon/config/*.js script/test-sub-store-file-scripts.js; do
           node --check "$file"
