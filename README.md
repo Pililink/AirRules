@@ -131,7 +131,7 @@ AI 分组默认使用美国节点的延迟自动选择，其他地区和主节�
 - base：
   `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#sub=<完整URL编码>#noCache`
 
-AC 模板中的 C 机场保持手动选择：`C全线路自选` 直接列出 C 机场节点，并参与主节点、人工智能、Telegram 和网络测试，不做自动优选。
+AC / ABC 模板中的 C 机场保持手动选择：`C全线路自选` 直接列出 C 机场节点，并作为主节点、人工智能、Telegram 的候选项；AC 还把它放进网络测试。C 不做 `url-test` 自动优选。
 
 同一个 Sub-Store 文件只保留一个 Clash 模板来源；`base`、`2-subscription`（AB）、`2-subscription-ac`（AC）、`3-subscription`（ABC）需要分别建文件，避免多个完整 YAML 被拼接后产生重复顶层键。
 
