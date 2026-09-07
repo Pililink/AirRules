@@ -14,9 +14,6 @@ proxy-providers:
       interval: 120
       timeout: 5000
       lazy: false
-    header:
-      User-Agent:
-        - "clash-verge/v1.7.7"
 
 # Mihomo 全局连接优化：
 # unified-delay 让不同协议节点的延迟结果更可比；
