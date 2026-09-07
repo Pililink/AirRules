@@ -41,9 +41,10 @@ AI 分组默认使用美国节点的延迟自动选择，其他地区和主节�
 **HuggingFace（`hf.co` / `hf.space` / `huggingface.co`）不走 `🤖 人工智能` 分组**，始终走 `🪜 代理域名`：模型/权重下载流量大，避免打满 AI 组的美区自动优选。已在各端 AI 命中源中显式排除（Clash 经由 `proxy.list`、sing-box 经由路由内联 HF 规则置于 AI 规则之前）。
 
 **Google Antigravity / Cloud Code 地区风控**：`daily-cloudcode-pa.sandbox.googleapis.com`、`sandbox.googleapis.com`、`cloudcode-pa.googleapis.com` 必须**先于** UnBan、GoogleCN 等直连规则命中 AI 组，避免 API 以本地出口访问触发服务端地区限制（与 OAuth `gstatic.com`/`recaptcha.net` 同理）。
-  - Clash：内联进 `rules` 且置于 `RULE-SET,myai` 之前
-  - sing-box：通过本地 `myai`（`rules_srs/ai.srs`）在第三方 DustinWin `ai` 规则之前命中
-  - Loon / Surfboard：内联规则置于第三方 AI 规则源之前
+
+- Clash：内联进 `rules` 且置于 `RULE-SET,myai` 之前
+- sing-box：通过本地 `myai`（`rules_srs/ai.srs`）在第三方 DustinWin `ai` 规则之前命中
+- Loon / Surfboard：内联规则置于第三方 AI 规则源之前
 
 ### 其他分组
 
@@ -131,7 +132,7 @@ AI 分组默认使用美国节点的延迟自动选择，其他地区和主节�
 - base：
   `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#sub=<完整URL编码>#noCache`
 
-AC / ABC 模板中的 C 机场保持手动选择：`C全线路自选` 直接列出 C 机场节点，并作为主节点、人工智能、Telegram 的候选项；AC 还把它放进网络测试。C 不做 `url-test` 自动优选。
+AC / ABC / AB 模板中的 A / B / C 机场全线路保持手动选择：`A全线路自选`、`B全线路自选`、`C全线路自选` 直接列出对应机场节点供自选，不做 `url-test` 自动优选。
 
 同一个 Sub-Store 文件只保留一个 Clash 模板来源；`base`、`2-subscription`（AB）、`2-subscription-ac`（AC）、`3-subscription`（ABC）需要分别建文件，避免多个完整 YAML 被拼接后产生重复顶层键。
 
