@@ -14,3 +14,15 @@ DOMAIN-SUFFIX,bing.com,DIRECT
 DOMAIN-SUFFIX,bing.net,DIRECT
 DOMAIN-SUFFIX,ts.net,DIRECT
 DOMAIN-SUFFIX,tailscale.com,DIRECT
+DOMAIN-SUFFIX,todesk.com,DIRECT
+DOMAIN-SUFFIX,kylinlot.com,DIRECT
+DOMAIN-SUFFIX,oray.com,DIRECT
+DOMAIN-SUFFIX,oray.net,DIRECT
+DOMAIN-SUFFIX,orayimg.com,DIRECT
+DOMAIN-SUFFIX,uuyc.163.com,DIRECT
+DOMAIN-SUFFIX,gameviewer.cn,DIRECT
+DOMAIN-SUFFIX,gameviewer.com,DIRECT
+DOMAIN,uuyc.res.netease.com,DIRECT
+DOMAIN,gv.res.netease.com,DIRECT
+DOMAIN,uuyc-res.fp.ps.netease.com,DIRECT
+DOMAIN,unisdk.update.netease.com,DIRECT

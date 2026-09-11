@@ -20,3 +20,15 @@ DOMAIN-SUFFIX,duckcoding.ai
 IP-CIDR,100.64.0.0/10
 IP-CIDR,115.190.88.0/21
 IP-CIDR,115.190.80.0/21
+DOMAIN-SUFFIX,todesk.com
+DOMAIN-SUFFIX,kylinlot.com
+DOMAIN-SUFFIX,oray.com
+DOMAIN-SUFFIX,oray.net
+DOMAIN-SUFFIX,orayimg.com
+DOMAIN-SUFFIX,uuyc.163.com
+DOMAIN-SUFFIX,gameviewer.cn
+DOMAIN-SUFFIX,gameviewer.com
+DOMAIN,uuyc.res.netease.com
+DOMAIN,gv.res.netease.com
+DOMAIN,uuyc-res.fp.ps.netease.com
+DOMAIN,unisdk.update.netease.com
