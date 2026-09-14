@@ -32,11 +32,14 @@ AI 分组默认使用美国节点的延迟自动选择，其他地区和主节�
 
 自维护的 AI 命中源已在各端统一补齐（`clash/ruleset/ai.list` ↔ `sing-box/rules_json/ai.json` 同源镜像），覆盖：
 
-- **OpenAI / ChatGPT**：`openai.com`、`chatgpt.com`、`oaistatic.com`、`oaiusercontent.com`、`auth0.com`、`stripe.com`、`sentry.io` 等依赖与风控域名
-- **Anthropic / Claude**：`anthropic.com`、`claude.ai`、`claude.com`、`claudeusercontent.com` 等
-- **xAI / Grok**：`grok.com`、`grok.x.com`、`x.ai`
-- **Google AI 全量**：`aistudio.google.com`、`notebooklm.google.com`、`makersuite.google.com`、`ai.google.dev`、`deepmind.google`、`generativelanguage.googleapis.com`、`aiplatform.googleapis.com`、`aida.googleapis.com`、`aisandbox-pa.googleapis.com`、`notebooklm-pa.googleapis.com`
-- **其他主流国外 AI 平台**：`perplexity.ai`、`meta.ai`、`mistral.ai`、`cohere.ai`、`openrouter.ai`、`sora.com`、`cursor.com`、`jetbrains.ai`、`kimi.ai`、`moonshot.ai`、`grokipedia.com`
+- **OpenAI / ChatGPT**：`openai.com`、`chat.com`、`chatgpt.com`、`chatgpt.livekit.cloud`、`oaistatic.com`、`oaistatsig.com`、`oaiusercontent.com`、`auth0.com`、`stripe.com`、`sentry.io` 等依赖与风控域名
+- **Anthropic / Claude**：`anthropic.com`、`claude.ai`、`claude.com`、`clau.de`、`claudemcpclient.com`、`claudemcpcontent.com`、`claudeusercontent.com` 等
+- **xAI / Grok**：`grok.com`、`grok.x.com`、`x.ai`、`grokipedia.com`
+- **Google AI 全量**：`aistudio.google.com`、`notebooklm.google.com`、`makersuite.google.com`、`ai.google.dev`、`deepmind.google`、`generativelanguage.googleapis.com`、`aiplatform.googleapis.com`、`aida.googleapis.com`、`aisandbox-pa.googleapis.com`、`notebooklm-pa.googleapis.com`、`antigravity.google`、`jules.google`、`labs.google`、`cloudaicompanion.googleapis.com` 等
+- **AI 编程与 Agent**：OpenCode (`opencode.ai`)、Command Code (`commandcode.ai` / `commandcode.dev`)、Cursor (`cursor.com` / `cursor.sh` / `cursorapi.com`)、Windsurf & Codeium (`codeium.com` / `windsurf.ai` / `windsurf.com`)、Devin & Cognition (`devin.ai` / `cognition.ai`)、Bolt.new、Lovable (`lovable.dev`)、v0 (`v0.dev`)、Aider (`aider.chat`)、Continue (`continue.dev`)、Augment Code (`augmentcode.com`)、CodeRabbit (`coderabbit.ai`)、JetBrains AI (`jetbrains.ai` / `grazie.ai`)
+- **模型推理 API 与云平台**：Groq (`groq.com`)、Cerebras (`cerebras.ai`)、Together AI (`together.ai`)、Fireworks AI (`fireworks.ai`)、DeepInfra (`deepinfra.com`)、Replicate (`replicate.com`)、OpenRouter (`openrouter.ai`)、Mistral AI (`mistral.ai`)、Cohere (`cohere.com` / `cohere.ai`)
+- **主流国外 AI 对话 / 搜索 / 社区**：Perplexity (`perplexity.ai`)、Poe (`poe.com`)、Character.AI (`character.ai`)、Phind (`phind.com`)、DuckDuckGo AI (`duck.ai`)、Meta AI (`meta.ai`)、Dify (`dify.ai`)、Kimi / Moonshot (`kimi.ai` / `moonshot.ai`)
+- **图像 / 视频 / 音乐 / 语音多模态 AI**：Midjourney (`midjourney.com`)、Sora (`sora.com`)、Runway (`runway.com` / `runwayml.com`)、Luma AI (`lumalabs.ai`)、Pika (`pika.art`)、Krea AI (`krea.ai`)、Ideogram (`ideogram.ai`)、Recraft (`recraft.ai`)、Black Forest Labs (`blackforestlabs.ai`)、Stability AI (`stability.ai`)、ElevenLabs (`elevenlabs.io`)、Suno (`suno.com` / `suno.ai`)、Udio (`udio.com`)、Jasper AI (`jasper.ai`)、NovelAI (`novelai.net`)
 
 **HuggingFace（`hf.co` / `hf.space` / `huggingface.co`）不走 `🤖 人工智能` 分组**，始终走 `🪜 代理域名`：模型/权重下载流量大，避免打满 AI 组的美区自动优选。已在各端 AI 命中源中显式排除（Clash 经由 `proxy.list`、sing-box 经由路由内联 HF 规则置于 AI 规则之前）。
 

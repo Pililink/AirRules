@@ -5,8 +5,11 @@ DOMAIN-KEYWORD,openai
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,auth0.com
 DOMAIN-SUFFIX,challenges.cloudflare.com
+DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,chatgpt.com
+DOMAIN,chatgpt.livekit.cloud
 DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaistatsig.com
 DOMAIN-SUFFIX,oaiusercontent.com
 DOMAIN-SUFFIX,openaiapi-site.azureedge.net
 DOMAIN-SUFFIX,events.statsigapi.net
@@ -22,8 +25,11 @@ DOMAIN-SUFFIX,arkoselabs.com
 DOMAIN-KEYWORD,anthropic
 DOMAIN-KEYWORD,claude
 DOMAIN-SUFFIX,anthropic.com
+DOMAIN-SUFFIX,clau.de
 DOMAIN-SUFFIX,claude.ai
 DOMAIN-SUFFIX,claude.com
+DOMAIN-SUFFIX,claudemcpclient.com
+DOMAIN-SUFFIX,claudemcpcontent.com
 DOMAIN-SUFFIX,claudeusercontent.com
 
 # ---- xAI / Grok ----
@@ -31,17 +37,26 @@ DOMAIN-KEYWORD,grok
 DOMAIN-SUFFIX,grok.com
 DOMAIN-SUFFIX,grok.x.com
 DOMAIN-SUFFIX,x.ai
+DOMAIN-SUFFIX,grokipedia.com
 
 # ---- Google AI (Gemini / AI Studio / NotebookLM / MakerSuite / API) ----
 DOMAIN,ai.google.dev
 DOMAIN,aistudio.google.com
 DOMAIN,makersuite.google.com
+DOMAIN-SUFFIX,antigravity.google
+DOMAIN-SUFFIX,antigravity.googleapis.com
+DOMAIN-SUFFIX,antigravity-pa.googleapis.com
+DOMAIN-SUFFIX,antigravity-unleash.goog
 DOMAIN-SUFFIX,bard.google.com
+DOMAIN-SUFFIX,cloudaicompanion.googleapis.com
 DOMAIN-SUFFIX,deepmind.com
 DOMAIN-SUFFIX,deepmind.google
 DOMAIN-SUFFIX,gemini.google
 DOMAIN-SUFFIX,gemini.google.com
+DOMAIN-SUFFIX,gemini.gstatic.com
 DOMAIN-SUFFIX,generativeai.google
+DOMAIN-SUFFIX,jules.google
+DOMAIN-SUFFIX,labs.google
 DOMAIN-SUFFIX,notebooklm.google
 DOMAIN-SUFFIX,notebooklm.google.com
 DOMAIN-SUFFIX,generativelanguage.googleapis.com
@@ -50,28 +65,89 @@ DOMAIN-SUFFIX,aida.googleapis.com
 DOMAIN-SUFFIX,aisandbox-pa.googleapis.com
 DOMAIN-SUFFIX,notebooklm-pa.googleapis.com
 
-# ---- 其它主流国外 AI 平台 ----
-DOMAIN-KEYWORD,perplexity
-DOMAIN-SUFFIX,perplexity.ai
-DOMAIN-SUFFIX,perplexity.com
-DOMAIN-SUFFIX,pplx.ai
-DOMAIN-SUFFIX,meta.ai
-DOMAIN-SUFFIX,mistral.ai
-DOMAIN-SUFFIX,cohere.ai
-DOMAIN-SUFFIX,cohere.com
-DOMAIN-SUFFIX,openrouter.ai
-DOMAIN-SUFFIX,opencode.ai
-DOMAIN-SUFFIX,sora.com
-DOMAIN-SUFFIX,cursor.com
-DOMAIN-SUFFIX,cursor.sh
-DOMAIN-SUFFIX,grazie.ai
-DOMAIN-SUFFIX,jetbrains.ai
-DOMAIN-SUFFIX,kimi.ai
-DOMAIN-SUFFIX,moonshot.ai
-DOMAIN-SUFFIX,grokipedia.com
-
 # Google Antigravity / Cloud Code 后端：必须先于 UnBan、GoogleCN 等直连规则匹配，
 # 避免该 API 以本地出口访问而触发服务端地区限制。
 DOMAIN,daily-cloudcode-pa.sandbox.googleapis.com
 DOMAIN-SUFFIX,sandbox.googleapis.com
 DOMAIN-SUFFIX,cloudcode-pa.googleapis.com
+
+# ---- AI 编程与 Agent (Coding Agents & IDEs) ----
+DOMAIN-KEYWORD,opencode
+DOMAIN-SUFFIX,opencode.ai
+DOMAIN-KEYWORD,commandcode
+DOMAIN-SUFFIX,commandcode.ai
+DOMAIN-SUFFIX,commandcode.dev
+DOMAIN-SUFFIX,cursor.com
+DOMAIN-SUFFIX,cursor.sh
+DOMAIN-SUFFIX,cursorapi.com
+DOMAIN-SUFFIX,cursor-cdn.com
+DOMAIN-KEYWORD,codeium
+DOMAIN-SUFFIX,codeium.com
+DOMAIN-SUFFIX,codeiumdata.com
+DOMAIN-SUFFIX,windsurf.com
+DOMAIN-SUFFIX,windsurf.ai
+DOMAIN-SUFFIX,windsurf.build
+DOMAIN-SUFFIX,devin.ai
+DOMAIN-SUFFIX,cognition.ai
+DOMAIN-SUFFIX,bolt.new
+DOMAIN-SUFFIX,lovable.dev
+DOMAIN-SUFFIX,v0.dev
+DOMAIN-SUFFIX,aider.chat
+DOMAIN-SUFFIX,continue.dev
+DOMAIN-SUFFIX,augmentcode.com
+DOMAIN-SUFFIX,coderabbit.ai
+DOMAIN-SUFFIX,grazie.ai
+DOMAIN-SUFFIX,jetbrains.ai
+
+# ---- 模型推理 API 与平台 (Inference & Model APIs) ----
+DOMAIN-KEYWORD,groq
+DOMAIN-SUFFIX,groq.com
+DOMAIN-SUFFIX,cerebras.ai
+DOMAIN-SUFFIX,together.ai
+DOMAIN-SUFFIX,together.xyz
+DOMAIN-SUFFIX,fireworks.ai
+DOMAIN-SUFFIX,deepinfra.com
+DOMAIN-SUFFIX,replicate.com
+DOMAIN-SUFFIX,replicate.delivery
+DOMAIN-SUFFIX,openrouter.ai
+DOMAIN-SUFFIX,mistral.ai
+DOMAIN-SUFFIX,cohere.ai
+DOMAIN-SUFFIX,cohere.com
+
+# ---- 主流国外 AI 对话 / 搜索 / 社区平台 ----
+DOMAIN-KEYWORD,perplexity
+DOMAIN-SUFFIX,perplexity.ai
+DOMAIN-SUFFIX,perplexity.com
+DOMAIN-SUFFIX,pplx.ai
+DOMAIN-SUFFIX,poe.com
+DOMAIN-SUFFIX,poecdn.net
+DOMAIN-SUFFIX,character.ai
+DOMAIN-SUFFIX,characterai.com
+DOMAIN-SUFFIX,phind.com
+DOMAIN-SUFFIX,duck.ai
+DOMAIN-SUFFIX,meta.ai
+DOMAIN-SUFFIX,dify.ai
+DOMAIN-SUFFIX,kimi.ai
+DOMAIN-SUFFIX,moonshot.ai
+
+# ---- 图像 / 视频 / 音乐 / 语音多模态 AI ----
+DOMAIN-KEYWORD,midjourney
+DOMAIN-SUFFIX,midjourney.com
+DOMAIN-SUFFIX,sora.com
+DOMAIN-SUFFIX,runway.com
+DOMAIN-SUFFIX,runwayml.com
+DOMAIN-SUFFIX,lumalabs.ai
+DOMAIN-SUFFIX,pika.art
+DOMAIN-SUFFIX,krea.ai
+DOMAIN-SUFFIX,ideogram.ai
+DOMAIN-SUFFIX,recraft.ai
+DOMAIN-SUFFIX,blackforestlabs.ai
+DOMAIN-SUFFIX,stability.ai
+DOMAIN-KEYWORD,elevenlabs
+DOMAIN-SUFFIX,elevenlabs.io
+DOMAIN-SUFFIX,elevenlabs.com
+DOMAIN-SUFFIX,suno.com
+DOMAIN-SUFFIX,suno.ai
+DOMAIN-SUFFIX,udio.com
+DOMAIN-SUFFIX,jasper.ai
+DOMAIN-SUFFIX,novelai.net
