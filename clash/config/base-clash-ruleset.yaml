@@ -10,6 +10,9 @@ proxy-providers:
       url: "https://www.gstatic.com/generate_204"
       interval: 600
 
+# tcp-concurrent 对同一域名解析出的多个 IP 并发拨号，采用最先成功者。
+tcp-concurrent: true
+
 proxy-groups:
   # --- 主选择逻辑 ---
   - { name: 🚀 节点选择, type: select, proxies: [🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, 🇹🇼 台湾节点, 🇪🇺 欧洲节点, 🇹🇷 土耳其节点, 🇮🇳 印度节点, 🇷🇺 俄罗斯节点, 🌏 其他地区, 🎯 全球直连] }
@@ -329,5 +332,9 @@ rules:
   - RULE-SET,game-nintendo,🎮 游戏服务
   - RULE-SET,game-xbox,🎮 游戏服务
   - RULE-SET,proxy,🪜 代理域名
+  # ACL4SSR ChinaDomain / ChinaIp 覆盖不全（ChinaIp 仅 IPv4），末尾用 GEOSITE / GEOIP 补漏：
+  # 只接住原本会落到 🐟 漏网之鱼 的流量，不改变前面任何规则的命中。
+  - GEOSITE,cn,🇨🇳 直连域名
   - RULE-SET,cnip,🇨🇳 直连 IP,no-resolve
+  - GEOIP,CN,🇨🇳 直连 IP,no-resolve
   - MATCH,🐟 漏网之鱼
