@@ -39,6 +39,7 @@ AI 分组默认使用美国节点的延迟自动选择，其他地区和主节�
 - **AI 编程与 Agent**：OpenCode (`opencode.ai`)、Command Code (`commandcode.ai` / `commandcode.dev`)、Cursor (`cursor.com` / `cursor.sh` / `cursorapi.com`)、Windsurf & Codeium (`codeium.com` / `windsurf.ai` / `windsurf.com`)、Devin & Cognition (`devin.ai` / `cognition.ai`)、Bolt.new、Lovable (`lovable.dev`)、v0 (`v0.dev`)、Aider (`aider.chat`)、Continue (`continue.dev`)、Augment Code (`augmentcode.com`)、CodeRabbit (`coderabbit.ai`)、JetBrains AI (`jetbrains.ai` / `grazie.ai`)
 - **模型推理 API 与云平台**：Groq (`groq.com`)、Cerebras (`cerebras.ai`)、Together AI (`together.ai`)、Fireworks AI (`fireworks.ai`)、DeepInfra (`deepinfra.com`)、Replicate (`replicate.com`)、OpenRouter (`openrouter.ai`)、Mistral AI (`mistral.ai`)、Cohere (`cohere.com` / `cohere.ai`)
 - **主流国外 AI 对话 / 搜索 / 社区**：Perplexity (`perplexity.ai`)、Poe (`poe.com`)、Character.AI (`character.ai`)、Phind (`phind.com`)、DuckDuckGo AI (`duck.ai`)、Meta AI (`meta.ai`)、Dify (`dify.ai`)、Kimi / Moonshot (`kimi.ai` / `moonshot.ai`)
+- **中国厂商海外版**：WorkBuddy / CodeBuddy 国际版 (`workbuddy.ai` / `codebuddy.ai`，安装包仅匹配产品 COS 桶)、Qwen 国际版 (`qwen.ai` / `qwenlm.ai` / `dashscope-intl.aliyuncs.com`)、智谱 Z.ai (`z.ai`)、MiniMax 国际版 (`minimax.io` / `hailuoai.video`)、豆包海外版 Dola / 旧 Cici (`dola.com` / `ciciai.com`)、扣子国际版 (`coze.com`)、可灵国际站 (`kling.ai` / `klingai.com`)、即梦海外版 (`dreamina.capcut.com`)、Manus、Skywork、阶跃国际版 (`stepfun.ai`)、01.AI、PixVerse、Vidu、Genspark。国内站（`workbuddy.cn`、`codebuddy.cn`、`minimaxi.com`、`stepfun.com`、`bigmodel.cn` 等）和 `tencent.com` / `myqcloud.com` 整域不进 AI 组
 - **图像 / 视频 / 音乐 / 语音多模态 AI**：Midjourney (`midjourney.com`)、Sora (`sora.com`)、Runway (`runway.com` / `runwayml.com`)、Luma AI (`lumalabs.ai`)、Pika (`pika.art`)、Krea AI (`krea.ai`)、Ideogram (`ideogram.ai`)、Recraft (`recraft.ai`)、Black Forest Labs (`blackforestlabs.ai`)、Stability AI (`stability.ai`)、ElevenLabs (`elevenlabs.io`)、Suno (`suno.com` / `suno.ai`)、Udio (`udio.com`)、Jasper AI (`jasper.ai`)、NovelAI (`novelai.net`)
 
 **HuggingFace（`hf.co` / `hf.space` / `huggingface.co`）不走 `🤖 人工智能` 分组**，始终走 `🪜 代理域名`：模型/权重下载流量大，避免打满 AI 组的美区自动优选。已在各端 AI 命中源中显式排除（Clash 经由 `proxy.list`、sing-box 经由路由内联 HF 规则置于 AI 规则之前）。
@@ -82,6 +83,7 @@ AI 分组默认使用美国节点的延迟自动选择，其他地区和主节�
 - Google Antigravity / Cloud Code 地区风控：`daily-cloudcode-pa.sandbox.googleapis.com`、`sandbox.googleapis.com`、`cloudcode-pa.googleapis.com`、`aiplatform.googleapis.com` 等必须在 UnBan / GoogleCN 等直连规则之前命中 AI 组，避免 API 以本地出口触发服务端地区限制；Clash 内联前置、sing-box 走本地 `myai` 前置、Loon/Surfboard 内联前置
 - **HuggingFace（`hf.co`/`hf.space`/`huggingface.co`）固定走 `🪜 代理域名` 不进 `🤖 人工智能` 分组**：模型/权重下载流量大，已在所有 AI 命中源显式排除（Clash 经 `proxy.list`、sing-box 经路由内联 HF 规则置于 AI 规则之前），避免打满美区自动优选
 - CI 校验新增 AI 路由约束：`clash/ruleset/ai.list` 与 `sing-box/rules_json/ai.json` 不得包含 HF 域名、`proxy.list` 必须含 HF、sing-box `myai` 路由必须先于第三方 `ai` 规则
+- 补充中国厂商海外版 AI 命中：WorkBuddy / CodeBuddy 国际版及 Qwen、Z.ai、MiniMax、Dola、Coze、可灵、Dreamina、Manus 等海外产品域名；国内 `.cn` 站与腾讯云整域不写入
 
 ## Sub-Store 使用说明（base/AB/AC/ABC）
 

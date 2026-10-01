@@ -6,7 +6,9 @@
                 "ai.google.dev",
                 "aistudio.google.com",
                 "makersuite.google.com",
-                "daily-cloudcode-pa.sandbox.googleapis.com"
+                "daily-cloudcode-pa.sandbox.googleapis.com",
+                "codebuddy-1328495429.cos.accelerate.myqcloud.com",
+                "acc-1258344699.cos.accelerate.myqcloud.com"
             ]
         },
         {
@@ -143,7 +145,31 @@
                 ".suno.ai",
                 ".udio.com",
                 ".jasper.ai",
-                ".novelai.net"
+                ".novelai.net",
+                ".workbuddy.ai",
+                ".codebuddy.ai",
+                ".qwen.ai",
+                ".qwenlm.ai",
+                ".dashscope-intl.aliyuncs.com",
+                ".z.ai",
+                ".minimax.io",
+                ".hailuoai.video",
+                ".dola.com",
+                ".ciciai.com",
+                ".coze.com",
+                ".kling.ai",
+                ".klingai.com",
+                ".dreamina.capcut.com",
+                ".manus.im",
+                ".manus.ai",
+                ".skywork.ai",
+                ".skyworkcdn.com",
+                ".stepfun.ai",
+                ".01.ai",
+                ".pixverse.ai",
+                ".vidu.com",
+                ".vidu.studio",
+                ".genspark.ai"
             ]
         }
     ],
