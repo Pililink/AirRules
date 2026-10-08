@@ -27,6 +27,14 @@ DOMAIN-SUFFIX,orayimg.com
 DOMAIN-SUFFIX,uuyc.163.com
 DOMAIN-SUFFIX,gameviewer.cn
 DOMAIN-SUFFIX,gameviewer.com
+# 系统连通性检测直连，避免网络探测被送进代理。
+# connectivitycheck.gstatic.com 不写入：gstatic.com 已整域走谷歌服务。
+DOMAIN,captive.apple.com
+DOMAIN,detectportal.firefox.com
+DOMAIN,www.msftconnecttest.com
+DOMAIN,www.msftncsi.com
+DOMAIN,cp.cloudflare.com
+DOMAIN-SUFFIX,ntp.org
 DOMAIN,uuyc.res.netease.com
 DOMAIN,gv.res.netease.com
 DOMAIN,uuyc-res.fp.ps.netease.com
