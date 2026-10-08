@@ -7,12 +7,14 @@ DOMAIN-SUFFIX,auth0.com
 DOMAIN-SUFFIX,challenges.cloudflare.com
 DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,chatgpt.com
-DOMAIN,chatgpt.livekit.cloud
 DOMAIN-SUFFIX,oaistatic.com
 DOMAIN-SUFFIX,oaistatsig.com
 DOMAIN-SUFFIX,oaiusercontent.com
 DOMAIN-SUFFIX,openaiapi-site.azureedge.net
 DOMAIN-SUFFIX,events.statsigapi.net
+DOMAIN-SUFFIX,api.statsig.com
+DOMAIN-SUFFIX,livekit.cloud
+DOMAIN-SUFFIX,oaifree.com
 DOMAIN-SUFFIX,featuregates.org
 DOMAIN-SUFFIX,identrust.com
 DOMAIN-SUFFIX,intercom.io
@@ -59,6 +61,10 @@ DOMAIN-SUFFIX,jules.google
 DOMAIN-SUFFIX,labs.google
 DOMAIN-SUFFIX,notebooklm.google
 DOMAIN-SUFFIX,notebooklm.google.com
+DOMAIN-SUFFIX,notebooklm.googleapis.com
+DOMAIN-SUFFIX,notebook.google
+DOMAIN-SUFFIX,opal.google
+DOMAIN-SUFFIX,flow.google
 DOMAIN-SUFFIX,generativelanguage.googleapis.com
 DOMAIN-SUFFIX,aiplatform.googleapis.com
 DOMAIN-SUFFIX,aida.googleapis.com
@@ -98,6 +104,37 @@ DOMAIN-SUFFIX,augmentcode.com
 DOMAIN-SUFFIX,coderabbit.ai
 DOMAIN-SUFFIX,grazie.ai
 DOMAIN-SUFFIX,jetbrains.ai
+DOMAIN-SUFFIX,tabnine.com
+DOMAIN-SUFFIX,marscode.com
+DOMAIN-SUFFIX,trae.ai
+DOMAIN-SUFFIX,qoder.com
+DOMAIN-SUFFIX,kiro.dev
+DOMAIN-SUFFIX,zed.dev
+DOMAIN-SUFFIX,sourcegraph.com
+DOMAIN-SUFFIX,lmstudio.ai
+DOMAIN-SUFFIX,plannotator.ai
+DOMAIN-SUFFIX,openspec.dev
+DOMAIN-SUFFIX,codepilot.ai
+DOMAIN-SUFFIX,cocopilot.org
+
+# ---- Agent / 平台 / 本地推理 ----
+DOMAIN-SUFFIX,crewai.com
+DOMAIN-SUFFIX,langchain.com
+DOMAIN-SUFFIX,anythingllm.com
+DOMAIN-SUFFIX,chutes.ai
+DOMAIN-SUFFIX,sider.ai
+DOMAIN-SUFFIX,openclaw.ai
+DOMAIN-SUFFIX,clawhub.ai
+DOMAIN-SUFFIX,youmind.ai
+DOMAIN-SUFFIX,youmind.com
+DOMAIN-SUFFIX,youmind.site
+DOMAIN-SUFFIX,arena.ai
+DOMAIN-SUFFIX,h2o.ai
+DOMAIN-SUFFIX,muse.ai
+DOMAIN-SUFFIX,ollama.com
+DOMAIN-SUFFIX,deepwiki.org
+DOMAIN-SUFFIX,deepwiki.com
+DOMAIN-SUFFIX,diabrowser.com
 
 # ---- 模型推理 API 与平台 (Inference & Model APIs) ----
 DOMAIN-KEYWORD,groq
@@ -151,6 +188,19 @@ DOMAIN-SUFFIX,suno.ai
 DOMAIN-SUFFIX,udio.com
 DOMAIN-SUFFIX,jasper.ai
 DOMAIN-SUFFIX,novelai.net
+DOMAIN-SUFFIX,leonardo.ai
+DOMAIN-SUFFIX,heygen.com
+DOMAIN-SUFFIX,d-id.com
+DOMAIN-SUFFIX,synthesia.io
+DOMAIN-SUFFIX,clipdrop.co
+DOMAIN-SUFFIX,lovart.ai
+DOMAIN-SUFFIX,openart.ai
+DOMAIN-SUFFIX,tripo3d.ai
+DOMAIN-SUFFIX,dreamgen.com
+DOMAIN-SUFFIX,diffusionbee.com
+DOMAIN-SUFFIX,stablediffusionweb.com
+DOMAIN-SUFFIX,play.ht
+DOMAIN-SUFFIX,notegpt.io
 
 # ---- 中国厂商海外版 (intl editions only; .cn 国内站不写入) ----
 # 国内站走美区会被地区校验打断，且 DOMAIN-KEYWORD 会误伤 .cn，故只用海外产品后缀。
@@ -184,6 +234,7 @@ DOMAIN-SUFFIX,dreamina.capcut.com
 # Manus、天工 Skywork、阶跃国际版、01.AI、PixVerse、Vidu、Genspark
 DOMAIN-SUFFIX,manus.im
 DOMAIN-SUFFIX,manus.ai
+DOMAIN-SUFFIX,manuscdn.com
 DOMAIN-SUFFIX,skywork.ai
 DOMAIN-SUFFIX,skyworkcdn.com
 DOMAIN-SUFFIX,stepfun.ai
