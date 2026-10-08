@@ -5,9 +5,7 @@
                 "ai.google.dev",
                 "aistudio.google.com",
                 "makersuite.google.com",
-                "daily-cloudcode-pa.sandbox.googleapis.com",
-                "codebuddy-1328495429.cos.accelerate.myqcloud.com",
-                "acc-1258344699.cos.accelerate.myqcloud.com"
+                "daily-cloudcode-pa.sandbox.googleapis.com"
             ]
         },
         {
@@ -196,9 +194,7 @@
                 ".notegpt.io",
                 ".workbuddy.ai",
                 ".codebuddy.ai",
-                ".qwen.ai",
                 ".qwenlm.ai",
-                ".dashscope-intl.aliyuncs.com",
                 ".z.ai",
                 ".minimax.io",
                 ".hailuoai.video",

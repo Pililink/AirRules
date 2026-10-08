@@ -206,17 +206,14 @@ DOMAIN-SUFFIX,notegpt.io
 # 国内站走美区会被地区校验打断，且 DOMAIN-KEYWORD 会误伤 .cn，故只用海外产品后缀。
 # 不写入：workbuddy.cn / codebuddy.cn / copilot.tencent.com、minimaxi.com、stepfun.com、
 # bigmodel.cn、dashscope.aliyuncs.com，以及 tencent.com / tencentcloud.com / myqcloud.com 整域。
+# qwen.ai、dashscope-intl.aliyuncs.com 和 CodeBuddy 的 myqcloud.com COS 桶会被
+# ACL4SSR ChinaDomain 直连，不写入 AI 组，避免境内服务被提前截到美区。
 # WorkBuddy 国际版站点、登录、计费、更新检查在 workbuddy.ai；
 # CodeBuddy 国际版 CLI 默认 https://www.codebuddy.ai/v2，技能市场在 api.codebuddy.ai。
-# COS 只匹配产品桶，避免把全部腾讯云对象存储打进 AI 组。
 DOMAIN-SUFFIX,workbuddy.ai
 DOMAIN-SUFFIX,codebuddy.ai
-DOMAIN,codebuddy-1328495429.cos.accelerate.myqcloud.com
-DOMAIN,acc-1258344699.cos.accelerate.myqcloud.com
-# 通义 / Qwen 国际版与新加坡 API。chat.qwen.ai 已被 qwen.ai 覆盖。
-DOMAIN-SUFFIX,qwen.ai
+# qwenlm.ai 不在 ChinaDomain 内，保留国际版站点。
 DOMAIN-SUFFIX,qwenlm.ai
-DOMAIN-SUFFIX,dashscope-intl.aliyuncs.com
 # 智谱 GLM 国际版。chat.z.ai / api.z.ai 已被 z.ai 覆盖。
 DOMAIN-SUFFIX,z.ai
 # MiniMax 国际版与海螺国际站。国内 minimaxi.com / hailuoai.com 不写入。
