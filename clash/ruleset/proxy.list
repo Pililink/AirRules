@@ -18,3 +18,6 @@ DOMAIN-SUFFIX,openwrt.ai
 DOMAIN-SUFFIX,hf.co
 DOMAIN-SUFFIX,hf.space
 DOMAIN-SUFFIX,huggingface.co
+DOMAIN-SUFFIX,ollama.com
+DOMAIN-SUFFIX,replicate.com
+DOMAIN-SUFFIX,replicate.delivery

@@ -47,7 +47,10 @@
         "domain_suffix": [
           "hf.co",
           "hf.space",
-          "huggingface.co"
+          "huggingface.co",
+          "ollama.com",
+          "replicate.com",
+          "replicate.delivery"
         ],
         "server": "cloudflare"
       },
@@ -545,7 +548,10 @@
         "domain_suffix": [
           "hf.co",
           "hf.space",
-          "huggingface.co"
+          "huggingface.co",
+          "ollama.com",
+          "replicate.com",
+          "replicate.delivery"
         ],
         "action": "route",
         "outbound": "🪜 代理域名"

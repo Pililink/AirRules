@@ -111,7 +111,6 @@ DOMAIN-SUFFIX,qoder.com
 DOMAIN-SUFFIX,kiro.dev
 DOMAIN-SUFFIX,zed.dev
 DOMAIN-SUFFIX,sourcegraph.com
-DOMAIN-SUFFIX,lmstudio.ai
 DOMAIN-SUFFIX,plannotator.ai
 DOMAIN-SUFFIX,openspec.dev
 DOMAIN-SUFFIX,codepilot.ai
@@ -131,7 +130,6 @@ DOMAIN-SUFFIX,youmind.site
 DOMAIN-SUFFIX,arena.ai
 DOMAIN-SUFFIX,h2o.ai
 DOMAIN-SUFFIX,muse.ai
-DOMAIN-SUFFIX,ollama.com
 DOMAIN-SUFFIX,deepwiki.org
 DOMAIN-SUFFIX,deepwiki.com
 DOMAIN-SUFFIX,diabrowser.com
@@ -144,8 +142,6 @@ DOMAIN-SUFFIX,together.ai
 DOMAIN-SUFFIX,together.xyz
 DOMAIN-SUFFIX,fireworks.ai
 DOMAIN-SUFFIX,deepinfra.com
-DOMAIN-SUFFIX,replicate.com
-DOMAIN-SUFFIX,replicate.delivery
 DOMAIN-SUFFIX,openrouter.ai
 DOMAIN-SUFFIX,mistral.ai
 DOMAIN-SUFFIX,cohere.ai
