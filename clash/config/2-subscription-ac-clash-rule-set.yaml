@@ -42,7 +42,7 @@ proxy-groups:
   - {
       name: 🚀 节点选择,
       type: select,
-      proxies: [A机场常用, A全线路自选, C全线路自选, 🎯 全球直连],
+      proxies: [A机场常用, A全线路自选, C全线路自选, 🛫 AI 出口, 🎯 全球直连],
     }
 
   # --- 机场常用入口 ---
@@ -72,8 +72,8 @@ proxy-groups:
   # 🛫 AI 出口：节点来自 AI出口 订阅并经 🔗 AI 前置 链式出站；未填订阅时组内为 COMPATIBLE（等同直连），
   # 因此放在 🤖 人工智能 末尾、不作默认，需手动选择。
   - { name: 🛫 AI 出口, type: select, use: [AI出口] }
-  # 🔗 AI 前置：AI 出口节点的上游线路，建议选与出口同地区的节点；不得包含 🛫 AI 出口，否则形成循环。
-  - { name: 🔗 AI 前置, type: select, proxies: [C全线路自选, A全线路自选, 🚀 节点选择] }
+  # 🔗 AI 前置：AI 出口节点的上游线路，建议选与出口同地区的节点；不得包含 🛫 AI 出口或 🚀 节点选择（后者含 AI 出口），否则形成循环。
+  - { name: 🔗 AI 前置, type: select, proxies: [A机场常用, C全线路自选] }
   - {
       name: 📲 电报消息,
       type: select,
