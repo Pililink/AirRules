@@ -9,7 +9,7 @@
   - 代理组策略（`proxy-groups`）
   - 规则集定义（`rule-providers`）
   - 路由规则（`rules`）
-- `clash/ruleset/` 存放自定义覆盖规则；当前 Clash 模板的通用规则源使用 ACL4SSR `Clash/Providers`
+- `clash/ruleset/` 存放自定义覆盖规则；当前 Clash 模板的通用规则源以 ACL4SSR `Clash/Providers` 为主，代理域名改用 Loyalsoldier，微软/谷歌/电报/Steam/Epic 服务分类改用 blackmatrix7
 
 ## 关键策略说明
 
@@ -57,7 +57,10 @@ AI 分组默认使用美国节点的延迟自动选择，其他地区和主节�
   - `🚀 节点选择` 作为总入口
   - `🐟 漏网之鱼` 兜底全部流量
   - `📲 电报消息 / 🎮 游戏服务 / 🍎 苹果服务 / 🪟 微软服务 / 🇬 谷歌服务` 按用途分流
-  - 规则源使用 ACL4SSR 的 `LocalAreaNetwork / UnBan / BanAD / BanProgramAD / ProxyGFWlist / ChinaDomain / ChinaIp` 以及常用服务规则集
+  - 规则源使用 ACL4SSR 的 `LocalAreaNetwork / UnBan / BanAD / BanProgramAD / ChinaDomain / ChinaIp` 以及常用服务规则集
+  - 代理域名改用 [Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules) `proxy.txt`（`behavior: domain`，每日更新）替代 ACL4SSR `ProxyGFWlist`
+  - `Microsoft / Google(No_Resolve) / Telegram(No_Resolve) / Steam / Epic` 改用 blackmatrix7：ACL4SSR 这几类已 1–3 年未更新；`.cn` 域名由前置的 ChinaDomain（含 `DOMAIN-SUFFIX,cn`）直连，不受影响；blackmatrix7 Microsoft 含 xbox 域名，`game-xbox` 已前移到 `microsoft` 之前
+  - `clash/ruleset/speedtest.list` 补充 blackmatrix7 Speedtest 未覆盖的测速域名（来源 SukkaW），与上游同归 `📈 网络测试`
   - `clash/ruleset/ignore.list` 和 `clash/ruleset/proxy.list` 作为自定义直连/代理覆盖规则，优先级高于 ACL4SSR 通用代理规则
 
 ## 使用方式（简要）

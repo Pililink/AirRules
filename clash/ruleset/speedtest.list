@@ -1,0 +1,27 @@
+# 测速服务补充：blackmatrix7 Speedtest_No_Resolve 未覆盖的条目，来源 SukkaW speedtest 域名集（后缀级条目）。
+# .cn 域名已由 ChinaDomain 直连，不写入。
+# ---- 测速平台 ----
+DOMAIN-SUFFIX,nperf.net
+DOMAIN-SUFFIX,wifiman.me
+DOMAIN-SUFFIX,wifiman.com
+DOMAIN-SUFFIX,wifiman.ubncloud.com
+DOMAIN-SUFFIX,wifiman-stability-test.ubncloud.com
+DOMAIN-SUFFIX,measurementlab.net
+DOMAIN-SUFFIX,measurement-lab.org
+DOMAIN-SUFFIX,backend.librespeed.org
+DOMAIN-SUFFIX,hizinitestet.com
+# ---- 运营商 / 服务器测速节点 ----
+DOMAIN-SUFFIX,speed.hinet.net
+DOMAIN-SUFFIX,speed.googlefiber.net
+DOMAIN-SUFFIX,speed.pfm.gg
+DOMAIN-SUFFIX,speed.tng.de
+DOMAIN-SUFFIX,speed.misaka.one
+DOMAIN-SUFFIX,speednet.net.tr
+DOMAIN-SUFFIX,srvr.bell.ca
+DOMAIN-SUFFIX,test.gslnetworks.com.au
+DOMAIN-SUFFIX,ookla.rcp.net
+DOMAIN-SUFFIX,ookla.bytel.fr
+DOMAIN-SUFFIX,ookla.ddnsgeek.com
+DOMAIN-SUFFIX,ookla.enventis.net
+DOMAIN-SUFFIX,ookla.ham1.x-ion.de
+DOMAIN-SUFFIX,ookla.surfinternet.com

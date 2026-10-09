@@ -311,6 +311,14 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/ruleset/ai.list"
     interval: 7200
 
+  myspeedtest:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/myspeedtest.list
+    url: "https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/ruleset/speedtest.list"
+    interval: 7200
+
   ads:
     type: http
     behavior: classical
@@ -331,9 +339,9 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    path: ./rule_provider/acl4ssr-microsoft.yaml
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Microsoft.yaml"
-    interval: 7200
+    path: ./rule_provider/blackmatrix7-microsoft.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml"
+    interval: 86400
 
   apple:
     type: http
@@ -347,9 +355,9 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    path: ./rule_provider/acl4ssr-google.yaml
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Google.yaml"
-    interval: 7200
+    path: ./rule_provider/blackmatrix7-google-no-resolve.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google_No_Resolve.yaml"
+    interval: 86400
 
   ai:
     type: http
@@ -363,9 +371,9 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    path: ./rule_provider/acl4ssr-telegram.yaml
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Telegram.yaml"
-    interval: 7200
+    path: ./rule_provider/blackmatrix7-telegram-no-resolve.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram_No_Resolve.yaml"
+    interval: 86400
 
   game-download:
     type: http
@@ -379,9 +387,9 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    path: ./rule_provider/acl4ssr-game-epic.yaml
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Epic.yaml"
-    interval: 7200
+    path: ./rule_provider/blackmatrix7-epic.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.yaml"
+    interval: 86400
 
   game-origin:
     type: http
@@ -403,9 +411,9 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    path: ./rule_provider/acl4ssr-game-steam.yaml
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Steam.yaml"
-    interval: 7200
+    path: ./rule_provider/blackmatrix7-steam.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml"
+    interval: 86400
 
   game-nintendo:
     type: http
@@ -433,11 +441,11 @@ rule-providers:
 
   proxy:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
-    path: ./rule_provider/acl4ssr-proxy-gfwlist.yaml
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ProxyGFWlist.yaml"
-    interval: 7200
+    path: ./rule_provider/loyalsoldier-proxy.yaml
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
+    interval: 86400
 
   cn:
     type: http
@@ -514,6 +522,8 @@ rules:
   - RULE-SET,steam-cn,🎯 全球直连
   - RULE-SET,cn,🇨🇳 直连域名
   - RULE-SET,ai,🤖 人工智能
+  # blackmatrix7 Microsoft 含 xbox.com / xboxlive.com 等，Xbox 需先于微软服务命中游戏服务。
+  - RULE-SET,game-xbox,🎮 游戏服务
   - RULE-SET,microsoft,🪟 微软服务
   - RULE-SET,apple,🍎 苹果服务
   - RULE-SET,google,🇬 谷歌服务
@@ -524,8 +534,8 @@ rules:
   - RULE-SET,game-sony,🎮 游戏服务
   - RULE-SET,game-steam,🎮 游戏服务
   - RULE-SET,game-nintendo,🎮 游戏服务
-  - RULE-SET,game-xbox,🎮 游戏服务
   - RULE-SET,speedtest,📈 网络测试
+  - RULE-SET,myspeedtest,📈 网络测试
   - RULE-SET,proxy,🪜 代理域名
   # ACL4SSR ChinaDomain / ChinaIp 覆盖不全（ChinaIp 仅 IPv4），末尾用 GEOSITE / GEOIP 补漏：
   # 只接住原本会落到 🐟 漏网之鱼 的流量，不改变前面任何规则的命中。

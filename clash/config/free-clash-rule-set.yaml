@@ -184,11 +184,11 @@ rule-providers:
 
   proxy:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
-    path: ./rule_provider/acl4ssr-proxy-gfwlist.yaml
-    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ProxyGFWlist.yaml
-    interval: 7200
+    path: ./rule_provider/loyalsoldier-proxy.yaml
+    url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt
+    interval: 86400
 
   cnip:
     type: http
