@@ -166,6 +166,25 @@ AC / ABC / AB 模板中的 A / B / C 机场全线路保持手动选择：`A全�
 
 模板会优先把 `.ts.net` MagicDNS 域名交给 `🏠 家庭网络`；注入 Tailscale 出站后，由内嵌 tsnet 完成域名解析和连接。家中 Mac mini 仍需自行发布并批准子网路由后，Clash 才能访问家庭 LAN。不要把 `auth-key` 提交到公开仓库。
 
+### 4. 可选：填充自建 AI 出口
+
+四个 Clash 模板（base / AB / AC / ABC）内置 `AI出口` proxy-provider 以及两个策略组：
+
+- `🛫 AI 出口`：只收录 `AI出口` 订阅中的节点，位于 `🤖 人工智能` 末尾、不作默认，需手动选择一次
+- `🔗 AI 前置`：AI 出口节点的上游线路，通过 provider `override.dialer-proxy` 链式出站（SOCKS5 为明文协议，不宜从国内直连），建议选与出口同地区的线路
+
+在 Sub-Store 中新建一个只含该节点的订阅，把它的 ClashMeta 下载地址编码后传给独立脚本，追加在机场填充脚本之后：
+
+`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-ai-provider.js#ai=<AI订阅完整URL编码>#noCache`
+
+参数：
+
+- `ai` / `ai_url`：AI 出口订阅的完整 HTTP(S) 地址（需 `encodeURIComponent`）
+- `ai_dialer_proxy` / `dialer-proxy`：可选，改写链式前置，须为模板中已有的策略组名（或 `DIRECT`），默认 `🔗 AI 前置`
+- `ai_provider` / `provider`：可选，provider 名称，默认 `AI出口`
+
+未填 `ai` 时 `🛫 AI 出口` 为 COMPATIBLE（等同直连），不要选择它。订阅地址可能含节点账号密码，只保存在私有 Sub-Store 中。
+
 ## Sub-Store 使用说明（Loon AC）
 
 Loon AC 配置也可以作为 Sub-Store 远程文件，并通过文件脚本动态填充 A/C 机场地址，避免把真实订阅写入公开模板。

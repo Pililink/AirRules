@@ -21,6 +21,19 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
       interval: 600
 
+  AI出口:
+    type: http
+    # 自建 AI 出口节点订阅（如 Sub-Store 中只含 SOCKS5 节点的订阅），经 🔗 AI 前置 链式出站
+    url: ""
+    path: ./proxy_provider/air2-ac-ai.yaml
+    interval: 3600
+    override:
+      dialer-proxy: 🔗 AI 前置
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 600
+
 # tcp-concurrent 对同一域名解析出的多个 IP 并发拨号，采用最先成功者。
 tcp-concurrent: true
 
@@ -54,8 +67,13 @@ proxy-groups:
   - {
       name: 🤖 人工智能,
       type: select,
-      proxies: [C全线路自选, A全线路自选, 🚀 节点选择],
+      proxies: [C全线路自选, A全线路自选, 🚀 节点选择, 🛫 AI 出口],
     }
+  # 🛫 AI 出口：节点来自 AI出口 订阅并经 🔗 AI 前置 链式出站；未填订阅时组内为 COMPATIBLE（等同直连），
+  # 因此放在 🤖 人工智能 末尾、不作默认，需手动选择。
+  - { name: 🛫 AI 出口, type: select, use: [AI出口] }
+  # 🔗 AI 前置：AI 出口节点的上游线路，建议选与出口同地区的节点；不得包含 🛫 AI 出口，否则形成循环。
+  - { name: 🔗 AI 前置, type: select, proxies: [C全线路自选, A全线路自选, 🚀 节点选择] }
   - {
       name: 📲 电报消息,
       type: select,
