@@ -35,7 +35,6 @@ DOMAIN-SUFFIX,claudemcpcontent.com
 DOMAIN-SUFFIX,claudeusercontent.com
 
 # ---- xAI / Grok ----
-DOMAIN-KEYWORD,grok
 DOMAIN-SUFFIX,grok.com
 DOMAIN-SUFFIX,grok.x.com
 DOMAIN-SUFFIX,x.ai
@@ -135,7 +134,6 @@ DOMAIN-SUFFIX,deepwiki.com
 DOMAIN-SUFFIX,diabrowser.com
 
 # ---- 模型推理 API 与平台 (Inference & Model APIs) ----
-DOMAIN-KEYWORD,groq
 DOMAIN-SUFFIX,groq.com
 DOMAIN-SUFFIX,cerebras.ai
 DOMAIN-SUFFIX,together.ai
@@ -210,8 +208,7 @@ DOMAIN-SUFFIX,workbuddy.ai
 DOMAIN-SUFFIX,codebuddy.ai
 # qwenlm.ai 不在 ChinaDomain 内，保留国际版站点。
 DOMAIN-SUFFIX,qwenlm.ai
-# 智谱 GLM 国际版。chat.z.ai / api.z.ai 已被 z.ai 覆盖。
-DOMAIN-SUFFIX,z.ai
+# 智谱国内服务 z.ai 走直连，不进 AI 组。
 # MiniMax 国际版与海螺国际站。国内 minimaxi.com / hailuoai.com 不写入。
 DOMAIN-SUFFIX,minimax.io
 DOMAIN-SUFFIX,hailuoai.video

@@ -1,7 +1,6 @@
 DOMAIN-SUFFIX,noteo.cn
 DOMAIN-SUFFIX,wslmf.com
 DOMAIN-SUFFIX,lanmiyun.me
-DOMAIN-SUFFIX,alicenetworks.net
 DOMAIN-SUFFIX,github.site
 DOMAIN-SUFFIX,pililink.com
 DOMAIN-SUFFIX,soulshell.cn
@@ -35,6 +34,7 @@ DOMAIN,www.msftconnecttest.com
 DOMAIN,www.msftncsi.com
 DOMAIN,cp.cloudflare.com
 DOMAIN-SUFFIX,ntp.org
+DOMAIN-SUFFIX,z.ai
 DOMAIN,uuyc.res.netease.com
 DOMAIN,gv.res.netease.com
 DOMAIN,uuyc-res.fp.ps.netease.com
