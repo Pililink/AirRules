@@ -19,8 +19,7 @@
                 "pypi.org",
                 "openwrt.ai",
                 "gstatic.com",
-                "recaptcha.net",
-                "challenges.cloudflare.com"
+                "recaptcha.net"
             ]
         },
         {
@@ -42,8 +41,7 @@
                 ".pypi.org",
                 ".openwrt.ai",
                 ".gstatic.com",
-                ".recaptcha.net",
-                ".challenges.cloudflare.com"
+                ".recaptcha.net"
             ]
         }
     ],
