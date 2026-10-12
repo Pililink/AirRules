@@ -15,25 +15,33 @@
 
 ### 人工智能分组（`🤖 人工智能`）优先策略
 
-`🤖 人工智能` 已设置为优先走 **美国节点**：
+`🤖 人工智能` 已设置为优先走 **自建 AI 出口**，其次 **美国节点**：
 
 - `🇺🇸 美国节点`：`type: url-test`
   - 入口探测：`https://www.gstatic.com/generate_204`
   - 覆盖范围：通过 `filter` 匹配美国节点
   - 刷新间隔：`interval: 120`
-- `🤖 人工智能` 的候选顺序为：
-  1. `🇺🇸 美国节点`
-  2. 其它地区分组（香港、日本、韩国、新加坡、台湾、欧洲、土耳其、印度、俄罗斯、其他）
-  3. `🚀 节点选择`
+- `🤖 人工智能` 的候选顺序为（base 模板；AB / AC / ABC 模板为 `🛫 AI出口节点` → 各机场全线路 → `🚀 节点选择`）：
+  1. `🛫 AI出口节点`
+  2. `🇺🇸 美国节点`
+  3. 其它地区分组（香港、日本、韩国、新加坡、台湾、欧洲、土耳其、印度、俄罗斯、其他）
+  4. `🚀 节点选择`
 
-AI 分组默认使用美国节点的延迟自动选择，其他地区和主节点组保留为手动备选。
+AI 分组默认使用自建 AI 出口（见下文「填充自建 AI 出口」）；**未填 AI出口 订阅时 `🛫 AI出口节点` 为 COMPATIBLE（等同直连），需在面板中手动改选 `🇺🇸 美国节点` 等线路**。
+
+#### Claude 细分分组（`🧠 Claude`）
+
+四个 Clash 模板（base / AB / AC / ABC）在 `🤖 人工智能` 基础上把 Claude / Anthropic 单独拆出：
+
+- 规则：`clash/ruleset/claude.list`（provider `myclaude`），置于 `RULE-SET,myai` 之前命中；`ai.list` 不再包含 Claude 域名
+- 分组：`🧠 Claude` 为 `select`，候选与 `🤖 人工智能` 相同，可独立选择线路（如 Claude 固定走 `🛫 AI出口节点`，其他 AI 服务仍走机场节点）
 
 #### AI 规则覆盖范围（补充完善）
 
 自维护的 AI 命中源已在各端统一补齐（`clash/ruleset/ai.list` ↔ `sing-box/rules_json/ai.json` 同源镜像），覆盖：
 
 - **OpenAI / ChatGPT**：`openai.com`、`chat.com`、`chatgpt.com`、`livekit.cloud`、`oaistatic.com`、`oaistatsig.com`、`oaiusercontent.com`、`auth0.com`、`stripe.com`、`sentry.io` 等依赖与风控域名
-- **Anthropic / Claude**：`anthropic.com`、`claude.ai`、`claude.com`、`clau.de`、`claudemcpclient.com`、`claudemcpcontent.com`、`claudeusercontent.com` 等
+- **Anthropic / Claude**：`anthropic.com`、`claude.ai`、`claude.com`、`clau.de`、`claudemcpclient.com`、`claudemcpcontent.com`、`claudeusercontent.com` 等（Clash 端已拆至 `clash/ruleset/claude.list`，走 `🧠 Claude`；sing-box `ai.json` 仍保留）
 - **xAI / Grok**：`grok.com`、`grok.x.com`、`x.ai`、`grokipedia.com`
 - **Google AI 全量**：`aistudio.google.com`、`notebooklm.google.com`、`makersuite.google.com`、`ai.google.dev`、`deepmind.google`、`generativelanguage.googleapis.com`、`aiplatform.googleapis.com`、`aida.googleapis.com`、`aisandbox-pa.googleapis.com`、`notebooklm-pa.googleapis.com`、`antigravity.google`、`jules.google`、`labs.google`、`cloudaicompanion.googleapis.com` 等
 - **AI 编程与 Agent**：OpenCode (`opencode.ai`)、Command Code (`commandcode.ai` / `commandcode.dev`)、Cursor (`cursor.com` / `cursor.sh` / `cursorapi.com`)、Windsurf & Codeium (`codeium.com` / `windsurf.ai` / `windsurf.com`)、Devin & Cognition (`devin.ai` / `cognition.ai`)、Bolt.new、Lovable (`lovable.dev`)、v0 (`v0.dev`)、Aider (`aider.chat`)、Continue (`continue.dev`)、Augment Code (`augmentcode.com`)、CodeRabbit (`coderabbit.ai`)、JetBrains AI (`jetbrains.ai` / `grazie.ai`)、Tabnine、MarsCode、Trae、Qoder、Kiro、Zed、Sourcegraph
@@ -170,8 +178,8 @@ AC / ABC / AB 模板中的 A / B / C 机场全线路保持手动选择：`A全�
 
 四个 Clash 模板（base / AB / AC / ABC）内置 `AI出口` proxy-provider 以及两个策略组：
 
-- `🛫 AI 出口`：只收录 `AI出口` 订阅中的节点，位于 `🤖 人工智能` 末尾、不作默认，需手动选择一次
-- `🔗 AI 前置`：AI 出口节点的上游线路，通过 provider `override.dialer-proxy` 链式出站（SOCKS5 为明文协议，不宜从国内直连），建议选与出口同地区的线路
+- `🛫 AI出口节点`：`fallback`，只收录 `AI出口` 订阅中的节点，多个节点时按订阅顺序取首个可用节点，失效自动切换下一个；位于 `🤖 人工智能` / `🧠 Claude` 首位作为默认
+- `🔗 AI前置节点`：AI 出口节点的上游线路，通过 provider `override.dialer-proxy` 链式出站（SOCKS5 为明文协议，不宜从国内直连），建议选与出口同地区的线路；末尾 `🎯 全球直连` 表示出口节点不经前置直接连接（适合加密协议出口或境外网络环境）
 
 在 Sub-Store 中新建一个只含该节点的订阅，把它的 ClashMeta 下载地址编码后传给独立脚本，追加在机场填充脚本之后：
 
@@ -180,10 +188,10 @@ AC / ABC / AB 模板中的 A / B / C 机场全线路保持手动选择：`A全�
 参数：
 
 - `ai` / `ai_url`：AI 出口订阅的完整 HTTP(S) 地址（需 `encodeURIComponent`）
-- `ai_dialer_proxy` / `dialer-proxy`：可选，改写链式前置，须为模板中已有的策略组名（或 `DIRECT`），默认 `🔗 AI 前置`
+- `ai_dialer_proxy` / `dialer-proxy`：可选，改写链式前置，须为模板中已有的策略组名（或 `DIRECT`），默认 `🔗 AI前置节点`
 - `ai_provider` / `provider`：可选，provider 名称，默认 `AI出口`
 
-未填 `ai` 时 `🛫 AI 出口` 为 COMPATIBLE（等同直连），不要选择它。订阅地址可能含节点账号密码，只保存在私有 Sub-Store 中。
+未填 `ai` 时 `🛫 AI出口节点` 为 COMPATIBLE（等同直连），而它是 `🤖 人工智能` / `🧠 Claude` 的默认项，需在面板中将这两个组改选为其他线路。订阅地址可能含节点账号密码，只保存在私有 Sub-Store 中。
 
 ## Sub-Store 使用说明（Loon AC）
 

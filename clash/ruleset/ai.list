@@ -23,17 +23,6 @@ DOMAIN-SUFFIX,sentry.io
 DOMAIN-SUFFIX,stripe.com
 DOMAIN-SUFFIX,arkoselabs.com
 
-# ---- Anthropic / Claude ----
-DOMAIN-KEYWORD,anthropic
-DOMAIN-KEYWORD,claude
-DOMAIN-SUFFIX,anthropic.com
-DOMAIN-SUFFIX,clau.de
-DOMAIN-SUFFIX,claude.ai
-DOMAIN-SUFFIX,claude.com
-DOMAIN-SUFFIX,claudemcpclient.com
-DOMAIN-SUFFIX,claudemcpcontent.com
-DOMAIN-SUFFIX,claudeusercontent.com
-
 # ---- xAI / Grok ----
 DOMAIN-SUFFIX,grok.com
 DOMAIN-SUFFIX,grok.x.com

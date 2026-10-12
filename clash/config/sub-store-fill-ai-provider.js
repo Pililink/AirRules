@@ -1,5 +1,5 @@
 // Clash/Mihomo Sub-Store 文件脚本：填充自建 AI 出口订阅（如购买的 SOCKS5 节点）。
-// 模板已内置 AI出口 proxy-provider、🛫 AI 出口 与 🔗 AI 前置 策略组；
+// 模板已内置 AI出口 proxy-provider、🛫 AI出口节点 与 🔗 AI前置节点 策略组；
 // 本脚本只写入订阅地址，可选改写链式前置（provider override.dialer-proxy）。
 // 订阅地址可能含节点账号密码，只应保存在私有 Sub-Store 配置中。
 const args = typeof $arguments !== "undefined" && $arguments ? $arguments : {};
