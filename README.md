@@ -194,6 +194,38 @@ AC / ABC / AB 模板中的 A / B / C 机场全线路保持手动选择：`A全�
 
 未填 `ai` 时 `🛫 AI出口节点` 为 COMPATIBLE（等同直连），而它是 `🤖 人工智能` / `🧠 Claude` 的默认项，需在面板中将这两个组改选为其他线路。订阅地址可能含节点账号密码，只保存在私有 Sub-Store 中。
 
+### 5. 完整示例：base 模板
+
+base 只有一个机场 provider（`机场1`），各地区分组（`🇺🇸 美国节点` 等）按节点名从 `机场1` 中筛选。
+
+1. 新增远程文件，地址：
+
+   `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/base-clash-ruleset.yaml`
+
+2. 在同一个文件上依次添加文件脚本（① 必须放在最前，② ③ 顺序不限）：
+
+   - ① 填充机场订阅（必填），`sub` 对应 `机场1`：
+
+     `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-clash-providers.js#sub=<机场订阅完整URL编码>#noCache`
+
+   - ② 填充自建 AI 出口（可选），出口节点不经前置时追加 `&ai_dialer_proxy=DIRECT`：
+
+     `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-fill-ai-provider.js#ai=<AI订阅完整URL编码>#noCache`
+
+   - ③ 注入 Tailscale 出站（可选），写入 `🏠 Tailscale` 并放到 `🏠 家庭网络` 第一位：
+
+     `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-add-tailscale-proxy.js#ts_hostname=mihomo-home&ts_dialer_proxy=DIRECT#noCache`
+
+3. 复制该文件在 Sub-Store 中的下载地址（`https://<Sub-Store 地址>/<路径>/api/file/<文件名>`），导入 Clash Verge / Mihomo。
+
+导入后在面板中确认：
+
+- `🤖 人工智能` / `🧠 Claude`：默认 `🛫 AI出口节点`；未添加脚本 ② 时改选 `🇺🇸 美国节点` 等线路
+- `🔗 AI前置节点`：选与出口同地区的线路
+- `🏠 家庭网络`：添加脚本 ③ 后应为 `🏠 Tailscale`；模板内置家庭网段为 `192.168.31.0/24`、`192.168.100.0/24`，其他网段需自行修改模板规则
+
+不需要家庭网络的设备可另建一份不添加脚本 ③ 的文件。订阅地址与 `ts_auth_key` 只保存在私有 Sub-Store 中。
+
 ## Sub-Store 使用说明（Loon AC）
 
 Loon AC 配置也可以作为 Sub-Store 远程文件，并通过文件脚本动态填充 A/C 机场地址，避免把真实订阅写入公开模板。
