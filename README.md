@@ -68,6 +68,7 @@ AI 分组默认使用自建 AI 出口（见下文「填充自建 AI 出口」）
   - 规则源使用 ACL4SSR 的 `LocalAreaNetwork / UnBan / BanAD / BanProgramAD / ChinaDomain / ChinaIp` 以及常用服务规则集
   - 代理域名改用 [Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules) `proxy.txt`（`behavior: domain`，每日更新）替代 ACL4SSR `ProxyGFWlist`
   - `Microsoft / Google(No_Resolve) / Telegram(No_Resolve) / Steam / Epic` 改用 blackmatrix7：ACL4SSR 这几类已 1–3 年未更新；`.cn` 域名由前置的 ChinaDomain（含 `DOMAIN-SUFFIX,cn`）直连，不受影响；blackmatrix7 Microsoft 含 xbox 域名，`game-xbox` 已前移到 `microsoft` 之前
+  - `🎮 游戏服务` 补充 blackmatrix7 平台规则（No_Resolve）：Blizzard、Battle、EA、PlayStation、Riot、Ubisoft、UBI、Rockstar、HoYoverse、Garena、Gog、2KGames、Supercell；其中国服域名（`.cn`、`163.com`、`netease.com`）由前置 ChinaDomain 直连
   - `clash/ruleset/speedtest.list` 补充 blackmatrix7 Speedtest 未覆盖的测速域名（来源 SukkaW），与上游同归 `📈 网络测试`
   - `clash/ruleset/ignore.list` 和 `clash/ruleset/proxy.list` 作为自定义直连/代理覆盖规则，优先级高于 ACL4SSR 通用代理规则
 
