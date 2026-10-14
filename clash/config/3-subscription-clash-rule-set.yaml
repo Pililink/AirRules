@@ -127,7 +127,7 @@ proxy-groups:
       type: select,
       proxies: [🚀 节点选择, A机场常用, B机场常用, A全线路自选, B全线路自选, C全线路自选, 🎯 全球直连],
     }
-  - {name: 🍎 苹果服务, type: select, proxies: [🚀 节点选择, A机场常用, B机场常用, A全线路自选, B全线路自选, C全线路自选, 🎯 全球直连]}
+  - {name: 🍎 苹果服务, type: select, proxies: [🎯 全球直连, 🚀 节点选择, A机场常用, B机场常用, A全线路自选, B全线路自选, C全线路自选]}
 
   # --- 规则承接层 ---
   - {
