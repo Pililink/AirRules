@@ -182,4 +182,147 @@ assert.throws(
   /Invalid URL for remote proxy A机场/,
 );
 
+const ruleGroupTemplate = JSON.stringify({
+  "proxy-providers": { "A机场": { url: "" } },
+  "proxy-groups": [
+    { name: "🚀 节点选择", type: "select", proxies: ["A机场常用", "🎯 全球直连"] },
+    { name: "🐟 漏网之鱼", type: "select", proxies: ["🚀 节点选择", "🎯 全球直连"] },
+  ],
+  "rule-providers": { proxy: { type: "http" } },
+  rules: ["RULE-SET,cn,🇨🇳 直连域名", "RULE-SET,proxy,🪜 代理域名", "MATCH,🐟 漏网之鱼"],
+});
+const twitchYaml = "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitch/Twitch_No_Resolve.yaml";
+const twitchMrs = "https://example.com/geosite/twitch.mrs";
+const ruleGroupFilled = runFileScript("clash/config/sub-store-fill-clash-providers.js", {
+  files: [ruleGroupTemplate],
+  arguments: { a: fillArgs.a },
+});
+const ruleGroup = JSON.parse(
+  runFileScript("clash/config/sub-store-add-rule-group.js", {
+    content: ruleGroupFilled,
+    files: [ruleGroupTemplate],
+    arguments: {
+      name: encodeURIComponent("📺 Twitch"),
+      url: `${encodeURIComponent(twitchYaml)}|${encodeURIComponent(twitchMrs)}`,
+    },
+  }),
+);
+// 前序脚本已改写 $content 时继续处理该结果。
+assert.equal(
+  ruleGroup["proxy-providers"]["A机场"].url,
+  "https://sub.example.com/token/download/Qcloud?target=ClashMeta",
+);
+const twitchGroups = JSON.parse(
+  runFileScript("clash/config/sub-store-add-rule-group.js", {
+    files: [ruleGroupTemplate],
+    arguments: {
+      name: "📺 Twitch",
+      url: encodeURIComponent(`${twitchYaml}|${twitchMrs}`),
+    },
+  }),
+);
+assert.deepEqual(
+  twitchGroups["proxy-groups"].map((item) => item.name),
+  ["🚀 节点选择", "📺 Twitch", "🐟 漏网之鱼"],
+);
+assert.deepEqual(Array.from(twitchGroups["proxy-groups"][1].proxies), ["A机场常用", "🎯 全球直连"]);
+assert.deepEqual(twitchGroups.rules, [
+  "RULE-SET,cn,🇨🇳 直连域名",
+  "RULE-SET,rg-twitch-1,📺 Twitch",
+  "RULE-SET,rg-twitch-2,📺 Twitch",
+  "RULE-SET,proxy,🪜 代理域名",
+  "MATCH,🐟 漏网之鱼",
+]);
+assert.deepEqual(twitchGroups["rule-providers"]["rg-twitch-1"], {
+  type: "http",
+  behavior: "classical",
+  format: "yaml",
+  path: "./rule_provider/rg-twitch-1.yaml",
+  url: twitchYaml,
+  interval: 86400,
+});
+assert.equal(twitchGroups["rule-providers"]["rg-twitch-2"].format, "mrs");
+assert.equal(twitchGroups["rule-providers"]["rg-twitch-2"].behavior, "domain");
+// 同一文件上多次挂载：后一个脚本在前一个结果上继续追加，provider 名冲突时自动加序号。
+const firstGroup = runFileScript("clash/config/sub-store-add-rule-group.js", {
+  files: [ruleGroupTemplate],
+  arguments: { name: "📺 Twitch", url: twitchYaml },
+});
+const secondGroup = runFileScript("clash/config/sub-store-add-rule-group.js", {
+  content: firstGroup,
+  files: [ruleGroupTemplate],
+  arguments: { name: "Twitch 备用", url: twitchMrs },
+});
+const thirdGroup = JSON.parse(
+  runFileScript("clash/config/sub-store-add-rule-group.js", {
+    content: secondGroup,
+    files: [ruleGroupTemplate],
+    arguments: { name: "🎵 Spotify", url: "https://example.com/spotify.list" },
+  }),
+);
+assert.deepEqual(
+  thirdGroup["proxy-groups"].map((item) => item.name),
+  ["🚀 节点选择", "📺 Twitch", "Twitch 备用", "🎵 Spotify", "🐟 漏网之鱼"],
+);
+assert.deepEqual(thirdGroup.rules, [
+  "RULE-SET,cn,🇨🇳 直连域名",
+  "RULE-SET,rg-twitch,📺 Twitch",
+  "RULE-SET,rg-twitch-2,Twitch 备用",
+  "RULE-SET,rg-spotify,🎵 Spotify",
+  "RULE-SET,proxy,🪜 代理域名",
+  "MATCH,🐟 漏网之鱼",
+]);
+assert.equal(thirdGroup["rule-providers"]["rg-twitch-2"].url, twitchMrs);
+assert.equal(thirdGroup["rule-providers"]["rg-spotify"].format, "text");
+// 后挂的分组可以复制先挂的自定义分组。
+const likeCustom = JSON.parse(
+  runFileScript("clash/config/sub-store-add-rule-group.js", {
+    content: JSON.stringify(thirdGroup),
+    files: [ruleGroupTemplate],
+    arguments: { name: "📺 直播合集", url: twitchYaml, like: "📺 Twitch" },
+  }),
+);
+assert.deepEqual(
+  Array.from(likeCustom["proxy-groups"].find((item) => item.name === "📺 直播合集").proxies),
+  ["A机场常用", "🎯 全球直连"],
+);
+assert.throws(
+  () => runFileScript("clash/config/sub-store-add-rule-group.js", {
+    content: firstGroup,
+    files: [ruleGroupTemplate],
+    arguments: { name: "📺 Twitch", url: twitchYaml },
+  }),
+  /Proxy-group already exists: 📺 Twitch/,
+);
+const singleSource = JSON.parse(
+  runFileScript("clash/config/sub-store-add-rule-group.js", {
+    files: [ruleGroupTemplate],
+    arguments: { name: "📺 直播", url: twitchYaml, like: "🐟 漏网之鱼" },
+  }),
+);
+const liveKey = Object.keys(singleSource["rule-providers"]).find((key) => key.startsWith("rg-"));
+assert.match(liveKey, /^rg-[0-9a-z]+$/);
+assert.deepEqual(Array.from(singleSource["proxy-groups"][1].proxies), ["🚀 节点选择", "🎯 全球直连"]);
+assert.throws(
+  () => runFileScript("clash/config/sub-store-add-rule-group.js", {
+    files: [ruleGroupTemplate],
+    arguments: { name: "🚀 节点选择", url: twitchYaml },
+  }),
+  /Proxy-group already exists/,
+);
+assert.throws(
+  () => runFileScript("clash/config/sub-store-add-rule-group.js", {
+    files: [ruleGroupTemplate],
+    arguments: { name: "📺 Twitch", url: "Twitch" },
+  }),
+  /Invalid rule source URL/,
+);
+assert.throws(
+  () => runFileScript("clash/config/sub-store-add-rule-group.js", {
+    files: [ruleGroupTemplate],
+    arguments: { name: "📺 Twitch", url: twitchYaml, like: "不存在" },
+  }),
+  /Missing proxy-group to copy from/,
+);
+
 console.log("Sub-Store chained file script tests passed");

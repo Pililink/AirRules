@@ -226,6 +226,29 @@ base 只有一个机场 provider（`机场1`），各地区分组（`🇺🇸 �
 
 不需要家庭网络的设备可另建一份不添加脚本 ③ 的文件。订阅地址与 `ts_auth_key` 只保存在私有 Sub-Store 中。
 
+### 6. 可选：新增自定义分流分组
+
+不改模板，在 Sub-Store 文件上追加脚本即可新增一个 `select` 策略组，并为它挂上一个或多个规则源（放在机场填充脚本之后；需要多个分组时重复添加该脚本）：
+
+`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-add-rule-group.js#name=<分组名URL编码>&url=<规则源URL编码>#noCache`
+
+参数：
+
+- `name` / `group`：分组名称（必填），如 `📺 Twitch`；与已有分组重名时报错
+- `url` / `urls`：规则源完整 HTTP(S) 地址（必填），多个用 `|` 分隔；可逐个 `encodeURIComponent` 后再用 `|` 连接
+- `like`：复制候选的分组，默认 `🚀 节点选择`
+- `before_group`：新分组插在哪个分组之前，默认 `🐟 漏网之鱼`（不存在时追加到末尾）
+- `before_rule`：规则插在哪条规则之前（按前缀匹配），默认 `RULE-SET,proxy,`，即先于 `🪜 代理域名` 命中；`cn` 等直连规则仍优先
+- `behavior` / `format`：默认按扩展名识别，`.yaml/.yml` 为 `yaml`、`.mrs` 为 `mrs`（behavior 默认 `domain`）、其他为 `text`；behavior 默认 `classical`
+- `interval`：规则更新间隔（秒），默认 `86400`
+- `no_resolve`：为 `true` 时规则追加 `,no-resolve`
+
+每个规则源生成一个 `rg-<分组名ASCII部分>` rule-provider（多个时追加 `-1`、`-2`；分组名无 ASCII 字符时使用哈希；与已有 provider 重名时自动追加序号）。
+
+同一文件可挂载多次该脚本，每次新增一个分组：后挂的脚本在前一个结果上继续追加，分组按挂载顺序排在 `before_group` 之前，规则也按挂载顺序排在 `before_rule` 之前（先挂的先命中）；`like` 也可以指定先挂的自定义分组。示例：新增 `📺 Twitch`，规则源为 blackmatrix7 Twitch：
+
+`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-add-rule-group.js#name=%F0%9F%93%BA%20Twitch&url=https%3A%2F%2Fraw.githubusercontent.com%2Fblackmatrix7%2Fios_rule_script%2Fmaster%2Frule%2FClash%2FTwitch%2FTwitch_No_Resolve.yaml#noCache`
+
 ## Sub-Store 使用说明（Loon AC）
 
 Loon AC 配置也可以作为 Sub-Store 远程文件，并通过文件脚本动态填充 A/C 机场地址，避免把真实订阅写入公开模板。
