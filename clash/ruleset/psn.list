@@ -1,0 +1,35 @@
+# PS / PSN 统一规则集（Clash 侧唯一来源，由 mypsn provider 引用）。
+# 原先分散在 ACL4SSR Ruleset/Sony.yaml（game-sony）与 blackmatrix7 PlayStation_No_Resolve
+# （game-playstation）两个 provider 里，内容为下列条目的子集，现合并为本仓库自维护列表。
+# 必须前置到 RULE-SET,cn 之前：ACL4SSR ChinaDomain 含 playstation.* / sony.com，命中即直连。
+#
+# 上游参考（如新增 PS 域名，人工比对后补进来）：
+#   https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/playstation.yaml
+#   https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/playstation
+#   https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PlayStation/PlayStation_No_Resolve.yaml
+#   https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Sony.yaml
+
+# PSN 核心：账号认证、商店、联机、系统更新、游戏下载
+DOMAIN-SUFFIX,playstation.com
+DOMAIN-SUFFIX,playstation.net
+DOMAIN-SUFFIX,playstationnetwork.com
+DOMAIN-SUFFIX,sonyentertainmentnetwork.com
+
+# Sony 官方域：会连带断 Sony 官网 / 音乐 / 影业 / 相机页面（有意为之）
+DOMAIN-SUFFIX,sony.com
+DOMAIN-SUFFIX,sony.com.cn
+
+# PS 事业部：sie.com 实测 301 到 sonyinteractive.com，不拦等于留后门
+DOMAIN-SUFFIX,sonyinteractive.com
+DOMAIN-SUFFIX,sie.com
+DOMAIN-SUFFIX,scea.com
+
+# Sony 申请的 .playstation 顶级域
+DOMAIN-SUFFIX,playstation
+
+# 各国/地区的 playstation.<TLD> 及其子域。实测有 A 记录的 20 个：
+# co.uk / de / fr / ca / nl / ch / se / no / fi / dk / cz / ru / ie / co.nz /
+# com.tr / co.kr / co.in / com.ph / com.ar / com.cn
+# 用通配而非逐条枚举：mihomo 的 * 匹配任意字符（含点），可覆盖以后新增的地区域名。
+DOMAIN-WILDCARD,playstation.*
+DOMAIN-WILDCARD,*.playstation.*

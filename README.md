@@ -4,12 +4,12 @@
 
 ## 当前配置结构
 
-- `clash/config/base-clash-ruleset.yaml`
+- `clash/config/base-clash-ruleset.yaml`（及其变体 `2-subscription-clash-rule-set.yaml` = AB、`2-subscription-ac-clash-rule-set.yaml` = AC、`3-subscription-clash-rule-set.yaml` = ABC，四份内容对齐、需同步修改）
   - 代理集配置（`proxy-providers`）
   - 代理组策略（`proxy-groups`）
   - 规则集定义（`rule-providers`）
   - 路由规则（`rules`）
-- `clash/ruleset/` 存放自定义覆盖规则；当前 Clash 模板的通用规则源以 ACL4SSR `Clash/Providers` 为主，代理域名改用 Loyalsoldier，微软/谷歌/电报/Steam/Epic 服务分类改用 blackmatrix7
+- `clash/ruleset/` 存放自维护规则集；当前 Clash 模板的通用规则源以 ACL4SSR `Clash/Providers` 为主，代理域名改用 Loyalsoldier，微软/谷歌/电报/Steam/Epic 服务分类改用 blackmatrix7，PS/PSN 域名改用本仓库 [psn.list](clash/ruleset/psn.list)（不再依赖第三方 Sony / PlayStation 规则集）
 
 ## 关键策略说明
 
@@ -64,17 +64,44 @@ AI 分组默认使用自建 AI 出口（见下文「填充自建 AI 出口」）
 - 关键用途规则：
   - `🚀 节点选择` 作为总入口
   - `🐟 漏网之鱼` 兜底全部流量
-  - `📲 电报消息 / 🎮 游戏服务 / 🍎 苹果服务 / 🪟 微软服务 / 🇬 谷歌服务` 按用途分流
+  - `📲 电报消息 / 🎮 游戏服务 / 🕹️ PSN 服务 / 🍎 苹果服务 / 🪟 微软服务 / 🇬 谷歌服务` 按用途分流（`🕹️ PSN 服务` 默认 `REJECT`，见下文「PSN 服务分组」）
   - 规则源使用 ACL4SSR 的 `LocalAreaNetwork / UnBan / BanAD / BanProgramAD / ChinaDomain / ChinaIp` 以及常用服务规则集
   - 代理域名改用 [Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules) `proxy.txt`（`behavior: domain`，每日更新）替代 ACL4SSR `ProxyGFWlist`
   - `Microsoft / Google(No_Resolve) / Telegram(No_Resolve) / Steam / Epic` 改用 blackmatrix7：ACL4SSR 这几类已 1–3 年未更新；`.cn` 域名由前置的 ChinaDomain（含 `DOMAIN-SUFFIX,cn`）直连，不受影响；blackmatrix7 Microsoft 含 xbox 域名，`game-xbox` 已前移到 `microsoft` 之前
-  - `🎮 游戏服务` 补充 blackmatrix7 平台规则（No_Resolve）：Blizzard、Battle、EA、PlayStation、Riot、Ubisoft、UBI、Rockstar、HoYoverse、Garena、Gog、2KGames、Supercell；其中国服域名（`.cn`、`163.com`、`netease.com`）由前置 ChinaDomain 直连
+  - `🎮 游戏服务` 补充 blackmatrix7 平台规则（No_Resolve）：Blizzard、Battle、EA、Riot、Ubisoft、UBI、Rockstar、HoYoverse、Garena、Gog、2KGames、Supercell；其中国服域名（`.cn`、`163.com`、`netease.com`）由前置 ChinaDomain 直连。PS/PSN 已从该组拆出，见下文「PSN 服务分组」
   - `clash/ruleset/speedtest.list` 补充 blackmatrix7 Speedtest 未覆盖的测速域名（来源 SukkaW），与上游同归 `📈 网络测试`
   - `clash/ruleset/ignore.list` 和 `clash/ruleset/proxy.list` 作为自定义直连/代理覆盖规则，优先级高于 ACL4SSR 通用代理规则
 
+### PSN 服务分组（`🕹️ PSN 服务`）
+
+PS/PSN 相关规则原先由 `game-sony`（ACL4SSR `Ruleset/Sony.yaml`）与 `game-playstation`（blackmatrix7 `PlayStation_No_Resolve`）指向 `🎮 游戏服务`，但这两条规则排在 `- RULE-SET,cn,🇨🇳 直连域名` 之后——而 ACL4SSR `ChinaDomain` 恰好也含 `playstation.com` / `playstation.net` / `playstationnetwork.com` / `sony.com` / `sonyentertainmentnetwork.com`，命中即定向 `🇨🇳 直连域名`（`[DIRECT]`），所以这两条规则**从未生效过**（死规则）。
+
+现在改为：
+
+- 新增 `🕹️ PSN 服务`（`type: select`，`proxies: [REJECT, DIRECT, 🎮 游戏服务]`，**首项即默认选中 REJECT**），分组放在 `🎮 游戏服务` 之前：REJECT = 断网（默认）、DIRECT = 恢复直连、`🎮 游戏服务` = 跟随游戏线路（需要给 PSN 走代理/加速时选它）。注：图标用 🕹️（摇杆）而非 🎮，与 `🎮 游戏服务` 在面板里一眼区分
+- PS 域名统一为一条自维护规则集（`mypsn`），**前置到 `RULE-SET,cn` 之前**：
+
+  | 规则 | 来源 | 内容 |
+  | --- | --- | --- |
+  | `RULE-SET,mypsn` | 自维护 `clash/ruleset/psn.list` | 12 条（10 条 suffix + 2 条通配）：PSN 核心（`playstation.com` / `playstation.net` / `playstationnetwork.com` / `sonyentertainmentnetwork.com`）、Sony 官方域（`sony.com` / `sony.com.cn`）、PS 事业部（`sonyinteractive.com` / `sie.com` / `scea.com`）、`.playstation` 顶级域，以及 `DOMAIN-WILDCARD,playstation.*` + `*.playstation.*` |
+
+- PS 域名极简：对比 [meta-rules-dat `geosite/playstation`](https://github.com/MetaCubeX/meta-rules-dat)、[v2fly `data/playstation`](https://github.com/v2fly/domain-list-community)、blackmatrix7 `PlayStation_No_Resolve`，PSN 核心在各家都只是 `playstation.com` / `playstation.net` / `playstationnetwork.com` / `sonyentertainmentnetwork.com` 这 4 条（meta-rules-dat 与 v2fly 另加裸 `playstation`，blackmatrix7 只有这 4 条），因此不需要引宽泛的第三方列表
+- 各国/地区域名靠通配覆盖：在候选中实测以下 20 个 `playstation.<ccTLD>` 有 A 记录（`.co.uk`、`.de`、`.fr`、`.ca`、`.nl`、`.ch`、`.se`、`.no`、`.fi`、`.dk`、`.cz`、`.ru`、`.ie`、`.co.nz`、`.com.tr`、`.co.kr`、`.co.in`、`.com.ph`、`.com.ar`、`.com.cn`；未穷举所有 ccTLD），`DOMAIN-SUFFIX,playstation.com` 盖不住它们，因此用 `DOMAIN-WILDCARD,playstation.*`（地区顶级域本身）+ `*.playstation.*`（其子域）。mihomo 的 `*` 匹配零或多个字符且包含点（见 `component/wildcard/wildcard.go`），故 `playstation.*` 能命中 `playstation.co.uk`。代价：含 `playstation` 作为中间标签的第三方域名也会被拦（如 `x.playstation.example.com`），实际不存在此类站点
+- `sie.com` 实测 301 到 `sonyinteractive.com`（标题 *Sony Interactive Entertainment*），不拦等于给已拦的 `sonyinteractive.com` 留后门
+- 原来的 `game-sony`（ACL4SSR `Ruleset/Sony.yaml`）与 `game-playstation`（blackmatrix7 `PlayStation_No_Resolve`）两个 provider 及其规则已删除：两家并集去重后只有 5 条（4 条 PSN + `sony.com`），blackmatrix7 那个文件头写着 `TOTAL: 4`、最近一次提交为 2025-06 时内容仍是这 4 条，上游自动更新价值低于“单一可见来源”。上游地址已作为注释写入 `psn.list` 头部，新增域名时人工比对后补一行
+- `sony.com` 与 `sony.com.cn` 也归入 `🕹️ PSN 服务`（有意为之）：会连带阻断 Sony 官网 / 音乐 / 影业 / 相机页面 / Sony 中国；不需要时删掉 `psn.list` 里对应行
+- 面板把 `🕹️ PSN 服务` 改选 `DIRECT` 即可临时恢复 PSN，改选 `🎮 游戏服务` 则 PSN 跟随游戏线路出网；不用改配置。注意 `🎮 游戏服务` 默认首项是 `🎯 全球直连`，选它等于直连，要先在该组里选好节点才有意义
+
+CI 已加断言：`mypsn` provider 必须存在、`RULE-SET,mypsn` 必须早于 `RULE-SET,cn`、不得再引用 `game-sony` / `game-playstation`、`🕹️ PSN 服务` 分组必须存在且 `proxies` 严格等于 `[REJECT, DIRECT, 🎮 游戏服务]`（并校验 `🎮 游戏服务` 真实存在，避免悬空引用导致 Mihomo 拒载）、`psn.list` 必须含全部域名与两条通配且不得混入其他规则类型。
+
+> 范围：`🕹️ PSN 服务` / `psn.list` **仅在 Clash 侧维护**，不做 Loon / Surfboard / sing-box 镜像（有意为之，与 `ai.list` ↔ `sing-box/rules_json/ai.json` 的双向镜像策略不同）。那边 PS 域名仍按原分流规则走（可正常联网）。`free-clash-rule-set.yaml` 是精简的免费节点链路池模板，不含游戏/平台分组，也未接入 PSN 规则。
+
+`🕹️ PSN 服务` 只覆盖域名维度：PSN 登录 / 商店 / 下载更新 / 联机认证会按该组当前选择（默认 REJECT）处理，但 PS5 上的 YouTube、Netflix、浏览器等第三方应用不受影响。要连第三方应用一起断、或者要按设备（而不是按域名）来封，推荐在路由器上按该设备的 **MAC 地址**封禁：比 Clash 的 `SRC-IP-CIDR` 更精准，不受 DHCP 换 IP 影响，也不用关设备 IPv6。
+
 ## 使用方式（简要）
 
-- 每次修改 `clash/config/base-clash-ruleset.yaml` 后，确保 Clash 重新加载配置。
+- 每次修改任一 Clash 模板（`base-clash-ruleset.yaml`，或 AB / AC / ABC 的 `2-` / `3-subscription-*.yaml`）后，确保 Clash 重新加载配置；公共规则（如 PSN、AI）需四个模板同步，CI 会对此做断言。
+- 自维护规则集（`psn.list` / `ai.list` / `claude.list` / `ignore.list` / `proxy.list`）是通过 `raw.githubusercontent.com/<repo>/main/...` 拉取的，**改动必须先 push 到 `main` 才会被订阅拉到**；各 provider 的 `interval` 为 7200 秒（2 小时），本地测试可先将 `path` 指向本地文件。
 - 更新订阅或远程规则前可先检查 `rule-providers` 链接是否可达。
 - 对于远程规则文件变化，确认 `path` 目录（如 `./rule_provider/`、`./proxy_provider/`）存在对应文件或能被规则源自动更新。
 
@@ -95,6 +122,7 @@ AI 分组默认使用自建 AI 出口（见下文「填充自建 AI 出口」）
 - Google Antigravity / Cloud Code 地区风控：`daily-cloudcode-pa.sandbox.googleapis.com`、`sandbox.googleapis.com`、`cloudcode-pa.googleapis.com`、`aiplatform.googleapis.com` 等必须在 UnBan / GoogleCN 等直连规则之前命中 AI 组，避免 API 以本地出口触发服务端地区限制；Clash 内联前置、sing-box 走本地 `myai` 前置、Loon/Surfboard 内联前置
 - **模型下载站固定走 `🪜 代理域名` 不进 `🤖 人工智能` 分组**：HuggingFace（`hf.co`/`hf.space`/`huggingface.co`）、Ollama（`ollama.com`）、Replicate（`replicate.com`/`replicate.delivery`）流量大，已在所有 AI 命中源显式排除（Clash 经 `proxy.list`、sing-box 经路由内联规则置于 AI 规则之前），避免打满美区自动优选
 - CI 校验新增 AI 路由约束：`clash/ruleset/ai.list` 与 `sing-box/rules_json/ai.json` 不得包含 HF 域名、`proxy.list` 必须含 HF、sing-box `myai` 路由必须先于第三方 `ai` 规则
+- 修复 PS/PSN 规则长期失效并统一收敛到单一来源：`game-sony` / `game-playstation` 原先排在 `RULE-SET,cn` 之后，而 ACL4SSR `ChinaDomain` 含同套 `playstation.*` / `sonyentertainmentnetwork.com` / `sony.com` 域名，命中即直连 → 两条规则从未生效。现新增 `🕹️ PSN 服务` 分组与自维护 `clash/ruleset/psn.list`（12 条：10 条 `DOMAIN-SUFFIX` + 2 条 `DOMAIN-WILDCARD`，在两家上游基础上补了 `playstation.com.cn` / `sony.com.cn` / `sonyinteractive.com` / `sie.com` / `scea.com` 与地区域名通配），删除两个第三方 Sony / PlayStation provider；规则前置到 `cn` 之前，CI 新增顺序、存在性、组内候选与列表内容断言
 - 补充中国厂商海外版 AI 命中：WorkBuddy / CodeBuddy 国际版及 Qwen、Z.ai、MiniMax、Dola、Coze、可灵、Dreamina、Manus 等海外产品域名；国内 `.cn` 站与腾讯云整域不写入
 
 ## Sub-Store 使用说明（base/AB/AC/ABC）
@@ -221,6 +249,7 @@ base 只有一个机场 provider（`机场1`），各地区分组（`🇺🇸 �
 导入后在面板中确认：
 
 - `🤖 人工智能` / `🧠 Claude`：默认 `🛫 AI出口节点`；未添加脚本 ② 时改选 `🇺🇸 美国节点` 等线路
+- `🕹️ PSN 服务`：默认 `REJECT`（PSN 登录 / 商店 / 更新 / 联机全不可用）；要放行改选 `DIRECT`，要让 PSN 跟随游戏线路改选 `🎮 游戏服务`
 - `🔗 AI前置节点`：选与出口同地区的线路
 - `🏠 家庭网络`：添加脚本 ③ 后应为 `🏠 Tailscale`；模板内置家庭网段为 `192.168.31.0/24`、`192.168.100.0/24`，其他网段需自行修改模板规则
 

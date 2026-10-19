@@ -90,6 +90,73 @@ jobs:
                 "sing-box/rules_json/ai.json must not contain HuggingFace domains"
             )
         print("validated AI routing constraints")
+
+        # PSN 域名必须先于 ChinaDomain：cn 规则集内含 playstation.com / playstation.net /
+        # playstationnetwork.com / sony.com / sonyentertainmentnetwork.com，命中即直连；
+        # 历史上 game-sony / game-playstation 排在 RULE-SET,cn 之后，两条规则均无法命中。
+        psn_rule = "RULE-SET,mypsn,🕹️ PSN 服务"
+        psn_domains = [
+            "playstation.com",
+            "playstation.net",
+            "playstationnetwork.com",
+            "sonyentertainmentnetwork.com",
+            "sony.com",
+            "sony.com.cn",
+            "sonyinteractive.com",
+            "sie.com",
+            "scea.com",
+            "playstation",
+        ]
+        psn_wildcards = ["playstation.*", "*.playstation.*"]
+        psn_templates = [
+            "base-clash-ruleset.yaml",
+            "2-subscription-clash-rule-set.yaml",
+            "2-subscription-ac-clash-rule-set.yaml",
+            "3-subscription-clash-rule-set.yaml",
+        ]
+        for name in psn_templates:
+            cfg = yaml.load((Path("clash/config") / name).read_text(encoding="utf-8"))
+            psn_config_rules = cfg["rules"]
+            cn_index = next(i for i, r in enumerate(psn_config_rules) if r.startswith("RULE-SET,cn,"))
+            assert psn_rule in psn_config_rules, f"{name}: missing {psn_rule}"
+            assert psn_config_rules.index(psn_rule) < cn_index, f"{name}: {psn_rule} must precede RULE-SET,cn"
+            assert "mypsn" in cfg["rule-providers"], f"{name}: missing rule-provider mypsn"
+            # PS 域名已统一为自维护 psn.list，不应再引用第三方 Sony / PlayStation 规则集。
+            assert not any(r.startswith(("RULE-SET,game-sony,", "RULE-SET,game-playstation,")) for r in psn_config_rules), (
+                f"{name}: PS 域名已并入 psn.list，不要再引用 game-sony / game-playstation"
+            )
+            assert not any(k in cfg["rule-providers"] for k in ("game-sony", "game-playstation")), (
+                f"{name}: 应移除 game-sony / game-playstation provider"
+            )
+            assert any(g.get("name") == "🕹️ PSN 服务" for g in cfg["proxy-groups"]), (
+                f"{name}: missing proxy-group 🕹️ PSN 服务"
+            )
+            psn_group = next(g for g in cfg["proxy-groups"] if g.get("name") == "🕹️ PSN 服务")
+            assert psn_group["proxies"][0] == "REJECT", f"{name}: 🕹️ PSN 服务 must default to REJECT"
+            assert psn_group["proxies"] == ["REJECT", "DIRECT", "🎮 游戏服务"], (
+                f"{name}: 🕹️ PSN 服务 proxies 应为 [REJECT, DIRECT, 🎮 游戏服务]，实际 {psn_group['proxies']}"
+            )
+            # 分组引用必须真实存在，否则 Mihomo 直接拒绝加载配置。
+            assert any(g.get("name") == "🎮 游戏服务" for g in cfg["proxy-groups"]), (
+                f"{name}: 🕹️ PSN 服务 引用了不存在的分组 🎮 游戏服务"
+            )
+        # 统一规则集必须覆盖全部 PS 域名，且不能混入非 PS 配置行。
+        psn_list = Path("clash/ruleset/psn.list").read_text(encoding="utf-8")
+        psn_entries = [
+            line.strip() for line in psn_list.splitlines()
+            if line.strip() and not line.strip().startswith("#")
+        ]
+        for domain in psn_domains:
+            assert f"DOMAIN-SUFFIX,{domain}" in psn_entries, f"clash/ruleset/psn.list missing {domain}"
+        for pattern in psn_wildcards:
+            assert f"DOMAIN-WILDCARD,{pattern}" in psn_entries, (
+                f"clash/ruleset/psn.list missing wildcard {pattern}（各国 playstation.<ccTLD> 靠它覆盖）"
+            )
+        for entry in psn_entries:
+            assert entry.startswith(("DOMAIN-SUFFIX,", "DOMAIN-WILDCARD,")), (
+                f"clash/ruleset/psn.list unexpected entry: {entry}"
+            )
+        print("validated PSN block rules")
         PY
         for file in clash/config/*.js loon/config/*.js script/test-sub-store-file-scripts.js; do
           node --check "$file"
