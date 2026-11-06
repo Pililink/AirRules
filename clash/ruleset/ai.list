@@ -1,10 +1,10 @@
 DOMAIN-SUFFIX,ai.com
 
 # ---- OpenAI / ChatGPT ----
+# challenges.cloudflare.com 为全网共用 Turnstile 验证域名，不放入 AI 组，避免与非 AI 站点出口 IP 不一致导致卡验证。
 DOMAIN-KEYWORD,openai
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,auth0.com
-DOMAIN-SUFFIX,challenges.cloudflare.com
 DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,chatgpt.com
 DOMAIN-SUFFIX,oaistatic.com
