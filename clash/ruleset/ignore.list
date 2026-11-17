@@ -33,6 +33,8 @@ DOMAIN,detectportal.firefox.com
 DOMAIN,www.msftconnecttest.com
 DOMAIN,www.msftncsi.com
 DOMAIN,cp.cloudflare.com
+# NTP 保持直连：NTP 回包是 UTC，时区由本机系统设置决定，走代理不会改变时区信息；
+# 反而把全系统校时绑在节点 UDP 可用性上，节点不支持 UDP 时会影响 TOTP / 证书校验。
 DOMAIN-SUFFIX,ntp.org
 DOMAIN-SUFFIX,z.ai
 DOMAIN,uuyc.res.netease.com

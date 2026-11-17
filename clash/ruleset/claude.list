@@ -8,3 +8,36 @@ DOMAIN-SUFFIX,claude.com
 DOMAIN-SUFFIX,claudemcpclient.com
 DOMAIN-SUFFIX,claudemcpcontent.com
 DOMAIN-SUFFIX,claudeusercontent.com
+
+# ---- 监控 / 遥测 ----
+# 这些上报端点必须与 Claude 请求同一出口：出口 IP 不一致会被判成异常会话。
+# browser-intake-us5-datadoghq.com 的根域名就是它自己（中间是连字符不是点），
+# datadoghq.com 后缀规则抓不到，必须精确写；datadog 关键词用于覆盖 us3/eu1/ap1 等区域切换。
+DOMAIN,browser-intake-us5-datadoghq.com
+DOMAIN-KEYWORD,datadog
+# sift 为注册/登录风控，触达面窄，关键词误伤风险可接受。
+DOMAIN-KEYWORD,sift
+DOMAIN-SUFFIX,statsigapi.net
+DOMAIN-SUFFIX,sentry.io
+
+# ---- 第三方 widget / 站点统计 ----
+# intercom 同时被 ChatGPT 站点使用，此处先命中即归 🧠 Claude；
+# 默认 🧠 Claude 与 🤖 人工智能 的首选节点同为 🛫 AI出口节点，默认出口不变，
+# 只有在两组选了不同节点时才会把 intercom 一起带走（这正是保持出口一致的目的）。
+DOMAIN-SUFFIX,intercom.io
+DOMAIN-SUFFIX,intercomcdn.com
+DOMAIN,cdn.usefathom.com
+
+# ---- KYC 身份核验 ----
+# 触发验证时必需：验证页直连会暴露本地真实出口，与 Claude 会话 IP 冲突。
+# maps.googleapis.com 用精确 DOMAIN 而非 googleapis.com 后缀：Persona 的地图/位置解析只走这台主机，
+# 写后缀会把大量非 Claude 的 googleapis 流量一起拽进 🧠 Claude 组。
+# 已知副作用：任何站点内嵌的 Google 地图也改走 Claude 出口，地图定位会跟着 Claude 节点地区。
+DOMAIN,maps.googleapis.com
+DOMAIN-SUFFIX,withpersona.com
+DOMAIN-SUFFIX,frompersona.com
+
+# ---- Anthropic 自有 IP 段兜底 ----
+# 域名漏配、DoH 加密解析或 ECH 隐藏 SNI 时的最后一道防线，置于域名规则之后。
+IP-CIDR,160.79.104.0/21,no-resolve
+IP-CIDR6,2607:6bc0::/32,no-resolve
