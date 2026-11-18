@@ -79,15 +79,21 @@ DOMAIN,antigravity-hub-auto-updater-974169037036.us-central1.run.app
 
 # Google Antigravity / Cloud Code 后端：必须先于 UnBan、GoogleCN 等直连规则匹配，
 # 避免该 API 以本地出口访问而触发服务端地区限制。
-# 只收 cloudcode 沙箱家族（实测 cloudcode-pa / daily- / autopush- / preprod-daily- 均解析到
+# 只收 cloudcode 家族（实测 cloudcode-pa / daily- / autopush- / preprod-daily- 均解析到
 # Google IP）；不再写整族 DOMAIN-SUFFIX,sandbox.googleapis.com——那是 Google 通用沙箱域，
-# 会把非 AI 的沙箱 API 一并拉进 AI 出口。
+# 会把非 AI 的沙箱 API 一并拉进 AI 出口。沙箱与非沙箱两套前缀变体都要覆盖。
 DOMAIN,jetski-webchannel.googleapis.com
 DOMAIN-SUFFIX,aicode.googleapis.com
 DOMAIN-SUFFIX,cloudcode-experiments.googleapis.com
 DOMAIN,cloudcode-pa.sandbox.googleapis.com
 DOMAIN,daily-cloudcode-pa.sandbox.googleapis.com
 DOMAIN-WILDCARD,*-cloudcode-pa.sandbox.googleapis.com
+# 非沙箱前缀变体：DOMAIN-SUFFIX,cloudcode-pa.googleapis.com 是点锚定，盖不住
+# daily-cloudcode-pa.googleapis.com（Antigravity 实际调用的 API 主机）。漏掉它会落到
+# RULE-SET,google 的 🇬 谷歌服务，一旦该组出口与 AI 组不同地区，Gemini Code Assist
+# 就报 User location is not supported for the API use.
+DOMAIN,daily-cloudcode-pa.googleapis.com
+DOMAIN-WILDCARD,*-cloudcode-pa.googleapis.com
 DOMAIN-SUFFIX,cloudcode-pa.googleapis.com
 
 # ---- AI 编程与 Agent (Coding Agents & IDEs) ----

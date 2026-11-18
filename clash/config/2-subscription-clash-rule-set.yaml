@@ -639,6 +639,10 @@ rules:
   - DOMAIN,cloudcode-pa.sandbox.googleapis.com,🤖 人工智能
   - DOMAIN,daily-cloudcode-pa.sandbox.googleapis.com,🤖 人工智能
   - DOMAIN-WILDCARD,*-cloudcode-pa.sandbox.googleapis.com,🤖 人工智能
+  # 非沙箱前缀变体：DOMAIN-SUFFIX 是点锚定，盖不住 daily-cloudcode-pa.googleapis.com
+  # （Antigravity 实际调用的 API 主机），漏掉会落到 🇬 谷歌服务导致出口地区不一致。
+  - DOMAIN,daily-cloudcode-pa.googleapis.com,🤖 人工智能
+  - DOMAIN-WILDCARD,*-cloudcode-pa.googleapis.com,🤖 人工智能
   - DOMAIN-SUFFIX,cloudcode-pa.googleapis.com,🤖 人工智能
   # Google OAuth 登录依赖:ssl.gstatic.com 被 ACL4SSR UnBan 误直连、recaptcha.net 被 google-cn 直连,
   # 与 accounts.google.com 出口 IP 不一致导致登录点击无反应(XTLS/Xray-core#1618),统一走谷歌服务
