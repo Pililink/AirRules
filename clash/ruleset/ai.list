@@ -1,27 +1,27 @@
+# 自维护 AI 命中源，对应 RULE-SET,myai → 🤖 人工智能。
+# 除 Claude（clash/ruleset/claude.list → 🧠 Claude）外，所有 AI 服务域名都写在这里。
+# 明确禁止写入：
+#   1) 模型下载站：hf.co / hf.space / huggingface.co / ollama.com / replicate.com / replicate.delivery
+#   2) 全网共用 SaaS 依赖：auth0 / stripe / sentry / identrust / arkoselabs / livekit.cloud / statsig
+# 它们都属于 proxy.list；rules 里 RULE-SET,myproxy 早于 myai 命中，写进本文件也不会生效。
+# 品牌后缀（openai.com / opencode.ai / commandcode.* / codeium.* / perplexity.* /
+# midjourney.com / elevenlabs.*）已由对应 DOMAIN-KEYWORD 覆盖，不再单独列出；
+# 若要收紧 keyword，请同时把对应后缀补回来。
 DOMAIN-SUFFIX,ai.com
 
 # ---- OpenAI / ChatGPT ----
 # challenges.cloudflare.com 为全网共用 Turnstile 验证域名，不放入 AI 组，避免与非 AI 站点出口 IP 不一致导致卡验证。
+# 同理移出 AI 组：auth0 / stripe / sentry / intercom / identrust / arkoselabs / livekit.cloud /
+# statsig / featuregates 都是全网共用的第三方依赖，留在 AI 组会让任意 Auth0 登录、Stripe 结账、
+# Sentry 上报跟着换出口 IP。通用依赖改走 proxy.list（🪜 代理域名）；Claude 侧需要的
+# sentry / intercom 由 claude.list 精确覆盖，不受影响。
 DOMAIN-KEYWORD,openai
-DOMAIN-SUFFIX,openai.com
-DOMAIN-SUFFIX,auth0.com
 DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,chatgpt.com
 DOMAIN-SUFFIX,oaistatic.com
 DOMAIN-SUFFIX,oaistatsig.com
 DOMAIN-SUFFIX,oaiusercontent.com
-DOMAIN-SUFFIX,openaiapi-site.azureedge.net
-DOMAIN-SUFFIX,events.statsigapi.net
-DOMAIN-SUFFIX,api.statsig.com
-DOMAIN-SUFFIX,livekit.cloud
 DOMAIN-SUFFIX,oaifree.com
-DOMAIN-SUFFIX,featuregates.org
-DOMAIN-SUFFIX,identrust.com
-DOMAIN-SUFFIX,intercom.io
-DOMAIN-SUFFIX,intercomcdn.com
-DOMAIN-SUFFIX,sentry.io
-DOMAIN-SUFFIX,stripe.com
-DOMAIN-SUFFIX,arkoselabs.com
 
 # ---- xAI / Grok ----
 DOMAIN-SUFFIX,grok.com
@@ -59,28 +59,47 @@ DOMAIN-SUFFIX,aida.googleapis.com
 DOMAIN-SUFFIX,aisandbox-pa.googleapis.com
 DOMAIN-SUFFIX,notebooklm-pa.googleapis.com
 
+# Gemini / AI Studio 前端 WebChannel 与 Google 内部 AI 微服务（会话记忆 / 语音管道 / 沙箱 applet）
+DOMAIN-SUFFIX,geminiweb-pa.clients.google.com
+DOMAIN-SUFFIX,geminiweb-pa.clients6.google.com
+DOMAIN-SUFFIX,alkalicore-pa.clients6.google.com
+DOMAIN-SUFFIX,alkalimakersuite-pa.clients6.google.com
+DOMAIN-SUFFIX,alkalimakersuiteapplets.pa.googleapis.com
+DOMAIN-SUFFIX,webchannel-alkalimakersuite-pa.clients6.google.com
+DOMAIN-SUFFIX,geller-pa.googleapis.com
+DOMAIN-SUFFIX,robinfrontend-pa.googleapis.com
+DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
+DOMAIN-SUFFIX,labstailwind.pa.googleapis.com
+
+# Antigravity 客户端：站点域名（antigravity.google 后缀盖不住 .google.com）与 IDE/CLI/Hub 自动更新
+DOMAIN,antigravity.google.com
+DOMAIN,antigravity-cli-auto-updater-974169037036.us-central1.run.app
+DOMAIN,antigravity-ide-auto-updater-974169037036.us-central1.run.app
+DOMAIN,antigravity-hub-auto-updater-974169037036.us-central1.run.app
+
 # Google Antigravity / Cloud Code 后端：必须先于 UnBan、GoogleCN 等直连规则匹配，
 # 避免该 API 以本地出口访问而触发服务端地区限制。
+# 只收 cloudcode 沙箱家族（实测 cloudcode-pa / daily- / autopush- / preprod-daily- 均解析到
+# Google IP）；不再写整族 DOMAIN-SUFFIX,sandbox.googleapis.com——那是 Google 通用沙箱域，
+# 会把非 AI 的沙箱 API 一并拉进 AI 出口。
+DOMAIN,jetski-webchannel.googleapis.com
+DOMAIN-SUFFIX,aicode.googleapis.com
+DOMAIN-SUFFIX,cloudcode-experiments.googleapis.com
+DOMAIN,cloudcode-pa.sandbox.googleapis.com
 DOMAIN,daily-cloudcode-pa.sandbox.googleapis.com
-DOMAIN-SUFFIX,sandbox.googleapis.com
+DOMAIN-WILDCARD,*-cloudcode-pa.sandbox.googleapis.com
 DOMAIN-SUFFIX,cloudcode-pa.googleapis.com
 
 # ---- AI 编程与 Agent (Coding Agents & IDEs) ----
 DOMAIN-KEYWORD,opencode
-DOMAIN-SUFFIX,opencode.ai
 DOMAIN-KEYWORD,commandcode
-DOMAIN-SUFFIX,commandcode.ai
-DOMAIN-SUFFIX,commandcode.dev
 DOMAIN-SUFFIX,cursor.com
 DOMAIN-SUFFIX,cursor.sh
 DOMAIN-SUFFIX,cursorapi.com
 DOMAIN-SUFFIX,cursor-cdn.com
 DOMAIN-KEYWORD,codeium
-DOMAIN-SUFFIX,codeium.com
-DOMAIN-SUFFIX,codeiumdata.com
 DOMAIN-SUFFIX,windsurf.com
 DOMAIN-SUFFIX,windsurf.ai
-DOMAIN-SUFFIX,windsurf.build
 DOMAIN-SUFFIX,devin.ai
 DOMAIN-SUFFIX,cognition.ai
 DOMAIN-SUFFIX,bolt.new
@@ -103,6 +122,13 @@ DOMAIN-SUFFIX,plannotator.ai
 DOMAIN-SUFFIX,openspec.dev
 DOMAIN-SUFFIX,codepilot.ai
 DOMAIN-SUFFIX,cocopilot.org
+
+# ---- 微软系 AI（Copilot / Azure AI）----
+# 原先由 ACL4SSR AI.yaml 覆盖；该规则集 47 条中 42 条被本仓库更靠前的规则遮蔽
+# （净生效仅 4 条，上游自 2025-12 未更新），已删除 provider，这 4 条并入本文件。
+DOMAIN-SUFFIX,copilot.microsoft.com
+DOMAIN-SUFFIX,copilot.cloud.microsoft
+DOMAIN-SUFFIX,ai.azure.com
 
 # ---- Agent / 平台 / 本地推理 ----
 DOMAIN-SUFFIX,crewai.com
@@ -136,13 +162,10 @@ DOMAIN-SUFFIX,cohere.com
 
 # ---- 主流国外 AI 对话 / 搜索 / 社区平台 ----
 DOMAIN-KEYWORD,perplexity
-DOMAIN-SUFFIX,perplexity.ai
-DOMAIN-SUFFIX,perplexity.com
 DOMAIN-SUFFIX,pplx.ai
 DOMAIN-SUFFIX,poe.com
 DOMAIN-SUFFIX,poecdn.net
 DOMAIN-SUFFIX,character.ai
-DOMAIN-SUFFIX,characterai.com
 DOMAIN-SUFFIX,phind.com
 DOMAIN-SUFFIX,duck.ai
 DOMAIN-SUFFIX,meta.ai
@@ -152,7 +175,6 @@ DOMAIN-SUFFIX,moonshot.ai
 
 # ---- 图像 / 视频 / 音乐 / 语音多模态 AI ----
 DOMAIN-KEYWORD,midjourney
-DOMAIN-SUFFIX,midjourney.com
 DOMAIN-SUFFIX,sora.com
 DOMAIN-SUFFIX,runway.com
 DOMAIN-SUFFIX,runwayml.com
@@ -164,8 +186,6 @@ DOMAIN-SUFFIX,recraft.ai
 DOMAIN-SUFFIX,blackforestlabs.ai
 DOMAIN-SUFFIX,stability.ai
 DOMAIN-KEYWORD,elevenlabs
-DOMAIN-SUFFIX,elevenlabs.io
-DOMAIN-SUFFIX,elevenlabs.com
 DOMAIN-SUFFIX,suno.com
 DOMAIN-SUFFIX,suno.ai
 DOMAIN-SUFFIX,udio.com

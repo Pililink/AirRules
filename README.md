@@ -38,25 +38,26 @@ AI 分组默认使用自建 AI 出口（见下文「填充自建 AI 出口」）
 
 #### AI 规则覆盖范围（补充完善）
 
-自维护的 AI 命中源已在各端统一补齐（`clash/ruleset/ai.list` ↔ `sing-box/rules_json/ai.json` 同源镜像），覆盖：
+自维护的 AI 命中源（`clash/ruleset/ai.list`，唯一来源）覆盖：**除 Claude（拆到 `clash/ruleset/claude.list` → `🧠 Claude`）外，所有 AI 服务都归 `🤖 人工智能`**。
 
-- **OpenAI / ChatGPT**：`openai.com`、`chat.com`、`chatgpt.com`、`livekit.cloud`、`oaistatic.com`、`oaistatsig.com`、`oaiusercontent.com`、`auth0.com`、`stripe.com`、`sentry.io` 等依赖与风控域名
-- **Anthropic / Claude**：`anthropic.com`、`claude.ai`、`claude.com`、`clau.de`、`claudemcpclient.com`、`claudemcpcontent.com`、`claudeusercontent.com` 等（Clash 端已拆至 `clash/ruleset/claude.list`，走 `🧠 Claude`；sing-box `ai.json` 仍保留）
+- **OpenAI / ChatGPT**：`DOMAIN-KEYWORD,openai` 负责 `openai.com` / `*.openai.com` / `openaiapi-site.azureedge.net` 等；另列 `chat.com`、`chatgpt.com`、`oaistatic.com`、`oaistatsig.com`、`oaiusercontent.com`、`oaifree.com`
+- **Anthropic / Claude**：`anthropic.com`、`claude.ai`、`claude.com`、`clau.de`、`claudemcpclient.com`、`claudemcpcontent.com`、`claudeusercontent.com` 等（已拆至 `clash/ruleset/claude.list`，走 `🧠 Claude`）
 - **xAI / Grok**：`grok.com`、`grok.x.com`、`x.ai`、`grokipedia.com`
-- **Google AI 全量**：`aistudio.google.com`、`notebooklm.google.com`、`makersuite.google.com`、`ai.google.dev`、`deepmind.google`、`generativelanguage.googleapis.com`、`aiplatform.googleapis.com`、`aida.googleapis.com`、`aisandbox-pa.googleapis.com`、`notebooklm-pa.googleapis.com`、`antigravity.google`、`jules.google`、`labs.google`、`cloudaicompanion.googleapis.com` 等
-- **AI 编程与 Agent**：OpenCode (`opencode.ai`)、Command Code (`commandcode.ai` / `commandcode.dev`)、Cursor (`cursor.com` / `cursor.sh` / `cursorapi.com`)、Windsurf & Codeium (`codeium.com` / `windsurf.ai` / `windsurf.com`)、Devin & Cognition (`devin.ai` / `cognition.ai`)、Bolt.new、Lovable (`lovable.dev`)、v0 (`v0.dev`)、Aider (`aider.chat`)、Continue (`continue.dev`)、Augment Code (`augmentcode.com`)、CodeRabbit (`coderabbit.ai`)、JetBrains AI (`jetbrains.ai` / `grazie.ai`)、Tabnine、MarsCode、Trae、Qoder、Kiro、Zed、Sourcegraph
+- **Google AI 全量**：`aistudio.google.com`、`notebooklm.google.com`、`makersuite.google.com`、`ai.google.dev`、`deepmind.google`、`generativelanguage.googleapis.com`、`aiplatform.googleapis.com`、`aida.googleapis.com`、`aisandbox-pa.googleapis.com`、`notebooklm-pa.googleapis.com`、`antigravity.google` / `antigravity.google.com`、`jules.google`、`labs.google`、`cloudaicompanion.googleapis.com`、`geminiweb-pa.clients{,.6}.google.com`、`alkalicore-pa` / `alkalimakersuite-pa.clients6.google.com`、`alkalimakersuiteapplets.pa.googleapis.com`、`webchannel-alkalimakersuite-pa.clients6.google.com`、`geller-pa` / `robinfrontend-pa` / `proactivebackend-pa` / `labstailwind.pa.googleapis.com`、`jetski-webchannel` / `aicode` / `cloudcode-experiments.googleapis.com`、`antigravity-{cli,ide,hub}-auto-updater-974169037036.us-central1.run.app` 等
+- **微软系 AI（Copilot / Azure AI）**：`copilot.microsoft.com`、`copilot.cloud.microsoft`、`ai.azure.com`、`grazie.aws.intellij.net`。原先由 ACL4SSR `AI.yaml` 覆盖，该规则集 47 条中 42 条被本仓库更靠前的规则遮蔽（净生效仅 4 条，上游自 2025-12 未更新），已删除 provider 并把这 4 条并入 `ai.list`
+- **AI 编程与 Agent**：OpenCode (`opencode.ai`)、Command Code (`commandcode.ai`)、Cursor (`cursor.com` / `cursor.sh` / `cursorapi.com`)、Windsurf & Codeium (`codeium.com` / `windsurf.ai` / `windsurf.com`)、Devin & Cognition (`devin.ai` / `cognition.ai`)、Bolt.new、Lovable (`lovable.dev`)、v0 (`v0.dev`)、Aider (`aider.chat`)、Continue (`continue.dev`)、Augment Code (`augmentcode.com`)、CodeRabbit (`coderabbit.ai`)、JetBrains AI (`jetbrains.ai` / `grazie.ai`)、Tabnine、MarsCode、Trae、Qoder、Kiro、Zed、Sourcegraph
 - **模型推理 API 与云平台**：Groq (`groq.com`)、Cerebras (`cerebras.ai`)、Together AI (`together.ai`)、Fireworks AI (`fireworks.ai`)、DeepInfra (`deepinfra.com`)、OpenRouter (`openrouter.ai`)、Mistral AI (`mistral.ai`)、Cohere (`cohere.com` / `cohere.ai`)
 - **主流国外 AI 对话 / 搜索 / 社区**：Perplexity (`perplexity.ai`)、Poe (`poe.com`)、Character.AI (`character.ai`)、Phind (`phind.com`)、DuckDuckGo AI (`duck.ai`)、Meta AI (`meta.ai`)、Dify (`dify.ai`)、Kimi / Moonshot (`kimi.ai` / `moonshot.ai`)
 - **中国厂商海外版**：WorkBuddy / CodeBuddy 国际版 (`workbuddy.ai` / `codebuddy.ai`)、Qwen 国际站 (`qwenlm.ai`)、MiniMax 国际版 (`minimax.io` / `hailuoai.video`)、豆包海外版 Dola / 旧 Cici (`dola.com` / `ciciai.com`)、扣子国际版 (`coze.com`)、可灵国际站 (`kling.ai` / `klingai.com`)、即梦海外版 (`dreamina.capcut.com`)、Manus、Skywork、阶跃国际版 (`stepfun.ai`)、01.AI、PixVerse、Vidu、Genspark。国内服务不进 AI 组：`z.ai`、`qwen.ai`、`dashscope-intl.aliyuncs.com` 和 CodeBuddy 的 `myqcloud.com` COS 桶交给后面的 ChinaDomain 直连；`workbuddy.cn`、`codebuddy.cn`、`minimaxi.com`、`stepfun.com`、`bigmodel.cn` 以及 `tencent.com` / `myqcloud.com` 整域也不写入
 - **图像 / 视频 / 音乐 / 语音多模态 AI**：Midjourney (`midjourney.com`)、Sora (`sora.com`)、Runway (`runway.com` / `runwayml.com`)、Luma AI (`lumalabs.ai`)、Pika (`pika.art`)、Krea AI (`krea.ai`)、Ideogram (`ideogram.ai`)、Recraft (`recraft.ai`)、Black Forest Labs (`blackforestlabs.ai`)、Stability AI (`stability.ai`)、ElevenLabs (`elevenlabs.io`)、Suno (`suno.com` / `suno.ai`)、Udio (`udio.com`)、Jasper AI (`jasper.ai`)、NovelAI (`novelai.net`)、Leonardo、HeyGen、D-ID、Synthesia、Clipdrop、Tripo3D
 
-**模型下载站不走 `🤖 人工智能` 分组**，始终走 `🪜 代理域名`：HuggingFace（`hf.co` / `hf.space` / `huggingface.co`）、Ollama（`ollama.com`）、Replicate（`replicate.com` / `replicate.delivery`）流量大，避免打满 AI 组的美区自动优选。Clash 经由 `proxy.list`，sing-box 经由路由内联规则置于 AI 规则之前。
+**模型下载站明确禁止进入 `🤖 人工智能`**，始终走 `🪜 代理域名`：HuggingFace（`hf.co` / `hf.space` / `huggingface.co`）、Ollama（`ollama.com`）、Replicate（`replicate.com` / `replicate.delivery`）流量大，避免打满 AI 组的美区自动优选。这条不是靠“`ai.list` 里没写”维持的：`rules` 中 `RULE-SET,myproxy` 排在 `RULE-SET,myai` **之前**，即使误投入 `ai.list` 也不会生效。
 
-**Google Antigravity / Cloud Code 地区风控**：`daily-cloudcode-pa.sandbox.googleapis.com`、`sandbox.googleapis.com`、`cloudcode-pa.googleapis.com` 必须**先于** UnBan、GoogleCN 等直连规则命中 AI 组，避免 API 以本地出口访问触发服务端地区限制（与 OAuth `gstatic.com`/`recaptcha.net` 同理）。
+**通用 SaaS 依赖同样不进 `🤖 人工智能`**（与 `challenges.cloudflare.com` 同一原则）：`auth0.com`、`stripe.com`、`identrust.com`、`arkoselabs.com`、`livekit.cloud`、`events.statsigapi.net`、`api.statsig.com` 已从 `ai.list` 移到 `proxy.list`（走 `🪜 代理域名`）；`sentry.io`、`intercom.io`、`intercomcdn.com` 从 `ai.list` 删除，Claude 侧需要的同样域名由 `claude.list` 精确覆盖（出口一致性要求）。理由：这些是全网共用的第三方依赖，放进 AI 组会让任意站的 Auth0 登录、Stripe 结账、Sentry 上报跟着换出口 IP，正是 README 里排除 Turnstile 想避开的问题。
 
-- Clash：内联进 `rules` 且置于 `RULE-SET,myai` 之前
-- sing-box：通过本地 `myai`（`rules_srs/ai.srs`）在第三方 DustinWin `ai` 规则之前命中
-- Loon / Surfboard：内联规则置于第三方 AI 规则源之前
+**Google Antigravity / Cloud Code 地区风控**：`cloudcode-pa.sandbox.googleapis.com`、`daily-` / `autopush-` / `preprod-daily-cloudcode-pa.sandbox.googleapis.com`、`cloudcode-pa.googleapis.com` 必须先于 UnBan、GoogleCN 等直连规则命中 AI 组，避免 API 以本地出口访问触发服务端地区限制（与 OAuth `gstatic.com`/`recaptcha.net` 同理）。沙箱段已从 `DOMAIN-SUFFIX,sandbox.googleapis.com` **收窄到 cloudcode 家族**：那是 Google 通用沙箱域，整族匹配会把非 AI 的沙箱 API 一并拉进 AI 出口；Clash 侧用 `DOMAIN-WILDCARD,*-cloudcode-pa.sandbox.googleapis.com` 覆盖 `autopush-` / `preprod-daily-` 等变体。
+
+- Clash：`clash/ruleset/ai.list`（`myai`）为主，四份模板另内联同一组规则，置于 `RULE-SET,unban` / `RULE-SET,cn` 等直连规则之前，位于 `RULE-SET,myai` 之后作为 provider 拉取失败时的兜底
 
 ### 其他分组
 
@@ -92,15 +93,15 @@ PS/PSN 相关规则原先由 `game-sony`（ACL4SSR `Ruleset/Sony.yaml`）与 `ga
 - `sony.com` 与 `sony.com.cn` 也归入 `🕹️ PSN 服务`（有意为之）：会连带阻断 Sony 官网 / 音乐 / 影业 / 相机页面 / Sony 中国；不需要时删掉 `psn.list` 里对应行
 - 面板把 `🕹️ PSN 服务` 改选 `DIRECT` 即可临时恢复 PSN，改选 `🎮 游戏服务` 则 PSN 跟随游戏线路出网；不用改配置。注意 `🎮 游戏服务` 默认首项是 `🎯 全球直连`，选它等于直连，要先在该组里选好节点才有意义
 
-CI 已加断言：`mypsn` provider 必须存在、`RULE-SET,mypsn` 必须早于 `RULE-SET,cn`、不得再引用 `game-sony` / `game-playstation`、`🕹️ PSN 服务` 分组必须存在且 `proxies` 严格等于 `[REJECT, DIRECT, 🎮 游戏服务]`（并校验 `🎮 游戏服务` 真实存在，避免悬空引用导致 Mihomo 拒载）、`psn.list` 必须含全部域名与两条通配且不得混入其他规则类型。
+落地时的硬约束（人工核对）：`mypsn` provider 必须存在、`RULE-SET,mypsn` 必须早于 `RULE-SET,cn`、不得再引用 `game-sony` / `game-playstation`、`🕹️ PSN 服务` 分组必须存在且 `proxies` 严格等于 `[REJECT, DIRECT, 🎮 游戏服务]`（并校验 `🎮 游戏服务` 真实存在，避免悬空引用导致 Mihomo 拒载）、`psn.list` 必须含全部域名与两条通配且不得混入其他规则类型。
 
-> 范围：`🕹️ PSN 服务` / `psn.list` **仅在 Clash 侧维护**，不做 Loon / Surfboard / sing-box 镜像（有意为之，与 `ai.list` ↔ `sing-box/rules_json/ai.json` 的双向镜像策略不同）。那边 PS 域名仍按原分流规则走（可正常联网）。`free-clash-rule-set.yaml` 是精简的免费节点链路池模板，不含游戏/平台分组，也未接入 PSN 规则。
+> 范围：`🕹️ PSN 服务` / `psn.list` 只在 Clash 模板里生效。`free-clash-rule-set.yaml` 是精简的免费节点链路池模板，不含游戏/平台分组，也未接入 PSN 规则。
 
 `🕹️ PSN 服务` 只覆盖域名维度：PSN 登录 / 商店 / 下载更新 / 联机认证会按该组当前选择（默认 REJECT）处理，但 PS5 上的 YouTube、Netflix、浏览器等第三方应用不受影响。要连第三方应用一起断、或者要按设备（而不是按域名）来封，推荐在路由器上按该设备的 **MAC 地址**封禁：比 Clash 的 `SRC-IP-CIDR` 更精准，不受 DHCP 换 IP 影响，也不用关设备 IPv6。
 
 ## 使用方式（简要）
 
-- 每次修改任一 Clash 模板（`base-clash-ruleset.yaml`，或 AB / AC / ABC 的 `2-` / `3-subscription-*.yaml`）后，确保 Clash 重新加载配置；公共规则（如 PSN、AI）需四个模板同步，CI 会对此做断言。
+- 每次修改任一 Clash 模板（`base-clash-ruleset.yaml`，或 AB / AC / ABC 的 `2-` / `3-subscription-*.yaml`）后，确保 Clash 重新加载配置；公共规则（如 PSN、AI）需四个模板同步修改（仓库不带 CI，全靠人工核对）。
 - 自维护规则集（`psn.list` / `ai.list` / `claude.list` / `ignore.list` / `proxy.list`）是通过 `raw.githubusercontent.com/<repo>/main/...` 拉取的，**改动必须先 push 到 `main` 才会被订阅拉到**；各 provider 的 `interval` 为 7200 秒（2 小时），本地测试可先将 `path` 指向本地文件。
 - 更新订阅或远程规则前可先检查 `rule-providers` 链接是否可达。
 - 对于远程规则文件变化，确认 `path` 目录（如 `./rule_provider/`、`./proxy_provider/`）存在对应文件或能被规则源自动更新。
@@ -116,14 +117,23 @@ CI 已加断言：`mypsn` provider 必须存在、`RULE-SET,mypsn` 必须早于 
 
 - 将 `🇺🇸 美国节点` 放到 `🤖 人工智能` 的第一候选
 - 保留原有各国家地区 `url-test` 组，继续作为稳定备选线路
-- 修复规则模式下 Google 账号登录点击无反应（[XTLS/Xray-core#1618](https://github.com/XTLS/Xray-core/discussions/1618)）：ACL4SSR `UnBan`（直连）含 `ssl.gstatic.com`/`www.gstatic.com` 等，且 `google-cn`（直连）含 `recaptcha.net`，均排在 Clash 模板的 google 规则集之前，导致 OAuth 登录页静态资源/验证组件走直连而 `accounts.google.com` 走代理，出口 IP 不一致被 Google 风控拦截（全局模式正常）。已在各端把 `gstatic.com`、`recaptcha.net` 强制走代理（Clash 内联到 🇬 谷歌服务并置于 UnBan 之前，Surfboard/Loon/sing-box 走各自代理列表），保证与 accounts.google.com 同出口。url-test 探测不受影响（健康检查直接走被测节点、不经过路由规则）
-- 新增 PT / tracker 直连规则：采用 [blackmatrix7/ios_rule_script PrivateTracker](https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/Clash/PrivateTracker)（当前 248 条），覆盖常见 PT 站点和 tracker / announce 域名；Clash、Loon、Surfboard 直接引用上游规则，sing-box 使用同源已编译快照，均在通用分流规则之前匹配为直连，避免 Fake-IP、代理及代理 DNS 影响私有站汇报和 IPv6 announce
-- 统一补全并镜像国外 AI 命中源（`clash/ruleset/ai.list` ↔ `sing-box/rules_json/ai.json`）：新增 Claude/Anthropic、Google AI 全量（AI Studio/NotebookLM/MakerSuite/DeepMind/`generativelanguage`/`aiplatform`/`aida`/`aisandbox-pa`/`notebooklm-pa`）以及 openrouter/perplexity/meta.ai/mistral/cohere/cursor/jetbrains/kimi/moonshot/grokipedia 等国外平台；sing-box 本地 `myai`（`rules_srs/ai.srs`）已接入路由并在第三方 DustinWin `ai` 规则之前命中（原先 `rules_json/openai.json` 已编译但未接线的孤儿文件删除）
-- Google Antigravity / Cloud Code 地区风控：`daily-cloudcode-pa.sandbox.googleapis.com`、`sandbox.googleapis.com`、`cloudcode-pa.googleapis.com`、`aiplatform.googleapis.com` 等必须在 UnBan / GoogleCN 等直连规则之前命中 AI 组，避免 API 以本地出口触发服务端地区限制；Clash 内联前置、sing-box 走本地 `myai` 前置、Loon/Surfboard 内联前置
-- **模型下载站固定走 `🪜 代理域名` 不进 `🤖 人工智能` 分组**：HuggingFace（`hf.co`/`hf.space`/`huggingface.co`）、Ollama（`ollama.com`）、Replicate（`replicate.com`/`replicate.delivery`）流量大，已在所有 AI 命中源显式排除（Clash 经 `proxy.list`、sing-box 经路由内联规则置于 AI 规则之前），避免打满美区自动优选
-- CI 校验新增 AI 路由约束：`clash/ruleset/ai.list` 与 `sing-box/rules_json/ai.json` 不得包含 HF 域名、`proxy.list` 必须含 HF、sing-box `myai` 路由必须先于第三方 `ai` 规则
-- 修复 PS/PSN 规则长期失效并统一收敛到单一来源：`game-sony` / `game-playstation` 原先排在 `RULE-SET,cn` 之后，而 ACL4SSR `ChinaDomain` 含同套 `playstation.*` / `sonyentertainmentnetwork.com` / `sony.com` 域名，命中即直连 → 两条规则从未生效。现新增 `🕹️ PSN 服务` 分组与自维护 `clash/ruleset/psn.list`（12 条：10 条 `DOMAIN-SUFFIX` + 2 条 `DOMAIN-WILDCARD`，在两家上游基础上补了 `playstation.com.cn` / `sony.com.cn` / `sonyinteractive.com` / `sie.com` / `scea.com` 与地区域名通配），删除两个第三方 Sony / PlayStation provider；规则前置到 `cn` 之前，CI 新增顺序、存在性、组内候选与列表内容断言
+- 修复规则模式下 Google 账号登录点击无反应（[XTLS/Xray-core#1618](https://github.com/XTLS/Xray-core/discussions/1618)）：ACL4SSR `UnBan`（直连）含 `ssl.gstatic.com`/`www.gstatic.com` 等，且 `google-cn`（直连）含 `recaptcha.net`，均排在 Clash 模板的 google 规则集之前，导致 OAuth 登录页静态资源/验证组件走直连而 `accounts.google.com` 走代理，出口 IP 不一致被 Google 风控拦截（全局模式正常）。已在各端把 `gstatic.com`、`recaptcha.net` 强制走代理（Clash 内联到 🇬 谷歌服务并置于 UnBan 之前），保证与 accounts.google.com 同出口。url-test 探测不受影响（健康检查直接走被测节点、不经过路由规则）
+- 新增 PT / tracker 直连规则：采用 [blackmatrix7/ios_rule_script PrivateTracker](https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/Clash/PrivateTracker)（当前 248 条），覆盖常见 PT 站点和 tracker / announce 域名；Clash 直接引用上游规则，均在通用分流规则之前匹配为直连，避免 Fake-IP、代理及代理 DNS 影响私有站汇报和 IPv6 announce
+- 统一补全国外 AI 命中源（`clash/ruleset/ai.list`）：新增 Claude/Anthropic、Google AI 全量（AI Studio/NotebookLM/MakerSuite/DeepMind/`generativelanguage`/`aiplatform`/`aida`/`aisandbox-pa`/`notebooklm-pa`）以及 openrouter/perplexity/meta.ai/mistral/cohere/cursor/jetbrains/kimi/moonshot/grokipedia 等国外平台
+- Google Antigravity / Cloud Code 地区风控：`daily-cloudcode-pa.sandbox.googleapis.com`、`sandbox.googleapis.com`、`cloudcode-pa.googleapis.com`、`aiplatform.googleapis.com` 等必须在 UnBan / GoogleCN 等直连规则之前命中 AI 组，避免 API 以本地出口触发服务端地区限制；Clash 内联前置
+- **模型下载站固定走 `🪜 代理域名` 不进 `🤖 人工智能` 分组**：HuggingFace（`hf.co`/`hf.space`/`huggingface.co`）、Ollama（`ollama.com`）、Replicate（`replicate.com`/`replicate.delivery`）流量大，已在 AI 命中源显式排除（Clash 经 `proxy.list`），避免打满美区自动优选
+
+- 修复 PS/PSN 规则长期失效并统一收敛到单一来源：`game-sony` / `game-playstation` 原先排在 `RULE-SET,cn` 之后，而 ACL4SSR `ChinaDomain` 含同套 `playstation.*` / `sonyentertainmentnetwork.com` / `sony.com` 域名，命中即直连 → 两条规则从未生效。现新增 `🕹️ PSN 服务` 分组与自维护 `clash/ruleset/psn.list`（12 条：10 条 `DOMAIN-SUFFIX` + 2 条 `DOMAIN-WILDCARD`，在两家上游基础上补了 `playstation.com.cn` / `sony.com.cn` / `sonyinteractive.com` / `sie.com` / `scea.com` 与地区域名通配），删除两个第三方 Sony / PlayStation provider；规则前置到 `cn` 之前
 - 补充中国厂商海外版 AI 命中：WorkBuddy / CodeBuddy 国际版及 Qwen、Z.ai、MiniMax、Dola、Coze、可灵、Dreamina、Manus 等海外产品域名；国内 `.cn` 站与腾讯云整域不写入
+- 补充 Google AI / Antigravity 端点 21 条（`ai.list`）：`jetski-webchannel`（内部全双工 relay，流式输出靠它）、`aicode` / `cloudcode-experiments`、`geminiweb-pa.clients{,.6}`、`alkalicore-pa` / `alkalimakersuite-pa.clients6` / `alkalimakersuiteapplets.pa` / `webchannel-alkalimakersuite-pa.clients6`、`geller-pa`（记忆/上下文）/ `robinfrontend-pa`（语音）/ `proactivebackend-pa` / `labstailwind.pa`、`antigravity.google.com`（`antigravity.google` 后缀盖不住，两者解析到不同 IP）、`antigravity-{cli,ide,hub}-auto-updater-974169037036.us-central1.run.app`。全部做过 DNS 验证，均解析到 Google / Cloud Run 真实 IP。有意**不写入** `firebaseremoteconfig` / `firebaseinstallations` / `oauth2.googleapis.com`：它们是全网共用的 Google 基础服务，放进来会把其他 App 的 Firebase / OAuth 流量一并拉进 AI 出口
+- **沙箱段收窄**：`DOMAIN-SUFFIX,sandbox.googleapis.com` → cloudcode 家族（`DOMAIN,cloudcode-pa.sandbox.googleapis.com` + `DOMAIN,daily-…` + `DOMAIN-WILDCARD,*-cloudcode-pa.sandbox.googleapis.com`）。共 5 处同步：`ai.list` + 四份 Clash 模板。目的：`.sandbox.googleapis.com` 是 Google 通用沙箱域，整族匹配会把非 AI 的沙箱 API 一并送进 AI 出口
+- **删除 ACL4SSR `Ruleset/AI.yaml` provider**：该文件 47 条中 42 条被本仓库更靠前的规则（`myignore` / `myclaude` / `myai` / `myproxy`）遮蔽，净生效仅 4 条，且上游自 2025-12-06 未更新。4 条（`copilot.microsoft.com`、`copilot.cloud.microsoft`、`ai.azure.com`、`grazie.aws.intellij.net`）已并入 `ai.list` 的「微软系 AI」段，行为不变但少一条 7200s 轮询的外部依赖（与 PSN 收敛到 `psn.list` 同一思路）
+- **通用 SaaS 依赖域移出 AI 组**：`auth0.com` / `stripe.com` / `identrust.com` / `arkoselabs.com` / `livekit.cloud` / `events.statsigapi.net` / `api.statsig.com` 移到 `proxy.list`；`sentry.io` / `intercom.io` / `intercomcdn.com` 直接从 `ai.list` 删除（Claude 侧由 `claude.list` 精确覆盖）。此前它们会让任意站的 Auth0 登录、Stripe 结账、Sentry 上报跟着换出口 IP——与 README 里排除 `challenges.cloudflare.com` 的理由相矛盾。附带 `featuregates.org`（OpenAI 早期特性开关，已弃用）直接删除
+- **删除 `clash/pililink.ini`**：subconverter 模板，与主模板已严重漂移（缺 21 个规则源含 `myclaude` / `mypsn`，仍引用 Sony 平台 / ProxyGFWlist / GoogleFCM / ChinaMedia 等已弃用源，`ai.list` 指向组名 `💬 OpenAi`），确认不再使用后整文件移除
+- **下载站排除改为结构性保证**：`rules` 里把 `RULE-SET,myproxy` 提到 `RULE-SET,myai` 之前（现顺序 `myignore → myclaude → myproxy → myai`）。此前「HF / Ollama / Replicate 不进 AI 组」只靠“`ai.list` 里没写”，误加就会命中 `myai`；现在 `proxy.list` 先命中，即使误写进 `ai.list` 也会被 `🪜 代理域名` 截住。两表当前交集为空，交换顺序不改变任何现有域名的走向；写在 `ai.list` 头部注释与 README 中
+- **`ai.list` 健康检查**（199 → 184 条，−15）：DNS（AliDNS DoH，避开本地污染）+ NS 委派 + 典型子域探测三重核对，删除 4 条死条目：`commandcode.dev`、`windsurf.build`（无委派、整域不存在）、`characterai.com`（NS 指向 afternic，域名在售，真站 `character.ai` 已单独列出）、`grazie.aws.intellij.net`（上一轮从 ACL4SSR `AI.yaml` 并进来的 4 条之一，实测 NXDOMAIN）；另删 11 条被同文件 `DOMAIN-KEYWORD` 完全覆盖的品牌后缀（`openai.com` / `opencode.ai` / `commandcode.*` / `codeium.*` / `perplexity.*` / `midjourney.com` / `elevenlabs.*`），删前已用模拟匹配确认 `openai.com` / `api.openai.com` / `auth.openai.com` 等仍被 keyword 命中。保留 8 条 apex 无 A 记录但 NS 委派正常的 CDN/API 后缀（`oaiusercontent.com` → `files.` 有记录、`codebuddy.ai` → `www.`/`api.` 有记录、`poecdn.net`、`play.ht`、`manuscdn.com`、`skyworkcdn.com`、`codeiumdata.com`、`cursorapi.com`）。核查同时确认：`ai.list` 无重复条目、0 条被 `myignore` 抢占、与 `claude.list` 无重叠
+- **删除 Loon / Surfboard 两端**：`loon/`（AC 模板 + `sub-store-fill-loon-proxies.js` + 2 个 list）与 `Surfboard/`（模板 + 2 个 list）整体移除，`script/test-sub-store-file-scripts.js` 里对应的 Loon 用例一并删除。仓库现在只维护 Clash / mihomo 一种配置形态
+- **移除 sing-box 链路**：`sing-box/`（config 模板、`rules_json/` 源、`rules_srs/` 编译产物、`sub-store-merge-airrules.js`）整体删除。原因：官方 sing-box 没有 `proxy-providers` + `filter` 等价物，模板里地区组只能是占位符，实际使用成本最高；且它是 `ai.list` 必须手工双向镜像到 `rules_json/ai.json` 的唯一原因。删后 AI 域名只维护 `clash/ruleset/ai.list` 一处。配套：`.github/workflows/`（原 `compile-rules.yml`，兼做 sing-box 编译、Clash 校验与编译产物自动回写）整体移除，仓库不再使用 GitHub Actions，一致性靠人工核对
 
 ## Sub-Store 使用说明（base/AB/AC/ABC）
 
@@ -277,33 +287,3 @@ base 只有一个机场 provider（`机场1`），各地区分组（`🇺🇸 �
 同一文件可挂载多次该脚本，每次新增一个分组：后挂的脚本在前一个结果上继续追加，分组按挂载顺序排在 `before_group` 之前，规则也按挂载顺序排在 `before_rule` 之前（先挂的先命中）；`like` 也可以指定先挂的自定义分组。示例：新增 `📺 Twitch`，规则源为 blackmatrix7 Twitch：
 
 `https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/clash/config/sub-store-add-rule-group.js#name=%F0%9F%93%BA%20Twitch&url=https%3A%2F%2Fraw.githubusercontent.com%2Fblackmatrix7%2Fios_rule_script%2Fmaster%2Frule%2FClash%2FTwitch%2FTwitch_No_Resolve.yaml#noCache`
-
-## Sub-Store 使用说明（Loon AC）
-
-Loon AC 配置也可以作为 Sub-Store 远程文件，并通过文件脚本动态填充 A/C 机场地址，避免把真实订阅写入公开模板。
-
-### 1. 新增远程文件
-
-在 Sub-Store 文件管理中创建一个远程文件，地址填写：
-
-`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/loon/config/2-subscription-ac-loon-rule.lcf`
-
-### 2. 添加文件脚本
-
-复制 A/C 订阅面向 Loon 的**完整 HTTP(S) 下载地址**。脚本不再接收订阅名称，也不再使用 `base` 拼接地址，而是原样写入 `[Remote Proxy]`。
-
-完整地址示例：
-
-- 普通订阅：`https://sub.example.com/token/download/Qcloud?target=Loon`
-- 组合订阅：`https://sub.example.com/token/download/collection/MyGroup?target=Loon`
-
-参数对应关系：
-
-- `a` -> `A机场`
-- `c` -> `C机场`
-
-完整地址通常包含私密 token，只应保存在私有 Sub-Store 配置中。由于脚本参数位于 URL 片段中，请先对每个完整地址执行 `encodeURIComponent`，再添加文件脚本：
-
-`https://raw.githubusercontent.com/Pililink/AirRules/refs/heads/main/loon/config/sub-store-fill-loon-proxies.js#a=<A完整URL编码>&c=<C完整URL编码>#noCache`
-
-处理完成后，复制该文件在 Sub-Store 中的下载地址，将它作为 Loon 配置使用。不要把真实机场订阅地址提交到公开仓库。

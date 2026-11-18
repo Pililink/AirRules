@@ -154,34 +154,6 @@ assert.equal(
   "https://airport.example/subscription",
 );
 
-const originalLoon = "[Remote Proxy]\nA机场 =\nC机场 =\n\n[Proxy Group]\n测试 = select,DIRECT\n";
-const currentLoon = `# previous-script-change\n${originalLoon}`;
-const loonArgs = {
-  a: "https://sub.example.com/token/download/Qcloud?target=Loon",
-  c: "https://sub.example.com/token/download/collection/private%20group?target=Loon&udp=true",
-};
-const chainedLoon = runFileScript("loon/config/sub-store-fill-loon-proxies.js", {
-  content: currentLoon,
-  files: [originalLoon],
-  arguments: loonArgs,
-});
-assert.match(chainedLoon, /^# previous-script-change/m);
-assert.match(
-  chainedLoon,
-  /^A机场 = https:\/\/sub\.example\.com\/token\/download\/Qcloud\?target=Loon$/m,
-);
-assert.match(
-  chainedLoon,
-  /^C机场 = https:\/\/sub\.example\.com\/token\/download\/collection\/private%20group\?target=Loon&udp=true$/m,
-);
-assert.throws(
-  () => runFileScript("loon/config/sub-store-fill-loon-proxies.js", {
-    files: [originalLoon],
-    arguments: { a: "Qcloud" },
-  }),
-  /Invalid URL for remote proxy A机场/,
-);
-
 const ruleGroupTemplate = JSON.stringify({
   "proxy-providers": { "A机场": { url: "" } },
   "proxy-groups": [

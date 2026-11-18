@@ -20,3 +20,12 @@ DOMAIN-SUFFIX,huggingface.co
 DOMAIN-SUFFIX,ollama.com
 DOMAIN-SUFFIX,replicate.com
 DOMAIN-SUFFIX,replicate.delivery
+
+# 通用 SaaS 依赖：与 AI 会话无关，不应占用 🤖 人工智能 的出口（原先在 ai.list 里）
+DOMAIN-SUFFIX,auth0.com
+DOMAIN-SUFFIX,stripe.com
+DOMAIN-SUFFIX,identrust.com
+DOMAIN-SUFFIX,arkoselabs.com
+DOMAIN-SUFFIX,livekit.cloud
+DOMAIN-SUFFIX,events.statsigapi.net
+DOMAIN-SUFFIX,api.statsig.com

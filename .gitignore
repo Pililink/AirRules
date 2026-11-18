@@ -1,0 +1,22 @@
+# ---- 编辑器 / 操作系统 ----
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+
+# ---- Pi agent 本地状态（会话、任务日志、临时脚本）----
+.pi/
+
+# ---- Python 工具缓存 ----
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.venv/
+
+# ---- Mihomo / Clash 本地运行时目录 ----
+# rule-providers 与 proxy-providers 的缓存文件由客户端生成，不入库
+rule_provider/
+proxy_provider/
+
+# ---- 本地测试产物 ----
+*.log
