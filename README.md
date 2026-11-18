@@ -135,6 +135,21 @@ PS/PSN 相关规则原先由 `game-sony`（ACL4SSR `Ruleset/Sony.yaml`）与 `ga
 - **删除 Loon / Surfboard 两端**：`loon/`（AC 模板 + `sub-store-fill-loon-proxies.js` + 2 个 list）与 `Surfboard/`（模板 + 2 个 list）整体移除，`script/test-sub-store-file-scripts.js` 里对应的 Loon 用例一并删除。仓库现在只维护 Clash / mihomo 一种配置形态
 - **移除 sing-box 链路**：`sing-box/`（config 模板、`rules_json/` 源、`rules_srs/` 编译产物、`sub-store-merge-airrules.js`）整体删除。原因：官方 sing-box 没有 `proxy-providers` + `filter` 等价物，模板里地区组只能是占位符，实际使用成本最高；且它是 `ai.list` 必须手工双向镜像到 `rules_json/ai.json` 的唯一原因。删后 AI 域名只维护 `clash/ruleset/ai.list` 一处。配套：`.github/workflows/`（原 `compile-rules.yml`，兼做 sing-box 编译、Clash 校验与编译产物自动回写）整体移除，仓库不再使用 GitHub Actions，一致性靠人工核对
 
+## 节点体检脚本
+
+`script/Check-ClashNodeGoogleRegion.ps1`：批量检测节点是否被 Google 判为「不支持地区」（会触发 Antigravity / Gemini Code Assist 的 `400 FAILED_PRECONDITION: User location is not supported`）。
+
+- 读节点：默认扫 Clash Verge 的 `proxy_provider\*.yaml`；也可 `-ConfigPath <clash yaml>`（支持 `proxies:` 与 `proxy-providers` 的 path/url）
+- 并发：起 N 个临时 mihomo 内核（独立端口 + 独立 data 目录），**不影响正在运行的 Clash**，135 个节点约 100 秒
+- 判定：`GET https://notebooklm.google.com/` 不跟随跳转，`Location` 含 `location=unsupported` → 被拦；同时记录出口 IP / 国家 / ASN
+- 不读任何账号凭据，不写入外部服务
+
+```powershell
+.\script\Check-ClashNodeGoogleRegion.ps1 -Filter '美国|台湾' -Parallel 10 -Csv .\result.csv
+```
+
+> 实测教训：同一机场同一 /24 的 `美国01`（可用）与 `美国02`（被拦）在 ipinfo 里都显示 US —— 所以只能逐 IP 实测，不能按「美国节点」整体判断；延迟也与可用性无关。
+
 ## Sub-Store 使用说明（base/AB/AC/ABC）
 
 `base-clash-ruleset.yaml`、`2-subscription-clash-rule-set.yaml`（AB）、`2-subscription-ac-clash-rule-set.yaml`（AC）和 `3-subscription-clash-rule-set.yaml`（ABC）可以直接作为 Sub-Store 远程文件托管使用，建议按文件分别建立订阅。若你只做规则定制，这些文件本身更推荐只维护 `proxy-groups` 与 `rules`，把机场订阅链接留空，避免暴露个人链接。
