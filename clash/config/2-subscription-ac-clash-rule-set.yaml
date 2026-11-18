@@ -67,13 +67,13 @@ proxy-groups:
   - {
       name: 🤖 人工智能,
       type: select,
-      proxies: [🛫 AI出口节点, C全线路自选, A全线路自选, 🚀 节点选择],
+      proxies: [🛫 AI出口节点, C全线路自选, A机场常用, A全线路自选, 🚀 节点选择],
     }
   # 🧠 Claude：从 🤖 人工智能 中单独细分，候选与 🤖 人工智能 相同，可独立选择线路。
   - {
       name: 🧠 Claude,
       type: select,
-      proxies: [🛫 AI出口节点, C全线路自选, A全线路自选, 🚀 节点选择],
+      proxies: [🛫 AI出口节点, C全线路自选, A机场常用, A全线路自选, 🚀 节点选择],
     }
   # 🛫 AI出口节点：节点来自 AI出口 订阅并经 🔗 AI前置节点 链式出站；未填订阅时组内为 COMPATIBLE（等同直连），
   # 放在 🤖 人工智能 / 🧠 Claude 首位作为默认；未填 AI出口 订阅时请改选其他线路。
